@@ -1,426 +1,664 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Resilience Simulator - Rethink Lab</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        :root {
-            --primary-dark: #003A3A;
-            --accent-red: #E30613;
-            --bg-light: #F0F4F2;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-light);
-            color: #333;
-        }
-        .font-serif {
-            font-family: 'Playfair Display', serif;
-        }
-        .lever-transition {
-            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        input[type=range]::-webkit-slider-thumb {
-            appearance: none;
-            width: 24px;
-            height: 24px;
-            background: var(--primary-dark);
-            border-radius: 50%;
-            cursor: pointer;
-            border: 4px solid white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        #risk-weight {
-            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .exit-card {
-            transition: all 0.3s ease;
-        }
-        .exit-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary-dark);
-        }
-        .nav-glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-        }
-        .step-node {
-            transition: all 0.4s ease;
-        }
-        .step-item:hover .step-node {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(74, 222, 128, 0.2);
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Protection Journey Prototype - Rethink Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary-dark: #003A3A;
+            --accent-red: #E30613;
+            --bg-light: #F0F4F2;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: #333;
+        }
+
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .lever-transition {
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--primary-dark);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .step-card {
+            transition: all 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .timeline-card {
+            transition: all 0.3s ease;
+        }
+
+        .timeline-card:hover {
+            transform: translateX(8px);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .fade-section {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-label {
+            display: inline-block;
+            padding: 0.3rem 0.9rem;
+            border: 1px solid rgba(0, 58, 58, 0.15);
+            color: var(--primary-dark);
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.28em;
+            border-radius: 999px;
+        }
+
+        .section-label-dark {
+            display: inline-block;
+            padding: 0.3rem 0.9rem;
+            border: 1px solid rgba(255,255,255,0.15);
+            color: white;
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.28em;
+            border-radius: 999px;
+        }
+
+    :root {
+        --primary-dark: #003A3A;
+        --accent-red: #E30613;
+        --bg-light: #F0F4F2;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-light);
+        color: #333;
+    }
+
+    .font-serif {
+        font-family: 'Playfair Display', serif;
+    }
+
+    .lever-transition {
+        transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        background: var(--primary-dark);
+        border-radius: 50%;
+        cursor: pointer;
+        border: 4px solid white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    #risk-weight {
+        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .step-card {
+        transition: all 0.3s ease;
+    }
+
+    .step-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .timeline-card {
+        transition: all 0.3s ease;
+    }
+
+    .timeline-card:hover {
+        transform: translateX(8px);
+        background: rgba(255,255,255,0.08);
+    }
+
+    .fade-section {
+        opacity: 0;
+        transform: translateY(32px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .section-label {
+        display: inline-block;
+        padding: 0.3rem 0.9rem;
+        border: 1px solid rgba(0, 58, 58, 0.15);
+        color: var(--primary-dark);
+        font-size: 10px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.28em;
+        border-radius: 999px;
+    }
+
+    .section-label-dark {
+        display: inline-block;
+        padding: 0.3rem 0.9rem;
+        border: 1px solid rgba(255,255,255,0.15);
+        color: white;
+        font-size: 10px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.28em;
+        border-radius: 999px;
+    }
+
+    .nav-glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .sim-exit-card {
+        transition: all 0.3s ease;
+    }
+
+    .sim-exit-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary-dark);
+    }
+</style>
+    </style>
 </head>
 <body class="selection:bg-[#E30613] selection:text-white">
 
-    <!-- 导航栏 -->
-    <nav class="fixed top-0 w-full z-50 nav-glass px-6 md:px-12 py-6 flex justify-between items-center">
-        <div class="flex items-center gap-3">
-            <div class="w-6 h-6 bg-[#003A3A] flex items-center justify-center rounded-sm">
-                <div class="w-3 h-3 bg-white rotate-45"></div>
-            </div>
-            <span class="font-serif font-black text-xl tracking-tighter text-[#003A3A]">RE·THINK LAB</span>
-        </div>
-        <div class="hidden lg:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
-            <a href="#step-entry" class="hover:text-[#003A3A] transition-colors">Intro</a>
-            <a href="#step-simulator" class="hover:text-[#003A3A] transition-colors">Simulator</a>
-            <a href="#journey" class="hover:text-[#003A3A] transition-colors">6-Step Journey</a>
-            <a href="#pillars" class="hover:text-[#003A3A] transition-colors">Analysis</a>
-        </div>
-    </nav>
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-white/40 backdrop-blur-2xl px-6 md:px-12 py-6 flex justify-between items-center border-b border-black/[0.03]">
+        <div class="flex items-center gap-3">
+            <div class="w-6 h-6 bg-[#003A3A] flex items-center justify-center rounded-sm">
+                <div class="w-3 h-3 bg-white rotate-45"></div>
+            </div>
+            <span class="font-serif font-black text-xl tracking-tighter text-[#003A3A]">RE·THINK LAB</span>
+        </div>
 
-    <!-- 入场画面 -->
-    <section id="step-entry" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden pt-20">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#003A3A]/5 rounded-full blur-[100px]"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#E30613]/5 rounded-full blur-[120px]"></div>
-        
-        <div class="relative z-20 max-w-4xl">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 border border-[#003A3A]/10 rounded-full text-[11px] mb-8 bg-white/50 backdrop-blur-md text-[#003A3A] tracking-[0.2em] uppercase font-bold shadow-sm">
-               <i data-lucide="activity" class="w-3.5 h-3.5 text-[#E30613]"></i> 
-               认知实验室 • 理解保障的本质
-            </div>
-            <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-[1.1] font-serif text-[#003A3A] tracking-tight">
-                不确定保险是否适合你？<br /><span class="text-transparent bg-clip-text bg-gradient-to-r from-[#003A3A] to-[#005a5a]">从理解开始，而非购买。</span>
-            </h1>
-            <p class="text-lg md:text-xl mb-12 text-gray-600/80 max-w-2xl mx-auto leading-relaxed font-light">
-                没有强制注册，没有销售压力。这是一个视觉化空间，用来探索“财务韧性”的物理学，看微小的行动如何创造巨大的确定性。
-            </p>
-            <div class="flex flex-col items-center gap-6">
-                <a href="#step-simulator" class="group bg-[#003A3A] text-white px-10 md:px-14 py-5 md:py-6 rounded-full font-bold text-lg md:text-xl transition-all flex items-center justify-center gap-3 shadow-[0_20px_40px_-15px_rgba(0,58,58,0.3)] hover:shadow-[0_25px_50px_-12px_rgba(0,58,58,0.4)] hover:-translate-y-1 active:scale-95">
-                    进入模拟器 <i data-lucide="arrow-right" class="group-hover:translate-x-1 transition-transform"></i>
-                </a>
-                <p class="text-[10px] text-gray-400 uppercase tracking-widest font-bold">100% 匿名探索体验</p>
-            </div>
-        </div>
-    </section>
+        <div class="hidden lg:flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
+            <a href="#intro" class="hover:text-[#003A3A] transition-colors">Intro</a>
+            <a href="#overview" class="hover:text-[#003A3A] transition-colors">Journey</a>
+            <a href="#simulator" class="hover:text-[#003A3A] transition-colors">Logic</a>
+            <a href="#claims" class="hover:text-[#003A3A] transition-colors">Claim</a>
+            <a href="#next" class="hover:text-[#003A3A] transition-colors">Next</a>
+        </div>
+    </nav>
 
-    <!-- 模拟器屏幕 -->
-    <section id="step-simulator" class="min-h-screen bg-white py-32 px-4 md:px-8 border-y border-gray-100">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-16 items-start">
-            <!-- 交互区域 -->
-            <div class="lg:col-span-7 space-y-12">
-                <div class="space-y-4">
-                    <div class="flex items-center gap-3 text-[#E30613] font-bold text-sm tracking-widest uppercase">
-                        <i data-lucide="scale" class="w-4 h-4"></i> 交互：风险平衡
-                    </div>
-                    <h2 class="text-4xl font-bold text-[#003A3A] font-serif">举起不确定性的重量</h2>
-                    <p class="text-gray-500 text-lg font-light leading-relaxed">
-                        当你增加<b>每月投入</b>（左侧）时，观察<b>不确定性负担</b>（右侧）如何通过杠杆效应变得轻盈，最终从你的生活中移除。
-                    </p>
-                </div>
+    <!-- 1. Intro -->
+    <section id="intro" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#003A3A]/5 rounded-full blur-[100px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] bg-[#E30613]/5 rounded-full blur-[120px]"></div>
 
-                <!-- 平衡视觉化 -->
-                <div class="bg-[#F8FAF9] p-12 rounded-[50px] border border-gray-100 shadow-sm relative overflow-hidden min-h-[550px] flex flex-col justify-center">
-                    <div class="relative h-64 flex flex-col justify-end items-center mb-16">
-                        <!-- 支点 -->
-                        <div class="absolute bottom-0 w-0 h-0 border-l-[30px] border-l-transparent border-r-[30px] border-r-transparent border-b-[50px] border-b-gray-300 z-10"></div>
-                        
-                        <!-- 杠杆臂 -->
-                        <div id="lever-arm" class="h-2 bg-[#003A3A] w-full rounded-full origin-center relative lever-transition mb-[24px]">
-                            <!-- 左侧：保费 -->
-                            <div class="absolute left-0 bottom-6 -translate-x-1/2 flex flex-col items-center">
-                                <div id="input-icon" class="w-16 h-16 bg-white shadow-xl rounded-2xl flex items-center justify-center border border-gray-50 mb-4 transition-transform">
-                                    <i data-lucide="check-circle" class="text-[#003A3A] w-8 h-8"></i>
-                                </div>
-                                <div class="text-center text-nowrap">
-                                    <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest">每月投入</span>
-                                    <span id="display-premium" class="text-2xl font-bold text-[#003A3A]">£45</span>
-                                </div>
-                            </div>
-                            <!-- 右侧：风险重量 -->
-                            <div class="absolute right-0 bottom-6 translate-x-1/2 flex flex-col items-center">
-                                <div id="risk-weight" class="w-32 h-32 bg-gradient-to-br from-gray-800 to-black shadow-2xl rounded-[2.5rem] flex flex-col items-center justify-center text-white mb-4 relative overflow-hidden">
-                                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
-                                    <span class="relative z-10 text-[10px] uppercase font-black opacity-40 text-nowrap">保障总额</span>
-                                    <span id="display-coverage" class="relative z-10 text-xl font-bold text-nowrap">£337,500</span>
-                                </div>
-                                <div class="text-center text-nowrap">
-                                    <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest">不确定性负担</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="relative z-20 max-w-5xl fade-section">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 border border-[#003A3A]/10 rounded-full text-[11px] mb-8 bg-white/50 backdrop-blur-md text-[#003A3A] tracking-[0.2em] uppercase font-bold shadow-sm">
+                <i data-lucide="activity" class="w-3.5 h-3.5 text-[#E30613]"></i>
+                Protection Journey Preview
+            </div>
 
-                    <!-- 控制器 -->
-                    <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm mt-8">
-                        <div class="flex justify-between mb-6">
-                            <span class="text-xs font-black text-[#003A3A] uppercase tracking-widest">调整你的投入额度</span>
-                            <span id="leverage-label" class="text-xs font-bold text-[#E30613]">效应: 7500倍 杠杆</span>
-                        </div>
-                        <input type="range" min="10" max="200" value="45" id="premium-slider" class="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer accent-[#003A3A]">
-                    </div>
-                </div>
-            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-[1.08] font-serif text-[#003A3A] tracking-tight">
+                Before you buy anything,<br />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#003A3A] to-[#005a5a]">see how protection actually works.</span>
+            </h1>
 
-            <!-- 分析侧边栏 -->
-            <div class="lg:col-span-5 lg:sticky lg:top-32">
-                <div class="bg-[#003A3A] p-10 rounded-[3.5rem] text-white space-y-12 shadow-2xl">
-                    <div class="space-y-6">
-                        <h3 class="text-2xl font-bold font-serif">韧性评分</h3>
-                        <p class="text-white/40 text-sm font-light leading-relaxed">通过承诺一个微小的月支出，你实际上将以下潜在债务风险转移给了我们：</p>
-                        <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10">
-                            <div class="flex justify-between items-center mb-4">
-                                <span class="text-[11px] uppercase font-bold text-white/40 tracking-widest">已转移风险</span>
-                                <i data-lucide="refresh-cw" class="w-4 h-4 text-green-400"></i>
-                            </div>
-                            <div id="transfer-amount" class="text-4xl font-black mb-2 tracking-tighter">£337,500</div>
-                            <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                                <div id="transfer-progress" class="h-full bg-green-400 w-1/3 transition-all duration-700"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-3 text-white/80">
-                            <i data-lucide="verified" class="w-5 h-5 text-green-400"></i>
-                            <span class="text-sm font-bold uppercase tracking-widest">99.4% 理赔确定性</span>
-                        </div>
-                        <p class="text-xs text-white/30 leading-relaxed font-light italic">基于2023年数据。我们支付了超过2.02亿英镑的赔款，支持了数万个家庭度过难关。</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            <p class="text-lg md:text-xl mb-12 text-gray-600/80 max-w-3xl mx-auto leading-relaxed font-light">
+                This is not a quote page and not an application page. It is a story layer for people who feel insurance may be becoming relevant, but are not ready for prices, forms, or decisions.
+            </p>
 
-    <!-- 理赔旅程 (已更新为6步) -->
-    <section id="journey" class="py-32 px-4 bg-white overflow-hidden">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid lg:grid-cols-2 gap-20 items-start">
-                <div class="space-y-8 lg:sticky lg:top-32">
-                    <div class="inline-block px-4 py-1 bg-[#003A3A] text-white text-[10px] font-black uppercase tracking-[0.3em] rounded-full">理赔透明度</div>
-                    <h3 class="text-4xl font-bold text-[#003A3A] font-serif">杠杆如何兑现它的诺言？</h3>
-                    <p class="text-gray-500 font-light leading-relaxed text-lg">
-                        视觉化只是第一步；真实的保护才是核心。当风险发生时，从“负担”到“解脱”的转变由 <b>Scottish Widows</b> 设计的精准流程提供保障。
-                    </p>
-                    
-                    <div class="grid gap-4">
-                        <div class="flex items-center gap-4 p-4 bg-[#F8FAF9] rounded-2xl border border-gray-100">
-                             <div class="w-10 h-10 bg-[#003A3A] text-white rounded-full flex items-center justify-center font-bold">99%</div>
-                             <p class="text-sm text-gray-500 font-medium">寿险理赔通过率 (2023)</p>
-                        </div>
-                        <div class="flex items-center gap-4 p-4 bg-[#F8FAF9] rounded-2xl border border-gray-100">
-                             <div class="w-10 h-10 bg-[#E30613]/10 text-[#E30613] rounded-full flex items-center justify-center font-bold">24h</div>
-                             <p class="text-sm text-gray-500 font-medium">专属经理平均响应时间</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="flex flex-col items-center gap-6">
+                <a href="#overview" class="group bg-[#003A3A] text-white px-10 py-6 rounded-full font-bold text-xl transition-all flex items-center gap-3 shadow-xl hover:-translate-y-1">
+                    Start the journey <i data-lucide="arrow-down"></i>
+                </a>
+                <p class="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold">No quote · No form · No commitment</p>
+            </div>
+        </div>
+    </section>
 
-                <!-- 6步理赔视觉流 -->
-                <div class="relative bg-[#003A3A] rounded-[3rem] p-8 md:p-14 text-white shadow-2xl">
-                    <div class="absolute top-0 right-0 p-10 opacity-5"><i data-lucide="shield-check" class="w-48 h-48"></i></div>
-                    
-                    <div class="flex items-center gap-3 mb-12">
-                        <div class="w-8 h-px bg-green-400"></div>
-                        <h4 class="text-xl font-bold tracking-tight">6步透明解脱周期</h4>
-                    </div>
-                    
-                    <div class="space-y-0 relative">
-                        <!-- 连接线 -->
-                        <div class="absolute left-[23px] top-6 bottom-6 w-px bg-white/10"></div>
-                        
-                        <!-- 步骤 1 -->
-                        <div class="step-item group relative flex gap-8 pb-10">
-                            <div class="step-node w-12 h-12 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-bold relative z-10 shrink-0">1</div>
-                            <div class="pt-1">
-                                <p class="text-[10px] uppercase font-bold text-white/40 tracking-widest mb-1">Notify / 通知</p>
-                                <h5 class="font-bold text-base mb-1">随时随地发起</h5>
-                                <p class="text-sm text-white/60 font-light leading-relaxed">通过我们的在线门户或电话24/7发起理赔，无需复杂表格。</p>
-                            </div>
-                        </div>
+    <!-- 2. Why this becomes relevant -->
+    <section id="overview" class="py-28 md:py-36 px-4 md:px-8 bg-white">
+        <div class="max-w-7xl mx-auto fade-section">
+            <div class="max-w-3xl mb-20">
+                <div class="section-label mb-6">Why this starts to matter</div>
+                <h2 class="text-5xl md:text-6xl font-black text-[#003A3A] font-serif leading-tight mb-6">
+                    Insurance often becomes relevant when responsibility grows.
+                </h2>
+                <p class="text-xl text-gray-500 font-light leading-relaxed">
+                    People do not always reject insurance. More often, they begin to care when someone depends on them, when shared costs increase, or when financial pressure makes future risk feel more real.
+                </p>
+            </div>
 
-                        <!-- 步骤 2 -->
-                        <div class="step-item group relative flex gap-8 pb-10">
-                            <div class="step-node w-12 h-12 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-bold relative z-10 shrink-0">2</div>
-                            <div class="pt-1">
-                                <p class="text-[10px] uppercase font-bold text-white/40 tracking-widest mb-1">Assign / 分配</p>
-                                <h5 class="font-bold text-base mb-1">您的专属经理</h5>
-                                <p class="text-sm text-white/60 font-light leading-relaxed">我们会在24小时内为您指派一位专属理赔经理，作为您的唯一联系人。</p>
-                            </div>
-                        </div>
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <div class="step-card p-10 rounded-[2.5rem] bg-[#F8FAF9] border border-gray-100">
+                    <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6">
+                        <i data-lucide="baby" class="text-[#003A3A]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-[#003A3A] mb-4">Responsibility increases</h3>
+                    <p class="text-sm text-gray-500 leading-7 font-light">
+                        Children, partners, rent, mortgages, or family care can turn income disruption from an abstract risk into a real concern.
+                    </p>
+                </div>
 
-                        <!-- 步骤 3 -->
-                        <div class="step-item group relative flex gap-8 pb-10">
-                            <div class="step-node w-12 h-12 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-bold relative z-10 shrink-0">3</div>
-                            <div class="pt-1">
-                                <p class="text-[10px] uppercase font-bold text-white/40 tracking-widest mb-1">Evidence / 证据</p>
-                                <h5 class="font-bold text-base mb-1">我们承担重任</h5>
-                                <p class="text-sm text-white/60 font-light leading-relaxed">我们直接与医生和医疗机构协调收集证据，让家人远离官僚主义的繁琐。</p>
-                            </div>
-                        </div>
+                <div class="step-card p-10 rounded-[2.5rem] bg-[#F8FAF9] border border-gray-100">
+                    <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6">
+                        <i data-lucide="triangle-alert" class="text-[#E30613]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-[#003A3A] mb-4">The process creates anxiety</h3>
+                    <p class="text-sm text-gray-500 leading-7 font-light">
+                        When people are pushed straight into prices, forms, and uncertain decisions, many leave before understanding has even started.
+                    </p>
+                </div>
 
-                        <!-- 步骤 4 -->
-                        <div class="step-item group relative flex gap-8 pb-10">
-                            <div class="step-node w-12 h-12 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-bold relative z-10 shrink-0">4</div>
-                            <div class="pt-1">
-                                <p class="text-[10px] uppercase font-bold text-white/40 tracking-widest mb-1">Assessment / 评估</p>
-                                <h5 class="font-bold text-base mb-1">公正透明审核</h5>
-                                <p class="text-sm text-white/60 font-light leading-relaxed">经验丰富的医学专家团队进行评估，确保在最短时间内得出准确结论。</p>
-                            </div>
-                        </div>
+                <div class="step-card p-10 rounded-[2.5rem] bg-[#F8FAF9] border border-gray-100">
+                    <div class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-6">
+                        <i data-lucide="eye-off" class="text-[#003A3A]"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-[#003A3A] mb-4">Claims feel invisible</h3>
+                    <p class="text-sm text-gray-500 leading-7 font-light">
+                        The deepest fear is often not buying. It is not knowing what would happen afterwards if something serious actually happened.
+                    </p>
+                </div>
+            </div>
 
-                        <!-- 步骤 5 -->
-                        <div class="step-item group relative flex gap-8 pb-10">
-                            <div class="step-node w-12 h-12 rounded-full bg-green-400 text-[#003A3A] flex items-center justify-center font-bold relative z-10 shrink-0"><i data-lucide="check" class="w-6 h-6"></i></div>
-                            <div class="pt-1">
-                                <p class="text-[10px] uppercase font-bold text-green-400/60 tracking-widest mb-1">Payment / 支付</p>
-                                <h5 class="font-bold text-base mb-1 text-green-400">资金快速释放</h5>
-                                <p class="text-sm text-white/60 font-light leading-relaxed">一旦确认，款项将通过 BACS 立即释放。99.4% 的寿险理赔均如此完成。</p>
-                            </div>
-                        </div>
+            <div class="bg-[#003A3A] text-white rounded-[3rem] p-10 md:p-12">
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div>
+                        <div class="text-[10px] uppercase tracking-[0.2em] text-white/40 font-black mb-4">What this page does</div>
+                        <p class="text-white/80 text-sm leading-7">Shows a simple journey from first understanding to claim outcome.</p>
+                    </div>
+                    <div>
+                        <div class="text-[10px] uppercase tracking-[0.2em] text-white/40 font-black mb-4">What this page does not do</div>
+                        <p class="text-white/80 text-sm leading-7">It does not force a decision or push you straight into buying.</p>
+                    </div>
+                    <div>
+                        <div class="text-[10px] uppercase tracking-[0.2em] text-white/40 font-black mb-4">What you gain</div>
+                        <p class="text-white/80 text-sm leading-7">A clearer mental picture of what protection is for, and how the journey can unfold.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <!-- 步骤 6 -->
-                        <div class="step-item group relative flex gap-8">
-                            <div class="step-node w-12 h-12 rounded-full bg-green-400 text-[#003A3A] flex items-center justify-center font-bold relative z-10 shrink-0"><i data-lucide="heart" class="w-5 h-5"></i></div>
-                            <div class="pt-1">
-                                <p class="text-[10px] uppercase font-bold text-green-400/60 tracking-widest mb-1">Support / 支持</p>
-                                <h5 class="font-bold text-base mb-1 text-green-400">长期关怀与协助</h5>
-                                <p class="text-sm text-white/60 font-light leading-relaxed">包含 RedArc 护理服务，提供心理健康、康复指导等全面的后续支持。</p>
-                            </div>
-                        </div>
-                    </div>
+    <!-- 3. Journey map -->
+    <section class="py-28 md:py-36 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto fade-section">
+            <div class="max-w-3xl mb-20">
+                <div class="section-label mb-6">Journey overview</div>
+                <h2 class="text-5xl md:text-6xl font-black text-[#003A3A] font-serif leading-tight mb-6">
+                    A simpler journey, before any decision is required.
+                </h2>
+                <p class="text-xl text-gray-500 font-light leading-relaxed">
+                    This layer is not trying to sell a product. It is trying to reduce the gap between relevance and real understanding.
+                </p>
+            </div>
 
-                    <div class="mt-16 pt-10 border-t border-white/10 flex justify-between items-center">
-                        <div>
-                            <p class="text-4xl font-black">£202M+</p>
-                            <p class="text-[9px] uppercase tracking-widest text-white/40">2023年理赔总额</p>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-4xl font-black">9,800+</p>
-                            <p class="text-[9px] uppercase tracking-widest text-white/40">支持家庭数量</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            <div class="grid md:grid-cols-4 gap-6">
+                <div class="step-card p-8 rounded-[2rem] bg-white border border-black/[0.05] shadow-sm">
+                    <div class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-black mb-4">01</div>
+                    <h3 class="text-lg font-bold text-[#003A3A] mb-3">See why it matters</h3>
+                    <p class="text-sm text-gray-500 leading-7 font-light">Understand why protection becomes relevant when responsibility changes.</p>
+                </div>
+                <div class="step-card p-8 rounded-[2rem] bg-white border border-black/[0.05] shadow-sm">
+                    <div class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-black mb-4">02</div>
+                    <h3 class="text-lg font-bold text-[#003A3A] mb-3">Understand the logic</h3>
+                    <p class="text-sm text-gray-500 leading-7 font-light">See how a smaller monthly cost can relate to a much larger protected amount.</p>
+                </div>
+                <div class="step-card p-8 rounded-[2rem] bg-white border border-black/[0.05] shadow-sm">
+                    <div class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-black mb-4">03</div>
+                    <h3 class="text-lg font-bold text-[#003A3A] mb-3">See what it means in life</h3>
+                    <p class="text-sm text-gray-500 leading-7 font-light">Translate abstract cover into daily consequences for a household.</p>
+                </div>
+                <div class="step-card p-8 rounded-[2rem] bg-white border border-black/[0.05] shadow-sm">
+                    <div class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-black mb-4">04</div>
+                    <h3 class="text-lg font-bold text-[#003A3A] mb-3">See what a claim can involve</h3>
+                    <p class="text-sm text-gray-500 leading-7 font-light">Replace the black box with a more visible and understandable process.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- 韧性支柱分解 -->
-    <section id="pillars" class="py-32 bg-[#F0F4F2]">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-16 space-y-4">
-                <div class="inline-block px-4 py-1 bg-[#E30613]/5 text-[#E30613] text-[10px] font-black uppercase tracking-[0.3em] rounded-full">安全网构成</div>
-                <h3 class="text-4xl font-bold text-[#003A3A] font-serif">这些杠杆究竟托起了什么？</h3>
-                <p class="text-gray-400 max-w-2xl mx-auto font-light text-sm">总杠杆由以下四个关键的稳定性支柱组成：</p>
-            </div>
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
-                    <div class="w-12 h-12 bg-[#F8FAF9] rounded-xl flex items-center justify-center mb-6"><i data-lucide="home" class="w-6 h-6 text-[#003A3A]"></i></div>
-                    <h4 class="font-bold text-[#003A3A] mb-2 text-sm">抵押贷款自由</h4>
-                    <p class="text-[10px] text-gray-400 font-light leading-relaxed mb-6">确保你家人的避风港永远不会受到债务的威胁。</p>
-                    <div class="flex items-end gap-1"><span id="cov-mortgage" class="text-xl font-black text-[#003A3A]">£200,000</span><span class="text-[8px] text-gray-300 font-bold mb-1 uppercase">全额覆盖</span></div>
-                </div>
-                <div class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
-                    <div class="w-12 h-12 bg-[#F8FAF9] rounded-xl flex items-center justify-center mb-6"><i data-lucide="graduation-cap" class="w-6 h-6 text-[#003A3A]"></i></div>
-                    <h4 class="font-bold text-[#003A3A] mb-2 text-sm">成长基石</h4>
-                    <p class="text-[10px] text-gray-400 font-light leading-relaxed mb-6">确保下一代未来的起跑线，无论发生什么。</p>
-                    <div class="flex items-end gap-1"><span id="cov-edu" class="text-xl font-black text-[#003A3A]">£50,000</span><span class="text-[8px] text-gray-300 font-bold mb-1 uppercase">教育基金</span></div>
-                </div>
-                <div class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
-                    <div class="w-12 h-12 bg-[#F8FAF9] rounded-xl flex items-center justify-center mb-6"><i data-lucide="shopping-cart" class="w-6 h-6 text-[#003A3A]"></i></div>
-                    <h4 class="font-bold text-[#003A3A] mb-2 text-sm">尊严替代方案</h4>
-                    <p class="text-[10px] text-gray-400 font-light leading-relaxed mb-6">替代失去的收入，以维持家庭现有的生活标准。</p>
-                    <div class="flex items-end gap-1 text-green-600"><span id="cov-life" class="text-xl font-black">5.2 年</span><span class="text-[8px] opacity-50 font-bold mb-1 uppercase">生活开支</span></div>
-                </div>
-                <div class="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
-                    <div class="w-12 h-12 bg-[#F8FAF9] rounded-xl flex items-center justify-center mb-6"><i data-lucide="heart" class="w-6 h-6 text-[#E30613]"></i></div>
-                    <h4 class="font-bold text-[#003A3A] mb-2 text-sm">纯粹韧性</h4>
-                    <p class="text-[10px] text-gray-400 font-light leading-relaxed mb-6">为任何预见之外的额外开支保留的缓冲垫。</p>
-                    <div class="flex items-end gap-1"><span id="cov-extra" class="text-xl font-black text-[#003A3A]">£87,500</span><span class="text-[8px] text-gray-300 font-bold mb-1 uppercase">备用缓冲</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- 4. Simulator chapter -->
+<section id="simulator" class="py-28 md:py-36 px-4 md:px-8 bg-white border-y border-gray-100">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-16 items-start fade-section">
+        <!-- Interaction Area -->
+        <div class="lg:col-span-7 space-y-12">
+            <div class="space-y-4">
+                <div class="flex items-center gap-3 text-[#E30613] font-bold text-sm tracking-widest uppercase">
+                    <i data-lucide="scale" class="w-4 h-4"></i> Interaction · Risk Balance
+                </div>
+                <h2 class="text-4xl font-bold text-[#003A3A] font-serif">Lifting the weight of uncertainty</h2>
+                <p class="text-gray-500 text-lg font-light leading-relaxed">
+                    As you increase your <b>monthly cost</b> on the left, notice how the <b>uncertainty burden</b> on the right becomes lighter through leverage, and gradually lifts away from your life.
+                </p>
+            </div>
 
-    <!-- 底部退出 -->
-    <section class="bg-white border-t border-gray-100 pt-20 pb-40 px-4">
-        <div class="max-w-7xl mx-auto text-center px-4">
-            <h3 class="text-4xl font-bold text-[#003A3A] mb-4 font-serif">认知已达成。下一步？</h3>
-            <p class="text-gray-400 font-light mb-16 uppercase tracking-[0.2em] text-xs">基于你的视觉模拟，哪条路径让你感觉最舒适？</p>
-            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto text-left">
-                <div class="exit-card p-10 bg-white border border-gray-100 rounded-[3rem] group cursor-pointer">
-                    <div class="w-16 h-16 bg-[#003A3A] text-white rounded-2xl flex items-center justify-center mb-6"><i data-lucide="zap" class="w-8 h-8"></i></div>
-                    <h4 class="font-bold mb-4 text-[#003A3A]">查看具体方案</h4>
-                    <p class="text-xs text-gray-400 mb-6 font-light leading-relaxed">探索具有透明理赔历史的具体保护产品。</p>
-                    <span class="text-[10px] font-black uppercase tracking-widest border-b-2 border-transparent group-hover:border-[#E30613] transition-all">查看详情</span>
-                </div>
-                <div class="exit-card p-10 bg-white border border-gray-100 rounded-[3rem] group cursor-pointer">
-                    <div class="w-16 h-16 bg-[#E30613]/10 text-[#E30613] rounded-2xl flex items-center justify-center mb-6"><i data-lucide="phone" class="w-8 h-8"></i></div>
-                    <h4 class="font-bold mb-4 text-[#003A3A]">咨询专家</h4>
-                    <p class="text-xs text-gray-400 mb-6 font-light leading-relaxed">对流程仍有疑问？与我们的专职顾问交流。</p>
-                    <span class="text-[10px] font-black uppercase tracking-widest border-b-2 border-transparent group-hover:border-[#E30613] transition-all">预约通话</span>
-                </div>
-                <div class="exit-card p-10 bg-white border border-gray-100 rounded-[3rem] group cursor-pointer">
-                    <div class="w-16 h-16 bg-gray-100 text-gray-400 rounded-2xl flex items-center justify-center mb-6"><i data-lucide="save" class="w-8 h-8"></i></div>
-                    <h4 class="font-bold mb-4 text-[#003A3A]">保存分析报告</h4>
-                    <p class="text-xs text-gray-400 mb-6 font-light leading-relaxed">将您当前的韧性分析保存为 PDF 报告。</p>
-                    <span class="text-[10px] font-black uppercase tracking-widest border-b-2 border-transparent group-hover:border-[#E30613] transition-all">下载 PDF</span>
-                </div>
-            </div>
-        </div>
-    </section>
+            <!-- Balance Visualisation -->
+            <div class="bg-[#F8FAF9] p-12 rounded-[50px] border border-gray-100 shadow-sm relative overflow-hidden min-h-[550px] flex flex-col justify-center">
+                <div class="relative h-64 flex flex-col justify-end items-center mb-16">
+                    <!-- Pivot -->
+                    <div class="absolute bottom-0 w-0 h-0 border-l-[30px] border-l-transparent border-r-[30px] border-r-transparent border-b-[50px] border-b-gray-300 z-10"></div>
 
-    <script>
-        lucide.createIcons();
+                    <!-- Lever Arm -->
+                    <div id="lever-arm" class="h-2 bg-[#003A3A] w-full rounded-full origin-center relative lever-transition mb-[24px]">
+                        <!-- Left: Input -->
+                        <div class="absolute left-0 bottom-6 -translate-x-1/2 flex flex-col items-center">
+                            <div id="input-icon" class="w-16 h-16 bg-white shadow-xl rounded-2xl flex items-center justify-center border border-gray-50 mb-4 transition-transform">
+                                <i data-lucide="check-circle" class="text-[#003A3A] w-8 h-8"></i>
+                            </div>
+                            <div class="text-center text-nowrap">
+                                <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest">Monthly cost</span>
+                                <span id="display-premium" class="text-2xl font-bold text-[#003A3A]">£45</span>
+                            </div>
+                        </div>
 
-        const slider = document.getElementById('premium-slider');
-        const displayPremium = document.getElementById('display-premium');
-        const displayCoverage = document.getElementById('display-coverage');
-        const leverArm = document.getElementById('lever-arm');
-        const riskWeight = document.getElementById('risk-weight');
-        const transferAmount = document.getElementById('transfer-amount');
-        const transferProgress = document.getElementById('transfer-progress');
-        const inputIcon = document.getElementById('input-icon');
+                        <!-- Right: Risk Weight -->
+                        <div class="absolute right-0 bottom-6 translate-x-1/2 flex flex-col items-center">
+                            <div id="risk-weight" class="w-32 h-32 bg-gradient-to-br from-gray-800 to-black shadow-2xl rounded-[2.5rem] flex flex-col items-center justify-center text-white mb-4 relative overflow-hidden">
+                                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                                <span class="relative z-10 text-[10px] uppercase font-black opacity-40 text-nowrap">Cover amount</span>
+                                <span id="display-coverage" class="relative z-10 text-xl font-bold text-nowrap">£337,500</span>
+                            </div>
+                            <div class="text-center text-nowrap">
+                                <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest">Uncertainty burden</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        const covMortgage = document.getElementById('cov-mortgage');
-        const covEdu = document.getElementById('cov-edu');
-        const covLife = document.getElementById('cov-life');
-        const covExtra = document.getElementById('cov-extra');
+                <!-- Controller -->
+                <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm mt-8">
+                    <div class="flex justify-between mb-6">
+                        <span class="text-xs font-black text-[#003A3A] uppercase tracking-widest">Adjust your contribution</span>
+                        <span id="leverage-label" class="text-xs font-bold text-[#E30613]">Effect: 7500x leverage</span>
+                    </div>
+                    <input type="range" min="10" max="200" value="45" id="premium-slider" class="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer accent-[#003A3A]">
+                </div>
+            </div>
+        </div>
 
-        slider.addEventListener('input', (e) => {
-            const val = parseInt(e.target.value);
-            const coverage = val * 7500;
-            
-            // 杠杆倾斜逻辑
-            const t = (val - 10) / (200 - 10);
-            const rotation = 15 - (t * 30); 
+        <!-- Analysis Sidebar -->
+        <div class="lg:col-span-5 lg:sticky lg:top-32">
+            <div class="bg-[#003A3A] p-10 rounded-[3.5rem] text-white space-y-12 shadow-2xl">
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-bold font-serif">Resilience score</h3>
+                    <p class="text-white/40 text-sm font-light leading-relaxed">
+                        By committing a small monthly amount, you are effectively transferring the following potential financial burden to us:
+                    </p>
+                    <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-[11px] uppercase font-bold text-white/40 tracking-widest">Risk transferred</span>
+                            <i data-lucide="refresh-cw" class="w-4 h-4 text-green-400"></i>
+                        </div>
+                        <div id="transfer-amount" class="text-4xl font-black mb-2 tracking-tighter">£337,500</div>
+                        <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                            <div id="transfer-progress" class="h-full bg-green-400 w-1/3 transition-all duration-700"></div>
+                        </div>
+                    </div>
+                </div>
 
-            displayPremium.innerText = `£${val}`;
-            displayCoverage.innerText = `£${coverage.toLocaleString()}`;
-            transferAmount.innerText = `£${coverage.toLocaleString()}`;
-            transferProgress.style.width = `${(val/200) * 100}%`;
-            
-            leverArm.style.transform = `rotate(${rotation}deg)`; 
-            
-            const riskScale = 1.2 - (val / 300); 
-            const riskOpacity = 1.1 - (val / 200);
-            riskWeight.style.transform = `scale(${Math.max(0.6, riskScale)})`;
-            riskWeight.style.opacity = Math.max(0.4, riskOpacity);
-            
-            inputIcon.style.transform = `scale(${0.9 + (val/500)})`;
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3 text-white/80">
+                        <i data-lucide="verified" class="w-5 h-5 text-green-400"></i>
+                        <span class="text-sm font-bold uppercase tracking-widest">99.4% claim certainty</span>
+                    </div>
+                    <p class="text-xs text-white/30 leading-relaxed font-light italic">
+                        Based on 2023 life claims data. More than £202 million was paid out, supporting thousands of families through difficult periods.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-            // 更新支点分解数据
-            const mortgagePortion = Math.min(coverage * 0.6, 500000);
-            const eduPortion = Math.min(coverage * 0.15, 100000);
-            const lifeYears = (coverage * 0.2 / 12000).toFixed(1); 
-            const buffer = Math.max(0, coverage - mortgagePortion - eduPortion - (coverage * 0.2));
+    <!-- 5. Real-life meaning -->
+    <section class="py-28 md:py-36 px-4 md:px-8">
+        <div class="max-w-6xl mx-auto fade-section">
+            <div class="mb-20 text-center space-y-6">
+                <div class="section-label">Chapter 2 · Real-life meaning</div>
+                <h2 class="text-5xl md:text-6xl font-black text-[#003A3A] font-serif leading-tight">
+                    A cover amount only matters if it helps hold real life together.
+                </h2>
+                <p class="text-xl text-gray-500 font-light max-w-3xl mx-auto leading-relaxed">
+                    Most people do not care about abstract leverage. They care about what happens to a household if life is suddenly disrupted.
+                </p>
+            </div>
 
-            covMortgage.innerText = `£${Math.round(mortgagePortion).toLocaleString()}`;
-            covEdu.innerText = `£${Math.round(eduPortion).toLocaleString()}`;
-            covLife.innerText = `${lifeYears} 年`;
-            covExtra.innerText = `£${Math.round(buffer).toLocaleString()}`;
-        });
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8">
+                        <i data-lucide="house" class="text-[#003A3A]"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Keep the home stable</h4>
+                    <p class="text-sm text-gray-500 leading-relaxed font-light">
+                        Rent, mortgage, and essential bills are less likely to become a second crisis immediately.
+                    </p>
+                </div>
 
-        // 初始化
-        slider.dispatchEvent(new Event('input'));
-    </script>
+                <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8">
+                        <i data-lucide="shopping-basket" class="text-[#003A3A]"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Protect routine living costs</h4>
+                    <p class="text-sm text-gray-500 leading-relaxed font-light">
+                        Food, transport, childcare, and ordinary living costs still need to be carried by someone.
+                    </p>
+                </div>
+
+                <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8">
+                        <i data-lucide="users" class="text-[#003A3A]"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Reduce pressure on a partner</h4>
+                    <p class="text-sm text-gray-500 leading-relaxed font-light">
+                        The full impact does not automatically collapse onto one person to carry alone.
+                    </p>
+                </div>
+
+                <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8">
+                        <i data-lucide="clock-3" class="text-[#003A3A]"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Create time to recover</h4>
+                    <p class="text-sm text-gray-500 leading-relaxed font-light">
+                        Protection does not remove loss, but it can create more room to manage disruption and adjust.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Claims journey -->
+    <section id="claims" class="py-32 md:py-36 px-4 md:px-8 bg-[#003A3A]">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col lg:flex-row gap-20 fade-section">
+                <div class="lg:w-1/3 lg:sticky lg:top-32 h-fit space-y-8">
+                    <div class="section-label-dark">Chapter 3 · Claim journey</div>
+                    <h2 class="text-5xl font-black text-white font-serif leading-tight">
+                        If something serious happens,<br><span class="text-green-400">what could the claim journey involve?</span>
+                    </h2>
+                    <p class="text-white/50 font-light text-lg leading-relaxed">
+                        The point here is not to promise perfection. It is to make the part people fear most feel less invisible.
+                    </p>
+                    <div class="p-8 bg-white/5 rounded-[2.5rem] border border-white/10">
+                        <p class="text-[11px] text-white/40 uppercase tracking-[0.2em] font-black mb-4">What matters here</p>
+                        <p class="text-white/70 text-sm leading-7">
+                            Not just “we will handle it,” but a clearer picture of who does what, what may be needed, and what happens next.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="lg:w-2/3 space-y-6">
+                    <div class="timeline-card relative pl-24 pr-12 py-10 bg-white/5 border border-white/10 rounded-[3rem]">
+                        <div class="absolute left-6 top-10 w-10 h-10 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black">1</div>
+                        <h4 class="text-xl font-bold text-white mb-4">Contact and start</h4>
+                        <p class="text-white/65 text-sm leading-7">
+                            A claim often begins with a phone call, online notification, or adviser support. The first task is to clarify what happens next, not to overload you with everything at once.
+                        </p>
+                    </div>
+
+                    <div class="timeline-card relative pl-24 pr-12 py-10 bg-white/5 border border-white/10 rounded-[3rem]">
+                        <div class="absolute left-6 top-10 w-10 h-10 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black">2</div>
+                        <h4 class="text-xl font-bold text-white mb-4">Understand what evidence is needed</h4>
+                        <p class="text-white/65 text-sm leading-7">
+                            Different claims require different documents, such as medical evidence or formal certificates. The important thing is that people are told what is needed, instead of being left to guess.
+                        </p>
+                    </div>
+
+                    <div class="timeline-card relative pl-24 pr-12 py-10 bg-white/5 border border-white/10 rounded-[3rem]">
+                        <div class="absolute left-6 top-10 w-10 h-10 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black">3</div>
+                        <h4 class="text-xl font-bold text-white mb-4">Assessment and review</h4>
+                        <p class="text-white/65 text-sm leading-7">
+                            The claim is reviewed against the cover in place. What users need most here is not vague reassurance, but visibility, progress, and understandable reasoning.
+                        </p>
+                    </div>
+
+                    <div class="timeline-card relative pl-24 pr-12 py-10 bg-white/5 border border-white/10 rounded-[3rem]">
+                        <div class="absolute left-6 top-10 w-10 h-10 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black">4</div>
+                        <h4 class="text-xl font-bold text-white mb-4">Outcome and next steps</h4>
+                        <p class="text-white/65 text-sm leading-7">
+                            The journey ends in a clear outcome: payment, ongoing support, or further communication. The crucial issue is whether people feel informed throughout, not whether they are told only at the end.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Ending -->
+    <section id="next" class="py-28 md:py-36 px-4 md:px-8 bg-white">
+        <div class="max-w-5xl mx-auto text-center fade-section">
+            <div class="section-label mb-8">End of story layer</div>
+
+            <h3 class="text-5xl md:text-6xl font-black text-[#003A3A] mb-8 font-serif">
+                Now, you do not need to decide immediately.
+            </h3>
+
+            <p class="text-xl text-gray-500 font-light leading-relaxed max-w-3xl mx-auto mb-16">
+                The purpose of this page is not to push you into buying. It is to make the journey more understandable before you decide whether to move forward.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]">
+                    <div class="w-16 h-16 bg-[#003A3A] text-white rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="file-text" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Continue to product details</h4>
+                    <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Move into plans and comparisons only if you feel ready for that level of detail.</p>
+                </div>
+
+                <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]">
+                    <div class="w-16 h-16 bg-[#E30613]/10 text-[#E30613] rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="save" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Save it for later</h4>
+                    <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Leaving now does not mean failure. You can come back when the timing feels right.</p>
+                </div>
+
+                <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]">
+                    <div class="w-16 h-16 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="share-2" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Discuss it with someone else</h4>
+                    <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Many people need to talk it through with a partner or family member before making any decision.</p>
+                </div>
+            </div>
+
+            <div class="pt-16">
+                <a href="#intro" class="text-gray-400 hover:text-[#003A3A] transition-colors flex items-center gap-2 mx-auto uppercase text-[10px] font-black tracking-widest w-fit">
+                    <i data-lucide="arrow-up" class="w-3 h-3"></i> Back to top
+                </a>
+            </div>
+        </div>
+    </section>
+
+<script>
+    lucide.createIcons();
+
+    const slider = document.getElementById('premium-slider');
+    const displayPremium = document.getElementById('display-premium');
+    const displayCoverage = document.getElementById('display-coverage');
+    const leverArm = document.getElementById('lever-arm');
+    const riskWeight = document.getElementById('risk-weight');
+    const transferAmount = document.getElementById('transfer-amount');
+    const transferProgress = document.getElementById('transfer-progress');
+    const inputIcon = document.getElementById('input-icon');
+
+    slider.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value, 10);
+        const coverage = val * 7500;
+
+        // Lever tilt
+        const t = (val - 10) / (200 - 10);
+        const rotation = 15 - (t * 30);
+
+        displayPremium.innerText = `£${val}`;
+        displayCoverage.innerText = `£${coverage.toLocaleString()}`;
+        transferAmount.innerText = `£${coverage.toLocaleString()}`;
+        transferProgress.style.width = `${(val / 200) * 100}%`;
+
+        leverArm.style.transform = `rotate(${rotation}deg)`;
+
+        // Risk weight becomes lighter / smaller
+        const riskScale = 1.2 - (val / 300);
+        const riskOpacity = 1.1 - (val / 200);
+        riskWeight.style.transform = `scale(${Math.max(0.6, riskScale)})`;
+        riskWeight.style.opacity = Math.max(0.4, riskOpacity);
+
+        // Input icon grows slightly
+        inputIcon.style.transform = `scale(${0.9 + (val / 500)})`;
+    });
+
+    slider.dispatchEvent(new Event('input'));
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-section').forEach(section => {
+        observer.observe(section);
+    });
+</script>
+
 </body>
 </html>
