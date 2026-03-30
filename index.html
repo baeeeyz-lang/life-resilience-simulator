@@ -17,6 +17,7 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-light);
             color: #333;
+            scroll-behavior: smooth;
         }
         .font-serif {
             font-family: 'Playfair Display', serif;
@@ -37,15 +38,21 @@
         .hidden-step {
             display: none;
         }
-        .step-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .step-active {
+            display: block;
+            animation: fadeIn 0.6s ease-out;
         }
-        .step-card:hover {
-            transform: translateX(10px);
-            background: rgba(255, 255, 255, 0.08);
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .glow-line {
-            background: linear-gradient(to bottom, transparent, #4ADE80, transparent);
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .step-number {
+            background: linear-gradient(135deg, #003A3A, #005a5a);
         }
     </style>
 </head>
@@ -53,250 +60,256 @@
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-50 bg-white/40 backdrop-blur-2xl px-6 md:px-12 py-6 flex justify-between items-center border-b border-black/[0.03]">
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="switchStep('entry')">
             <div class="w-6 h-6 bg-[#003A3A] flex items-center justify-center rounded-sm">
                 <div class="w-3 h-3 bg-white rotate-45"></div>
             </div>
             <span class="font-serif font-black text-xl tracking-tighter text-[#003A3A]">RE·THINK LAB</span>
         </div>
-        <div class="hidden lg:flex items-center gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
-            <span>Methodology</span>
-            <span>Transparency</span>
-            <span>Ethics</span>
+        <div class="flex items-center gap-6">
+             <button onclick="switchStep('simulator')" class="text-[10px] font-black uppercase tracking-widest text-[#003A3A] hover:opacity-60 transition-opacity">Simulator</button>
+             <button onclick="switchStep('promise')" class="text-[10px] font-black uppercase tracking-widest text-[#003A3A] hover:opacity-60 transition-opacity">The Promise</button>
+             <button onclick="switchStep('claims')" class="bg-[#003A3A] text-white px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">Claims Journey</button>
         </div>
     </nav>
 
     <!-- 1. Entry Screen -->
-    <section id="step-entry" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+    <section id="step-entry" class="step-active relative min-h-screen flex flex-col items-center justify-center text-center px-4">
         <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#003A3A]/5 rounded-full blur-[100px]"></div>
-        <div class="relative z-20 max-w-4xl">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 border border-[#003A3A]/10 rounded-full text-[11px] mb-8 bg-white/50 backdrop-blur-md text-[#003A3A] tracking-[0.2em] uppercase font-bold shadow-sm">
-               <i data-lucide="activity" class="w-3.5 h-3.5 text-[#E30613]"></i> 
-               理财认知实验室 • 理解保障的本质
-            </div>
+        <div class="max-w-4xl relative z-20">
+            <p class="text-[#E30613] font-black uppercase tracking-[0.3em] mb-6 text-sm">Welcome to Rethink Lab</p>
             <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-[1.1] font-serif text-[#003A3A] tracking-tight">
-                不确定保险是否适合你？<br /><span class="text-transparent bg-clip-text bg-gradient-to-r from-[#003A3A] to-[#005a5a]">从理解开始，而非购买。</span>
+                Not sure if insurance is for you?<br /><span class="italic text-gray-400">Start with Understanding.</span>
             </h1>
-            <p class="text-lg md:text-xl mb-12 text-gray-600/80 max-w-2xl mx-auto leading-relaxed font-light">
-                这里没有强制注册，没有销售压力。这是一个可视化空间，让你探索“财务韧性”的物理学原理，看微小的行动如何创造巨大的确定性。
+            <p class="text-xl mb-12 text-gray-500 font-light max-w-2xl mx-auto">
+                Explore how financial leverage works and why a robust claims process is the foundation of any real protection plan.
             </p>
-            <button onclick="switchStep('simulator')" class="group bg-[#003A3A] text-white px-10 py-6 rounded-full font-bold text-xl transition-all flex items-center gap-3 shadow-xl hover:-translate-y-1">
-                进入模拟器 <i data-lucide="arrow-right"></i>
+            <button onclick="switchStep('simulator')" class="bg-[#003A3A] text-white px-12 py-6 rounded-full font-bold text-xl hover:-translate-y-1 transition-all shadow-xl">
+                Start Exploration
             </button>
         </div>
     </section>
 
     <!-- 2. Simulator Screen -->
-    <section id="step-simulator" class="min-h-screen bg-white py-24 px-4 md:px-8 hidden-step">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-16 items-start mb-32">
-            <!-- Lever Interaction... (保持原有逻辑) -->
+    <section id="step-simulator" class="hidden-step min-h-screen bg-white py-32 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-16">
+            <!-- Left: Interaction -->
             <div class="lg:col-span-7 space-y-12">
                 <div class="space-y-4">
-                    <h2 class="text-4xl font-bold text-[#003A3A] font-serif">杠杆原理：举起不确定的重担</h2>
-                    <p class="text-gray-500 text-lg font-light">调整你的月度投入（左侧），观察“不确定负担”（右侧）如何通过 7500 倍杠杆被化解。</p>
+                    <h2 class="text-4xl font-bold text-[#003A3A] font-serif">How Leverage Changes Lives</h2>
+                    <p class="text-gray-500 text-lg font-light">Drag the slider to see the leverage effect between monthly cost (left) and the protection gained (right).</p>
                 </div>
-                <!-- Balance Visualization Placeholder (省略重复样式) -->
-                <div class="bg-[#F8FAF9] p-12 rounded-[50px] border border-gray-100 flex flex-col items-center">
-                    <div id="lever-arm" class="h-2 bg-[#003A3A] w-full rounded-full origin-center relative lever-transition mb-24 mt-24">
-                        <div class="absolute left-0 bottom-6 -translate-x-1/2 text-center">
-                            <span id="display-premium" class="text-3xl font-black text-[#003A3A]">£45</span>
-                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">月投入</p>
-                        </div>
-                        <div class="absolute right-0 bottom-6 translate-x-1/2 text-center">
-                            <span id="display-coverage" class="text-3xl font-black text-[#003A3A]">£337,500</span>
-                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">保障额度</p>
+                <div class="bg-[#F8FAF9] p-12 rounded-[50px] border border-gray-100 shadow-sm min-h-[500px] flex flex-col justify-center">
+                    <div class="relative h-64 flex flex-col justify-end items-center mb-16">
+                        <div class="absolute bottom-0 w-0 h-0 border-l-[30px] border-l-transparent border-r-[30px] border-r-transparent border-b-[50px] border-b-gray-300 z-10"></div>
+                        <div id="lever-arm" class="h-2 bg-[#003A3A] w-full rounded-full origin-center relative lever-transition mb-[24px]">
+                            <div class="absolute left-0 bottom-6 -translate-x-1/2 flex flex-col items-center">
+                                <div id="input-icon" class="w-16 h-16 bg-white shadow-xl rounded-2xl flex items-center justify-center border mb-4">
+                                    <i data-lucide="shield-check" class="text-[#003A3A]"></i>
+                                </div>
+                                <span id="display-premium" class="text-2xl font-bold text-[#003A3A]">£45</span>
+                            </div>
+                            <div class="absolute right-0 bottom-6 translate-x-1/2 flex flex-col items-center">
+                                <div id="risk-weight" class="w-32 h-32 bg-[#003A3A] shadow-2xl rounded-[2.5rem] flex flex-col items-center justify-center text-white mb-4">
+                                    <span class="text-xl font-bold" id="display-coverage">£337,500</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <input type="range" min="10" max="200" value="45" id="premium-slider" class="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer accent-[#003A3A]">
+                    <div class="bg-white p-8 rounded-3xl border border-gray-100">
+                        <input type="range" min="10" max="200" value="45" id="premium-slider" class="w-full h-2 bg-gray-100 rounded-lg appearance-none cursor-pointer accent-[#003A3A]">
+                    </div>
                 </div>
             </div>
+            <!-- Right: Analysis -->
             <div class="lg:col-span-5">
-                <div class="bg-[#003A3A] p-10 rounded-[3.5rem] text-white shadow-2xl">
-                    <h3 class="text-2xl font-bold font-serif mb-6">韧性得分</h3>
-                    <div id="transfer-amount" class="text-5xl font-black mb-8 tracking-tighter">£337,500</div>
-                    <button onclick="switchStep('promise')" class="w-full py-5 bg-white text-[#003A3A] rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-green-400 transition-colors">
-                        了解“杠杆”如何兑现承诺 <i data-lucide="arrow-down"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 3. Promise Explanation Page (新页面样式) -->
-    <section id="step-promise" class="min-h-screen bg-white py-32 px-4 md:px-8 hidden-step">
-        <div class="max-w-5xl mx-auto">
-            <div class="mb-20 text-center space-y-6">
-                <div class="inline-block px-4 py-1 border border-[#003A3A]/20 text-[#003A3A] text-[10px] font-black uppercase tracking-[0.3em] rounded-full">兑现承诺的科学</div>
-                <h2 class="text-5xl md:text-6xl font-black text-[#003A3A] font-serif leading-tight">“杠杆”如何履行它的诺言？</h2>
-                <p class="text-xl text-gray-500 font-light max-w-3xl mx-auto leading-relaxed">
-                    可视化只是第一步，真正的保护始于风险发生的那一刻。从“重担”到“解脱”的过渡，是由 <span class="font-bold text-[#003A3A]">Scottish Widows</span> 精密设计的理赔流程所守护的。
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8 mb-20">
-                <div class="p-10 bg-[#F8FAF9] rounded-[3rem] border border-gray-100">
-                    <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-8"><i data-lucide="user-plus" class="text-[#003A3A]"></i></div>
-                    <h4 class="text-lg font-bold mb-4 text-[#003A3A]">专属理赔经理</h4>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">你不会在不同部门间被踢皮球。我们会指派专人处理从通知到赔付的所有细节。</p>
-                </div>
-                <div class="p-10 bg-[#F8FAF9] rounded-[3rem] border border-gray-100">
-                    <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-8"><i data-lucide="smartphone" class="text-[#003A3A]"></i></div>
-                    <h4 class="text-lg font-bold mb-4 text-[#003A3A]">极简数字化通知</h4>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">只需几分钟即可在线通知。在最艰难的时刻，我们确保繁文缛节不会成为额外的负担。</p>
-                </div>
-                <div class="p-10 bg-[#F8FAF9] rounded-[3rem] border border-gray-100">
-                    <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-8"><i data-lucide="heart-pulse" class="text-[#E30613]"></i></div>
-                    <h4 class="text-lg font-bold mb-4 text-[#003A3A]">全方位情绪支持</h4>
-                    <p class="text-sm text-gray-400 leading-relaxed font-light">包含 RedArc 护理服务。除了财务援助，我们还提供身体和心理健康的专业支持。</p>
-                </div>
-            </div>
-
-            <div class="flex justify-center">
-                <button onclick="switchStep('claims')" class="bg-[#003A3A] text-white px-12 py-6 rounded-full font-bold text-lg flex items-center gap-3 shadow-2xl hover:scale-105 transition-all">
-                    深入了解：6 步透明理赔全流程 <i data-lucide="arrow-right"></i>
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- 4. Detailed Claims Flow (6 步详细页面) -->
-    <section id="step-claims" class="min-h-screen bg-[#003A3A] py-32 px-4 md:px-8 hidden-step">
-        <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col lg:flex-row gap-20">
-                <!-- Left Sticky Header -->
-                <div class="lg:w-1/3 lg:sticky lg:top-32 h-fit space-y-8">
-                    <h2 class="text-5xl font-black text-white font-serif leading-tight">理赔透明化：<br/><span class="text-green-400">解压全周期</span></h2>
-                    <p class="text-white/50 font-light text-lg">我们拆解了从风险触发到资金到账的每一个关键节点，让你对未来的确定性了然于胸。</p>
-                    <div class="p-8 bg-white/5 rounded-[2.5rem] border border-white/10">
-                        <p class="text-4xl font-black text-white mb-2">99.4%</p>
-                        <p class="text-[10px] text-white/40 uppercase tracking-widest font-bold">2023 年人寿理赔通过率</p>
-                    </div>
-                </div>
-
-                <!-- Right Detailed Scroll -->
-                <div class="lg:w-2/3 space-y-6 relative">
-                    <div class="absolute left-8 top-10 bottom-10 w-px glow-line opacity-20"></div>
-
-                    <!-- Step 1 -->
-                    <div class="step-card group relative pl-24 pr-12 py-10 bg-white/5 border border-white/10 rounded-[3rem]">
-                        <div class="absolute left-4 top-10 w-8 h-8 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black z-10 group-hover:scale-125 transition-transform">1</div>
-                        <h4 class="text-xl font-bold text-white mb-4">触发与通知 (Trigger → Notify)</h4>
-                        <div class="grid md:grid-cols-2 gap-8 text-sm">
-                            <div class="space-y-3">
-                                <span class="text-[10px] text-white/30 uppercase font-black">如何操作</span>
-                                <ul class="text-white/70 space-y-2">
-                                    <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-green-400"></i> 在线填写简易表格</li>
-                                    <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-green-400"></i> 24/7 专属理赔热线</li>
-                                    <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-green-400"></i> 理财顾问代为申请</li>
-                                </ul>
-                            </div>
-                            <div class="p-4 bg-black/20 rounded-2xl border border-white/5">
-                                <span class="text-[10px] text-green-400 uppercase font-black">现实场景</span>
-                                <p class="text-white/50 text-xs mt-2 italic leading-relaxed">如果是身故，由家属通知；如果是重疾，可由本人或在医生建议下启动。</p>
-                            </div>
+                <div class="bg-[#003A3A] p-10 rounded-[3.5rem] text-white space-y-12 shadow-2xl">
+                    <h3 class="text-2xl font-bold font-serif">Resilience Score</h3>
+                    <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10">
+                        <div id="transfer-amount" class="text-5xl font-black mb-4">£337,500</div>
+                        <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                            <div id="transfer-progress" class="h-full bg-green-400 w-1/3 transition-all duration-700"></div>
                         </div>
                     </div>
-
-                    <!-- Step 2 -->
-                    <div class="step-card group relative pl-24 pr-12 py-10 bg-white/5 border border-white/10 rounded-[3rem]">
-                        <div class="absolute left-4 top-10 w-8 h-8 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black z-10 group-hover:scale-125 transition-transform">2</div>
-                        <h4 class="text-xl font-bold text-white mb-4">关键资料提交 (Evidence Submission)</h4>
-                        <p class="text-white/50 text-sm mb-6">这是确保理赔准确性的核心步骤。根据类型不同，所需文件如下：</p>
-                        <div class="grid md:grid-cols-2 gap-6">
-                            <div class="p-6 bg-white/5 rounded-3xl">
-                                <h5 class="text-xs font-bold text-white/80 mb-4 uppercase">人寿险（身故）</h5>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="px-3 py-1 bg-white/10 rounded-full text-[10px] text-white/60">死亡证明</span>
-                                    <span class="px-3 py-1 bg-white/10 rounded-full text-[10px] text-white/60">遗嘱/Probate</span>
-                                    <span class="px-3 py-1 bg-white/10 rounded-full text-[10px] text-white/60">保单原件</span>
-                                </div>
-                            </div>
-                            <div class="p-6 bg-white/5 rounded-3xl">
-                                <h5 class="text-xs font-bold text-white/80 mb-4 uppercase">健康/疾病类</h5>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="px-3 py-1 bg-white/10 rounded-full text-[10px] text-white/60">医疗诊断报告</span>
-                                    <span class="px-3 py-1 bg-white/10 rounded-full text-[10px] text-white/60">医生专项说明</span>
-                                </div>
-                            </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3 text-green-400">
+                            <i data-lucide="check-circle" class="w-5 h-5"></i>
+                            <span class="text-sm font-bold uppercase tracking-widest">99.4% Claims Confidence</span>
                         </div>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="step-card group relative pl-24 pr-12 py-10 bg-white/5 border border-white/10 rounded-[3rem]">
-                        <div class="absolute left-4 top-10 w-8 h-8 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black z-10 group-hover:scale-125 transition-transform">3</div>
-                        <h4 class="text-xl font-bold text-white mb-4">专业审核与评估 (Assessment)</h4>
-                        <div class="space-y-4">
-                            <p class="text-white/60 text-sm leading-relaxed">
-                                由专业的 <span class="text-white font-bold">Claims Assessors</span> 团队处理。他们会核对病历原因是否符合条款规定，并可能直接联系医疗机构获取证据，**减少你的行政负担**。
-                            </p>
-                            <div class="flex items-center gap-4 text-[10px] text-white/30 uppercase font-black">
-                                <span><i data-lucide="clock" class="inline w-3 h-3 mr-1"></i> 周期：2-8 周 (视复杂度)</span>
-                                <span><i data-lucide="refresh-ccw" class="inline w-3 h-3 mr-1"></i> 实时更新进度</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="step-card group relative pl-24 pr-12 py-10 bg-white/5 border border-white/10 rounded-[3rem]">
-                        <div class="absolute left-4 top-10 w-8 h-8 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black z-10 group-hover:scale-125 transition-transform">4</div>
-                        <h4 class="text-xl font-bold text-white mb-4">理赔决策 (Decision)</h4>
-                        <div class="flex flex-col md:flex-row gap-6">
-                            <div class="flex-1 p-6 bg-green-400/10 border border-green-400/20 rounded-3xl">
-                                <h5 class="text-green-400 font-bold text-sm mb-2">批准 (Valid Claim)</h5>
-                                <p class="text-white/50 text-xs">99% 的理赔申请会顺利进入此环节。</p>
-                            </div>
-                            <div class="flex-1 p-6 bg-red-400/10 border border-red-400/20 rounded-3xl opacity-50">
-                                <h5 class="text-red-400 font-bold text-sm mb-2">拒赔 (Repudiation)</h5>
-                                <p class="text-white/50 text-xs italic">罕见。通常由于投保时未如实披露重要健康信息。</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 5 -->
-                    <div class="step-card group relative pl-24 pr-12 py-10 bg-green-400/10 border border-green-400/20 rounded-[3rem]">
-                        <div class="absolute left-4 top-10 w-8 h-8 rounded-full bg-green-400 text-[#003A3A] flex items-center justify-center font-black z-10 group-hover:scale-125 transition-transform">5</div>
-                        <h4 class="text-xl font-bold text-white mb-4">资金赔付 (Payout)</h4>
-                        <p class="text-white/70 text-sm mb-6">决策一旦做出，资金将立即发放。金额取决于你在模拟器中看到的“杠杆倍数”。</p>
-                        <div class="flex gap-4">
-                            <div class="px-6 py-4 bg-white/10 rounded-2xl">
-                                <span class="block text-[10px] text-white/30 uppercase font-black">身故/重疾</span>
-                                <span class="text-white font-bold">一次性 BACS 打款</span>
-                            </div>
-                            <div class="px-6 py-4 bg-white/10 rounded-2xl">
-                                <span class="block text-[10px] text-white/30 uppercase font-black">收入保障</span>
-                                <span class="text-white font-bold">月度持续支付</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 6 -->
-                    <div class="step-card group relative pl-24 pr-12 py-10 bg-white/5 border border-white/10 rounded-[3rem]">
-                        <div class="absolute left-4 top-10 w-8 h-8 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black z-10 group-hover:scale-125 transition-transform">6</div>
-                        <h4 class="text-xl font-bold text-white mb-4">持续沟通与支持 (Support)</h4>
-                        <p class="text-white/50 text-sm italic leading-relaxed">
-                            “我们会在整个过程中与你保持同步。你可以随时通过电话查询进度，我们将提供必要的支持直到最后一刻。”
-                        </p>
-                    </div>
-
-                    <div class="pt-20 text-center">
-                        <button onclick="switchStep('simulator')" class="text-white/40 hover:text-white transition-colors flex items-center gap-2 mx-auto uppercase text-[10px] font-black tracking-widest">
-                            <i data-lucide="arrow-left" class="w-3 h-3"></i> 返回模拟器调整配置
+                        <button onclick="switchStep('promise')" class="w-full py-5 bg-white text-[#003A3A] rounded-2xl font-bold hover:bg-green-400 transition-colors flex items-center justify-center gap-2">
+                            How do we fulfill this? <i data-lucide="arrow-right" class="w-4 h-4"></i>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Exit Strategy -->
-        <div class="max-w-4xl mx-auto mt-40 text-center py-20 border-t border-white/10">
-            <h3 class="text-4xl font-bold text-white mb-12 font-serif">模拟完成。下一步？</h3>
-            <div class="flex flex-col md:flex-row justify-center gap-6">
-                <button class="bg-white text-[#003A3A] px-10 py-5 rounded-full font-bold flex items-center justify-center gap-3 hover:bg-green-400 transition-all">
-                    <i data-lucide="file-text" class="w-5 h-5"></i> 生成我的韧性报告 <i data-lucide="chevron-right" class="w-4 h-4"></i>
-                </button>
-                <button class="border border-white/30 text-white px-10 py-5 rounded-full font-bold flex items-center justify-center gap-3 hover:bg-white/10 transition-all">
-                    <i data-lucide="share-2" class="w-5 h-5"></i> 与家人共享此分析
-                </button>
+    <!-- 3. The Promise Page -->
+    <section id="step-promise" class="hidden-step min-h-screen bg-[#F0F4F2] py-32 px-4">
+        <div class="max-w-5xl mx-auto text-center mb-20">
+            <div class="inline-block px-4 py-1 bg-[#003A3A] text-white text-[10px] font-black uppercase tracking-[0.3em] rounded-full mb-6">The Promise</div>
+            <h2 class="text-5xl md:text-7xl font-bold text-[#003A3A] font-serif leading-tight">How Does Leverage<br/>Keep Its Promise?</h2>
+            <p class="text-gray-500 text-xl font-light mt-8 max-w-3xl mx-auto">
+                Digital leverage is only the first step. True protection occurs when risk strikes and a precision-engineered process turns "burden" into "relief."
+            </p>
+        </div>
+
+        <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
+            <div class="bg-white p-12 rounded-[4rem] border border-black/5 hover:border-[#003A3A]/20 transition-all group">
+                <div class="w-16 h-16 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#003A3A] transition-colors">
+                    <i data-lucide="user-check" class="w-8 h-8 text-[#003A3A] group-hover:text-white"></i>
+                </div>
+                <h4 class="text-2xl font-bold text-[#003A3A] mb-4">Dedicated Claims Manager</h4>
+                <p class="text-gray-400 font-light leading-relaxed">
+                    A single point of contact handling everything from notification to payment, ensuring you don't get lost in bureaucracy during tough times.
+                </p>
+            </div>
+            <div class="bg-white p-12 rounded-[4rem] border border-black/5 hover:border-[#003A3A]/20 transition-all group">
+                <div class="w-16 h-16 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#003A3A] transition-colors">
+                    <i data-lucide="monitor" class="w-8 h-8 text-[#003A3A] group-hover:text-white"></i>
+                </div>
+                <h4 class="text-2xl font-bold text-[#003A3A] mb-4">Simplified Digital Hub</h4>
+                <p class="text-gray-400 font-light leading-relaxed">
+                    Start your claim in minutes via our platform. We ensure administrative tasks don't become an emotional burden.
+                </p>
+            </div>
+            <div class="bg-white p-12 rounded-[4rem] border border-black/5 hover:border-[#003A3A]/20 transition-all group">
+                <div class="w-16 h-16 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#003A3A] transition-colors">
+                    <i data-lucide="heart-pulse" class="w-8 h-8 text-[#E30613] group-hover:text-white"></i>
+                </div>
+                <h4 class="text-2xl font-bold text-[#003A3A] mb-4">Holistic Support</h4>
+                <p class="text-gray-400 font-light leading-relaxed">
+                    Beyond capital, we offer physical and mental health support (via RedArc) to help your family get back on their feet.
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-20 text-center">
+            <button onclick="switchStep('claims')" class="bg-[#003A3A] text-white px-10 py-5 rounded-full font-bold flex items-center gap-3 mx-auto hover:bg-[#005a5a] transition-all">
+                Explore the 6-Step Claims Journey <i data-lucide="chevron-down" class="w-5 h-5"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- 4. The Claims Journey -->
+    <section id="step-claims" class="hidden-step min-h-screen bg-[#003A3A] py-32 px-4 overflow-hidden relative">
+        <div class="absolute top-0 right-0 p-32 opacity-5 pointer-events-none"><i data-lucide="shield" class="w-[500px] h-[500px] text-white"></i></div>
+        
+        <div class="max-w-6xl mx-auto">
+            <div class="mb-20">
+                <h2 class="text-5xl font-black text-white font-serif mb-6">The Claims Journey</h2>
+                <div class="h-1 w-24 bg-green-400"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 relative">
+                <!-- Step 1 -->
+                <div class="glass-card p-10 rounded-[3rem] relative">
+                    <div class="w-12 h-12 step-number rounded-full flex items-center justify-center text-white font-black mb-8">1</div>
+                    <h4 class="text-xl font-bold text-white mb-4 italic">01. Trigger & Notification</h4>
+                    <div class="space-y-4 text-sm text-white/60 font-light">
+                        <p class="text-green-400 font-bold uppercase tracking-widest text-[10px]">Active Contact Channels</p>
+                        <ul class="space-y-2">
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-green-400"></i> Online digital form</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-green-400"></i> Direct phone line</li>
+                            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3 h-3 text-green-400"></i> Advisor-led support</li>
+                        </ul>
+                        <div class="p-4 bg-white/5 rounded-2xl border border-white/5 text-[11px] italic">
+                            Life: Notified by family<br/>Illness: Initiated by policyholder or doctor recommendation
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="glass-card p-10 rounded-[3rem] relative">
+                    <div class="w-12 h-12 step-number rounded-full flex items-center justify-center text-white font-black mb-8">2</div>
+                    <h4 class="text-xl font-bold text-white mb-4 italic">02. Documentation Submission</h4>
+                    <div class="space-y-6 text-sm text-white/60 font-light">
+                        <div class="space-y-2 border-l-2 border-white/10 pl-4">
+                            <p class="text-white font-bold text-xs uppercase">Life Protection</p>
+                            <p class="text-[11px]">Death certificate, Probate/Will, Policy details</p>
+                        </div>
+                        <div class="space-y-2 border-l-2 border-white/10 pl-4">
+                            <p class="text-white font-bold text-xs uppercase">Health/Illness</p>
+                            <p class="text-[11px]">Medical evidence, Specialist reports, Diagnostic results</p>
+                        </div>
+                        <p class="text-[10px] text-yellow-400/60 font-bold">Key: Heavily dependent on hospital/legal 3rd party documents.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="glass-card p-10 rounded-[3rem] relative">
+                    <div class="w-12 h-12 step-number rounded-full flex items-center justify-center text-white font-black mb-8">3</div>
+                    <h4 class="text-xl font-bold text-white mb-4 italic">03. Assessment & Review</h4>
+                    <div class="space-y-4 text-sm text-white/60 font-light">
+                        <p>Handled by expert <b class="text-white font-bold">Claims Assessors</b>:</p>
+                        <ul class="space-y-2 text-[11px]">
+                            <li>• Verify against specific policy definitions</li>
+                            <li>• Review medical history and diagnosis</li>
+                            <li>• Liaise with healthcare providers if needed</li>
+                        </ul>
+                        <div class="text-[10px] text-white/30 italic">Timeline: Weeks to months depending on complexity.</div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="glass-card p-10 rounded-[3rem] relative">
+                    <div class="w-12 h-12 step-number rounded-full flex items-center justify-center text-white font-black mb-8">4</div>
+                    <h4 class="text-xl font-bold text-white mb-4 italic">04. Claim Decision</h4>
+                    <div class="grid grid-cols-2 gap-4 mb-4">
+                        <div class="p-4 bg-green-400/10 rounded-2xl border border-green-400/20">
+                            <p class="text-green-400 font-bold text-xs">✅ APPROVED</p>
+                        </div>
+                        <div class="p-4 bg-red-400/10 rounded-2xl border border-red-400/20">
+                            <p class="text-red-400 font-bold text-xs">❌ DECLINED</p>
+                        </div>
+                    </div>
+                    <p class="text-[11px] text-white/50">Common reason for decline: Material non-disclosure at application.</p>
+                    <p class="mt-4 text-[11px] text-green-400 italic">Scottish Widows historical payout rate: ~98%–99%</p>
+                </div>
+
+                <!-- Step 5 -->
+                <div class="glass-card p-10 rounded-[3rem] relative border-green-400/30 bg-green-400/5">
+                    <div class="w-12 h-12 bg-green-400 rounded-full flex items-center justify-center text-[#003A3A] font-black mb-8">5</div>
+                    <h4 class="text-xl font-bold text-white mb-4 italic">05. Payment Disbursement</h4>
+                    <div class="space-y-4">
+                        <p class="text-xs text-white/70 leading-relaxed">Once confirmed, capital is deployed rapidly:</p>
+                        <div class="space-y-2">
+                            <div class="p-3 bg-white/5 rounded-xl border border-white/5 text-[11px]">
+                                <b class="text-white">Life / CI:</b> Lump sum wire transfer
+                            </div>
+                            <div class="p-3 bg-white/5 rounded-xl border border-white/5 text-[11px]">
+                                <b class="text-white">Income Protection:</b> Recurring monthly installments
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 6 -->
+                <div class="glass-card p-10 rounded-[3rem] relative">
+                    <div class="w-12 h-12 step-number rounded-full flex items-center justify-center text-white font-black mb-8">6</div>
+                    <h4 class="text-xl font-bold text-white mb-4 italic">06. Ongoing Support</h4>
+                    <div class="space-y-4 text-sm text-white/60 font-light">
+                        <p>“We’ll keep you updated throughout the process.”</p>
+                        <div class="flex gap-4 mt-6">
+                            <div class="flex flex-col items-center gap-1">
+                                <div class="p-3 bg-white/5 rounded-full"><i data-lucide="phone" class="w-4 h-4"></i></div>
+                                <span class="text-[8px] uppercase font-bold tracking-widest">ENQUIRY</span>
+                            </div>
+                            <div class="flex flex-col items-center gap-1">
+                                <div class="p-3 bg-white/5 rounded-full"><i data-lucide="refresh-cw" class="w-4 h-4"></i></div>
+                                <span class="text-[8px] uppercase font-bold tracking-widest">UPDATES</span>
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-white/30 border-t border-white/5 pt-4">Complete transparency via dedicated case management.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-32 text-center">
+                 <button onclick="switchStep('simulator')" class="text-white/40 hover:text-white transition-colors text-xs font-black uppercase tracking-[0.4em]">
+                    Back to Simulator
+                 </button>
             </div>
         </div>
     </section>
@@ -304,17 +317,25 @@
     <script>
         lucide.createIcons();
 
+        function switchStep(id) {
+            document.querySelectorAll('section').forEach(s => {
+                s.classList.remove('step-active');
+                s.classList.add('hidden-step');
+            });
+            const next = document.getElementById('step-' + id);
+            next.classList.remove('hidden-step');
+            next.classList.add('step-active');
+            window.scrollTo(0, 0);
+            lucide.createIcons();
+        }
+
         const slider = document.getElementById('premium-slider');
         const displayPremium = document.getElementById('display-premium');
         const displayCoverage = document.getElementById('display-coverage');
         const leverArm = document.getElementById('lever-arm');
+        const riskWeight = document.getElementById('risk-weight');
         const transferAmount = document.getElementById('transfer-amount');
-
-        function switchStep(id) {
-            document.querySelectorAll('section').forEach(s => s.classList.add('hidden-step'));
-            document.getElementById('step-' + id).classList.remove('hidden-step');
-            window.scrollTo(0, 0);
-        }
+        const transferProgress = document.getElementById('transfer-progress');
 
         slider.addEventListener('input', (e) => {
             const val = parseInt(e.target.value);
@@ -325,7 +346,12 @@
             displayPremium.innerText = `£${val}`;
             displayCoverage.innerText = `£${coverage.toLocaleString()}`;
             transferAmount.innerText = `£${coverage.toLocaleString()}`;
+            transferProgress.style.width = `${(val/200) * 100}%`;
             leverArm.style.transform = `rotate(${rotation}deg)`; 
+            
+            const riskScale = 1.2 - (val / 300); 
+            riskWeight.style.transform = `scale(${Math.max(0.6, riskScale)})`;
+            riskWeight.style.opacity = 1.1 - (val/200);
         });
 
         slider.dispatchEvent(new Event('input'));
