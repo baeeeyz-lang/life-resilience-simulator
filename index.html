@@ -6,7 +6,8 @@
     <title>Protection Journey Prototype - Rethink Lab</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- 1. 优先加载 Lucide 图标库（使用更稳定的 CDN 地址） -->
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.323.0/dist/umd/lucide.min.js"></script>
     <style>
         :root {
             --primary-dark: #003A3A;
@@ -137,6 +138,15 @@
             .simulator-sidebar {
                 position: static !important;
             }
+        }
+        
+        /* 新增：确保图标容器尺寸稳定，避免加载延迟导致的布局偏移 */
+        .lucide-icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 24px;
+            min-height: 24px;
         }
     </style>
 </head>
@@ -345,36 +355,40 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
+                <!-- 卡片1：偿还房贷/租金 → mortgage 图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8">
-                        <i data-lucide="house" class="text-[#003A3A]"></i>
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8 lucide-icon-container">
+                        <i data-lucide="mortgage" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Pay off the mortgage or rent</h4>
                     <p class="text-sm text-gray-500 leading-relaxed font-light">
                        A payout could be used to settle an outstanding mortgage or cover rent, helping your family stay in their home without that financial pressure falling on them. 
                     </p>
                 </div>
+                <!-- 卡片2：日常开支 → hand-coins 图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8">
-                        <i data-lucide="shopping-basket" class="text-[#003A3A]"></i>
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8 lucide-icon-container">
+                        <i data-lucide="hand-coins" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Support day-to-day living costs</h4>
                     <p class="text-sm text-gray-500 leading-relaxed font-light">
                         Without your income, everyday costs — food, bills, childcare, transport — still need to be met. A lump sum can help bridge that gap while your family adjusts.
                     </p>
                 </div>
+                <!-- 卡片3：偿还债务 → credit-card 图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8">
-                        <i data-lucide="users" class="text-[#003A3A]"></i>
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8 lucide-icon-container">
+                        <i data-lucide="credit-card" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Settle outstanding loans or debts</h4>
                     <p class="text-sm text-gray-500 leading-relaxed font-light">
                         Life cover can also help clear other financial obligations — such as personal loans or outstanding debts — so your family is not left managing these alone.
                     </p>
                 </div>
+                <!-- 卡片4：安心喘息 → heart 图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8">
-                        <i data-lucide="clock-3" class="text-[#003A3A]"></i>
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8 lucide-icon-container">
+                        <i data-lucide="heart" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Create space to make considered decisions</h4>
                     <p class="text-sm text-gray-500 leading-relaxed font-light">
@@ -459,21 +473,21 @@
 
             <div class="grid md:grid-cols-3 gap-8">
                 <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]">
-                    <div class="w-16 h-16 bg-[#003A3A] text-white rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <div class="w-16 h-16 bg-[#003A3A] text-white rounded-2xl flex items-center justify-center mx-auto mb-6 lucide-icon-container">
                         <i data-lucide="file-text" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Product details</h4>
                     <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Move into plans and comparisons only if you feel ready.</p>
                 </div>
                 <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]">
-                    <div class="w-16 h-16 bg-[#E30613]/10 text-[#E30613] rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <div class="w-16 h-16 bg-[#E30613]/10 text-[#E30613] rounded-2xl flex items-center justify-center mx-auto mb-6 lucide-icon-container">
                         <i data-lucide="save" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Save for later</h4>
                     <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Leaving now does not mean failure. Come back when it feels right.</p>
                 </div>
                 <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]">
-                    <div class="w-16 h-16 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <div class="w-16 h-16 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center mx-auto mb-6 lucide-icon-container">
                         <i data-lucide="share-2" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Discuss it</h4>
@@ -484,88 +498,110 @@
     </section>
 
     <script>
-    // Initialize Icons
-    lucide.createIcons();
+    // 2. 优化图标初始化逻辑（确保DOM加载完成后再初始化）
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化所有 Lucide 图标
+        try {
+            lucide.createIcons({
+                attrs: {
+                    // 统一设置图标默认尺寸，避免显示不一致
+                    width: '24',
+                    height: '24',
+                    strokeWidth: '1.5'
+                }
+            });
+            console.log('Lucide 图标初始化成功');
+        } catch (error) {
+            console.error('Lucide 图标初始化失败:', error);
+            // 容错：手动创建缺失的图标（如果有）
+            const missingIcons = document.querySelectorAll('[data-lucide]:not([data-icon-initialized])');
+            missingIcons.forEach(iconEl => {
+                const iconName = iconEl.getAttribute('data-lucide');
+                iconEl.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><use href="#lucide-${iconName}" /></svg>`;
+                iconEl.setAttribute('data-icon-initialized', 'true');
+            });
+        }
 
-    // Scroll Animation Observer
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
+        // Scroll Animation Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.fade-section').forEach((section) => {
+            observer.observe(section);
         });
-    }, { threshold: 0.12 });
 
-    document.querySelectorAll('.fade-section').forEach((section) => {
-        observer.observe(section);
+        // Simulator Logic
+        const slider = document.getElementById('premium-slider');
+        const displayPremium = document.getElementById('display-premium');
+        const displayCoverage = document.getElementById('display-coverage');
+        const transferAmount = document.getElementById('transfer-amount');
+        const transferProgress = document.getElementById('transfer-progress');
+        const leverageLabel = document.getElementById('leverage-label');
+
+        const beamScene = document.getElementById('beam-scene');
+        const leftUpright = document.getElementById('left-upright');
+        const rightUpright = document.getElementById('right-upright');
+        const riskWeight = document.getElementById('risk-weight');
+        const inputIcon = document.getElementById('input-icon');
+
+        const MIN_VALUE = 10;
+        const MAX_VALUE = 200;
+        const DEFAULT_VALUE = 45;
+        const LEVERAGE_MULTIPLIER = 7500;
+
+        function clamp(num, min, max) {
+            return Math.min(Math.max(num, min), max);
+        }
+
+        function updateSimulator(val) {
+            const coverage = val * LEVERAGE_MULTIPLIER;
+            const progress = (val - MIN_VALUE) / (MAX_VALUE - MIN_VALUE);
+            const delta = (val - DEFAULT_VALUE) / (MAX_VALUE - MIN_VALUE);
+
+            // Update Text
+            displayPremium.textContent = `£${val}`;
+            displayCoverage.textContent = `£${coverage.toLocaleString()}`;
+            transferAmount.textContent = `£${coverage.toLocaleString()}`;
+            transferProgress.style.width = `${progress * 100}%`;
+            leverageLabel.textContent = `Effect: ${LEVERAGE_MULTIPLIER}x leverage`;
+
+            // Balance Rotation
+            // When value is low (delta < 0), right side is heavier (positive rotation)
+            const baseRotation = 8;
+            const angle = baseRotation - (delta * 20);
+
+            beamScene.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+
+            // Counter-rotate the contents to keep them upright
+            leftUpright.style.transform = `translateY(-70px) rotate(${-angle}deg)`;
+            rightUpright.style.transform = `translateY(-95px) rotate(${-angle}deg)`;
+
+            // Visual Weight Scaling
+            const riskScale = clamp(1.18 - (progress * 0.52), 0.68, 1.18);
+            const riskOpacity = clamp(1 - (progress * 0.45), 0.5, 1);
+            riskWeight.style.transform = `scale(${riskScale})`;
+            riskWeight.style.opacity = riskOpacity;
+
+            const inputScale = clamp(0.92 + (progress * 0.18), 0.92, 1.1);
+            const inputOpacity = clamp(0.65 + (progress * 0.35), 0.65, 1);
+            inputIcon.style.transform = `scale(${inputScale})`;
+            inputIcon.style.opacity = inputOpacity;
+        }
+
+        if (slider) {
+            slider.addEventListener('input', (e) => {
+                updateSimulator(parseInt(e.target.value, 10));
+            });
+
+            // Init
+            updateSimulator(parseInt(slider.value, 10));
+        }
     });
-
-    // Simulator Logic
-    const slider = document.getElementById('premium-slider');
-    const displayPremium = document.getElementById('display-premium');
-    const displayCoverage = document.getElementById('display-coverage');
-    const transferAmount = document.getElementById('transfer-amount');
-    const transferProgress = document.getElementById('transfer-progress');
-    const leverageLabel = document.getElementById('leverage-label');
-
-    const beamScene = document.getElementById('beam-scene');
-    const leftUpright = document.getElementById('left-upright');
-    const rightUpright = document.getElementById('right-upright');
-    const riskWeight = document.getElementById('risk-weight');
-    const inputIcon = document.getElementById('input-icon');
-
-    const MIN_VALUE = 10;
-    const MAX_VALUE = 200;
-    const DEFAULT_VALUE = 45;
-    const LEVERAGE_MULTIPLIER = 7500;
-
-    function clamp(num, min, max) {
-        return Math.min(Math.max(num, min), max);
-    }
-
-    function updateSimulator(val) {
-        const coverage = val * LEVERAGE_MULTIPLIER;
-        const progress = (val - MIN_VALUE) / (MAX_VALUE - MIN_VALUE);
-        const delta = (val - DEFAULT_VALUE) / (MAX_VALUE - MIN_VALUE);
-
-        // Update Text
-        displayPremium.textContent = `£${val}`;
-        displayCoverage.textContent = `£${coverage.toLocaleString()}`;
-        transferAmount.textContent = `£${coverage.toLocaleString()}`;
-        transferProgress.style.width = `${progress * 100}%`;
-        leverageLabel.textContent = `Effect: ${LEVERAGE_MULTIPLIER}x leverage`;
-
-        // Balance Rotation
-        // When value is low (delta < 0), right side is heavier (positive rotation)
-        const baseRotation = 8;
-        const angle = baseRotation - (delta * 20);
-
-        beamScene.style.transform = `translateX(-50%) rotate(${angle}deg)`;
-
-        // Counter-rotate the contents to keep them upright
-        leftUpright.style.transform = `translateY(-70px) rotate(${-angle}deg)`;
-        rightUpright.style.transform = `translateY(-95px) rotate(${-angle}deg)`;
-
-        // Visual Weight Scaling
-        const riskScale = clamp(1.18 - (progress * 0.52), 0.68, 1.18);
-        const riskOpacity = clamp(1 - (progress * 0.45), 0.5, 1);
-        riskWeight.style.transform = `scale(${riskScale})`;
-        riskWeight.style.opacity = riskOpacity;
-
-        const inputScale = clamp(0.92 + (progress * 0.18), 0.92, 1.1);
-        const inputOpacity = clamp(0.65 + (progress * 0.35), 0.65, 1);
-        inputIcon.style.transform = `scale(${inputScale})`;
-        inputIcon.style.opacity = inputOpacity;
-    }
-
-    if (slider) {
-        slider.addEventListener('input', (e) => {
-            updateSimulator(parseInt(e.target.value, 10));
-        });
-
-        // Init
-        updateSimulator(parseInt(slider.value, 10));
-    }
-</script>
+    </script>
 </body>
 </html>
