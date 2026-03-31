@@ -80,7 +80,6 @@
             border-radius: 999px;
         }
 
-        /* Custom Range Slider Styling */
         input[type=range] {
             -webkit-appearance: none;
             appearance: none;
@@ -106,13 +105,28 @@
             border-radius: 999px;
         }
 
+        input[type=range]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: var(--primary-dark);
+            border-radius: 50%;
+            cursor: pointer;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
         .beam-rotate {
             transition: none;
             will-change: transform;
         }
 
-        #risk-weight, #input-icon {
+        #risk-weight,
+        #input-icon {
             transition: transform 120ms linear, opacity 120ms linear;
+        }
+
+        .simulator-shell {
+            align-items: start;
         }
 
         .simulator-visual {
@@ -146,7 +160,7 @@
         </div>
     </nav>
 
-    <!-- 1. Intro Hero -->
+    <!-- 1. Intro -->
     <section id="intro" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
         <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#003A3A]/5 rounded-full blur-[100px]"></div>
         <div class="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] bg-[#E30613]/5 rounded-full blur-[120px]"></div>
@@ -175,7 +189,7 @@
         </div>
     </section>
 
-    <!-- 2. Journey Overview Cards -->
+    <!-- 2. Journey Overview -->
     <section id="journey" class="py-28 md:py-36 px-4 md:px-8">
         <div class="max-w-7xl mx-auto fade-section">
             <div class="max-w-3xl mb-20">
@@ -208,57 +222,61 @@
         </div>
     </section>
 
-    <!-- 3. Interactive Balance Simulator -->
+    <!-- 3. Simulator chapter -->
     <section id="simulator" class="py-24 md:py-32 px-4 md:px-8 bg-white border-y border-gray-100">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-14 items-start">
-            <!-- Left Side: Copy & Visual -->
-            <div class="lg:col-span-7 space-y-10 fade-section">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-14 simulator-shell">
+            <!-- Interaction Area -->
+            <div class="lg:col-span-7 space-y-10 fade-section simulator-copy">
                 <div class="space-y-6">
                     <div class="section-label">Chapter 1 · Protection logic</div>
+
                     <div class="flex items-center gap-3 text-[#E30613] font-bold text-sm tracking-widest uppercase">
                         <i data-lucide="scale" class="w-4 h-4"></i>
                         Interaction · Risk Balance
                     </div>
+
                     <h2 class="text-4xl md:text-5xl font-bold text-[#003A3A] font-serif leading-tight">
                         A small monthly cost can support a much larger protected amount.
                     </h2>
+
                     <p class="text-gray-500 text-lg font-light leading-relaxed max-w-2xl">
-                        This is the basic logic of protection. As the monthly cost increases, the financial uncertainty carried by a household is transferred through leverage.
+                        This is the first part of the story. It shows the basic logic of protection before product detail, application steps, or pricing comparison. As the monthly cost increases, the financial uncertainty carried by a household can be reduced through leverage.
                     </p>
                 </div>
 
-                <!-- Visual Balance Card -->
+                <!-- Balance Visualisation Card -->
                 <div class="bg-[#F8FAF9] p-10 md:p-12 rounded-[50px] border border-gray-100 shadow-sm relative overflow-visible simulator-visual flex flex-col justify-center">
                     <div id="balance-stage" class="relative h-[340px] mb-16 overflow-visible">
                         <!-- Pivot -->
                         <div class="absolute left-1/2 bottom-[42px] -translate-x-1/2 w-0 h-0 border-l-[30px] border-l-transparent border-r-[30px] border-r-transparent border-b-[50px] border-b-gray-300 z-10"></div>
 
-                        <!-- Rotating Beam -->
+                        <!-- Rotating scene -->
                         <div id="beam-scene" class="absolute left-1/2 bottom-[92px] w-[78%] h-[2px] beam-rotate origin-center z-20">
+                            <!-- Beam -->
                             <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-2 bg-[#003A3A] rounded-full"></div>
 
-                            <!-- Left: Monthly Cost -->
+                            <!-- Left endpoint -->
                             <div class="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                                <div id="left-upright" class="flex flex-col items-center">
+                                <div id="left-upright" class="flex flex-col items-center origin-center">
                                     <div id="input-icon" class="w-16 h-16 bg-white shadow-xl rounded-2xl flex items-center justify-center border border-gray-50 mb-4">
                                         <i data-lucide="check-circle" class="text-[#003A3A] w-8 h-8"></i>
                                     </div>
-                                    <div class="text-center">
+                                    <div class="text-center whitespace-nowrap">
                                         <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest">Monthly cost</span>
                                         <span id="display-premium" class="text-2xl font-bold text-[#003A3A]">£45</span>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Right: Risk Amount -->
+                            <!-- Right endpoint -->
                             <div class="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2">
-                                <div id="right-upright" class="flex flex-col items-center">
+                                <div id="right-upright" class="flex flex-col items-center origin-center">
                                     <div id="risk-weight" class="w-32 h-32 bg-gradient-to-br from-gray-800 to-black shadow-2xl rounded-[2.5rem] flex flex-col items-center justify-center text-white mb-4 relative overflow-hidden">
                                         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
                                         <span class="relative z-10 text-[10px] uppercase font-black opacity-40 whitespace-nowrap">Cover amount</span>
                                         <span id="display-coverage" class="relative z-10 text-xl font-bold whitespace-nowrap">£337,500</span>
                                     </div>
-                                    <div class="text-center">
+                                    <div class="text-center whitespace-nowrap">
                                         <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest">Uncertainty burden</span>
                                     </div>
                                 </div>
@@ -266,20 +284,20 @@
                         </div>
                     </div>
 
-                    <!-- Range Input -->
-                    <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+                    <!-- Controller -->
+                    <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm mt-8">
                         <div class="flex justify-between mb-6 gap-4">
                             <span class="text-xs font-black text-[#003A3A] uppercase tracking-widest">Adjust your contribution</span>
-                            <span id="leverage-label" class="text-xs font-bold text-[#E30613]">Effect: 7500x leverage</span>
+                            <span id="leverage-label" class="text-xs font-bold text-[#E30613] whitespace-nowrap">Effect: 7500x leverage</span>
                         </div>
                         <input type="range" min="10" max="200" value="45" id="premium-slider" class="w-full cursor-pointer">
                     </div>
                 </div>
             </div>
 
-            <!-- Right Side: Sticky Resilience Score -->
+            <!-- Analysis Sidebar -->
             <div class="lg:col-span-5 lg:pt-[32rem]">
-                <div class="lg:sticky lg:top-32 fade-section">
+                <div class="lg:sticky lg:top-32 fade-section simulator-sidebar">
                     <div class="bg-[#003A3A] p-8 md:p-10 rounded-[3rem] text-white space-y-10 shadow-2xl">
                         <div class="space-y-5">
                             <h3 class="text-2xl font-bold font-serif">Resilience score</h3>
@@ -297,9 +315,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex items-center gap-3 text-white/80">
-                            <i data-lucide="verified" class="w-5 h-5 text-green-400"></i>
-                            <span class="text-sm font-bold uppercase tracking-widest">99.4% claim certainty</span>
+
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3 text-white/80">
+                                <i data-lucide="verified" class="w-5 h-5 text-green-400"></i>
+                                <span class="text-sm font-bold uppercase tracking-widest">99.4% claim certainty</span>
+                            </div>
+                            <p class="text-xs text-white/30 leading-relaxed font-light italic">
+                                Based on 2023 life claims data. More than £202 million was paid out, supporting thousands of families through difficult periods.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -307,7 +331,7 @@
         </div>
     </section>
 
-    <!-- 4. Real-life Impact -->
+    <!-- 4. Real-life meaning -->
     <section class="py-28 md:py-36 px-4 md:px-8">
         <div class="max-w-6xl mx-auto fade-section">
             <div class="mb-20 text-center space-y-6">
@@ -315,6 +339,9 @@
                 <h2 class="text-5xl md:text-6xl font-black text-[#003A3A] font-serif leading-tight">
                     A cover amount only matters if it helps hold real life together.
                 </h2>
+                <p class="text-xl text-gray-500 font-light max-w-3xl mx-auto leading-relaxed">
+                    Most people do not care about abstract leverage. They care about what happens to a household if life is suddenly disrupted.
+                </p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
@@ -323,29 +350,53 @@
                         <i data-lucide="house" class="text-[#003A3A]"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Keep the home stable</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed font-light">Rent, mortgage, and essential bills are less likely to become a second crisis immediately.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed font-light">
+                        Rent, mortgage, and essential bills are less likely to become a second crisis immediately.
+                    </p>
+                </div>
+                <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8">
+                        <i data-lucide="shopping-basket" class="text-[#003A3A]"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Protect routine living costs</h4>
+                    <p class="text-sm text-gray-500 leading-relaxed font-light">
+                        Food, transport, childcare, and ordinary living costs still need to be carried by someone.
+                    </p>
                 </div>
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
                     <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8">
                         <i data-lucide="users" class="text-[#003A3A]"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Reduce pressure on a partner</h4>
-                    <p class="text-sm text-gray-500 leading-relaxed font-light">The full impact does not automatically collapse onto one person to carry alone.</p>
+                    <p class="text-sm text-gray-500 leading-relaxed font-light">
+                        The full impact does not automatically collapse onto one person to carry alone.
+                    </p>
+                </div>
+                <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8">
+                        <i data-lucide="clock-3" class="text-[#003A3A]"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Create time to recover</h4>
+                    <p class="text-sm text-gray-500 leading-relaxed font-light">
+                        Protection does not remove loss, but it can create more room to manage disruption and adjust.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 5. Claims Timeline -->
+    <!-- 5. Claims journey -->
     <section id="claims" class="py-32 md:py-36 px-4 md:px-8 bg-[#003A3A]">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col lg:flex-row gap-20 fade-section">
                 <div class="lg:w-1/3 lg:sticky lg:top-32 h-fit space-y-8">
                     <div class="section-label-dark">Chapter 3 · Claim journey</div>
                     <h2 class="text-5xl font-black text-white font-serif leading-tight">
-                        If something happens,<br><span class="text-green-400">how does it work?</span>
+                        If something serious happens,<br><span class="text-green-400">what could the journey involve?</span>
                     </h2>
-                    <p class="text-white/50 font-light text-lg">We make the part people fear most feel less invisible by walking through the process step-by-step.</p>
+                    <p class="text-white/50 font-light text-lg leading-relaxed">
+                        The point here is not to promise perfection. It is to make the part people fear most feel less invisible by walking through the process step-by-step.
+                    </p>
                 </div>
 
                 <div class="lg:w-2/3 space-y-8">
@@ -353,99 +404,168 @@
                         <div class="absolute left-6 top-10 w-10 h-10 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black shadow-lg">1</div>
                         <h4 class="text-xl font-bold text-white mb-2">Trigger & Notify</h4>
                         <div class="text-green-400 text-[10px] uppercase font-black tracking-widest mb-4">Initial Contact</div>
-                        <p class="text-white/65 text-sm">A claim begins when a life event occurs. Clarity on what happens next is our priority.</p>
+                        <p class="text-white/65 text-sm leading-7">A claim begins when a life event occurs. Clarity on what happens next is the priority.</p>
                     </div>
+
                     <div class="timeline-card relative pl-24 pr-12 py-10 bg-white/5 border border-white/10 rounded-[3rem]">
                         <div class="absolute left-6 top-10 w-10 h-10 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black shadow-lg">2</div>
-                        <h4 class="text-xl font-bold text-white mb-2">Assessment & Decision</h4>
-                        <div class="text-green-400 text-[10px] uppercase font-black tracking-widest mb-4">The Process</div>
-                        <p class="text-white/65 text-sm">With a 98%+ approval rate, the majority of claims are paid quickly to provide stability.</p>
+                        <h4 class="text-xl font-bold text-white mb-2">Evidence Gathering</h4>
+                        <div class="text-green-400 text-[10px] uppercase font-black tracking-widest mb-4">Verification</div>
+                        <p class="text-white/65 text-sm leading-7">We help identify exactly what is needed—from certificates to diagnoses—so you're not left guessing.</p>
+                    </div>
+
+                    <div class="timeline-card relative pl-24 pr-12 py-10 bg-white/5 border border-white/10 rounded-[3rem]">
+                        <div class="absolute left-6 top-10 w-10 h-10 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black shadow-lg">3</div>
+                        <h4 class="text-xl font-bold text-white mb-2">Assessment & Review</h4>
+                        <div class="text-green-400 text-[10px] uppercase font-black tracking-widest mb-4">Deep Review</div>
+                        <p class="text-white/65 text-sm leading-7">Visible progress updates ensure you know where the claim stands within policy terms.</p>
+                    </div>
+
+                    <div class="timeline-card relative pl-24 pr-12 py-10 bg-white/5 border border-white/10 rounded-[3rem]">
+                        <div class="absolute left-6 top-10 w-10 h-10 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black shadow-lg">4</div>
+                        <h4 class="text-xl font-bold text-white mb-2">The Decision</h4>
+                        <div class="text-green-400 text-[10px] uppercase font-black tracking-widest mb-4">Outcome</div>
+                        <p class="text-white/65 text-sm leading-7">With a 98%+ approval rate, the majority of claims are paid. Clear logic follows any decision.</p>
+                    </div>
+
+                    <div class="timeline-card relative pl-24 pr-12 py-10 bg-white/5 border border-white/10 rounded-[3rem]">
+                        <div class="absolute left-6 top-10 w-10 h-10 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black shadow-lg">5</div>
+                        <h4 class="text-xl font-bold text-white mb-2">Payout & Relief</h4>
+                        <div class="text-green-400 text-[10px] uppercase font-black tracking-widest mb-4">Completion</div>
+                        <p class="text-white/65 text-sm leading-7">Funds are released (lump sum or monthly) to provide the capital needed for stability.</p>
+                    </div>
+
+                    <div class="timeline-card relative pl-24 pr-12 py-10 bg-white/5 border border-white/10 rounded-[3rem]">
+                        <div class="absolute left-6 top-10 w-10 h-10 rounded-full bg-white text-[#003A3A] flex items-center justify-center font-black shadow-lg">6</div>
+                        <h4 class="text-xl font-bold text-white mb-2">Ongoing Support</h4>
+                        <div class="text-green-400 text-[10px] uppercase font-black tracking-widest mb-4">Post-Claim</div>
+                        <p class="text-white/65 text-sm leading-7">The relationship continues with support to help families adjust to new circumstances.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 6. Footer Call to Action -->
+    <!-- 6. Ending -->
     <section id="next" class="py-28 md:py-36 px-4 md:px-8 bg-white">
         <div class="max-w-5xl mx-auto text-center fade-section">
             <div class="section-label mb-8">End of story layer</div>
-            <h3 class="text-5xl md:text-6xl font-black text-[#003A3A] mb-8 font-serif">Now, you do not need to decide immediately.</h3>
-            <p class="text-xl text-gray-500 font-light mb-16 max-w-3xl mx-auto">This page is here to make the journey more understandable before you decide whether to move forward.</p>
-            
-            <div class="flex flex-wrap justify-center gap-6">
-                <button class="bg-[#003A3A] text-white px-8 py-4 rounded-full font-bold">View Product Details</button>
-                <button class="border border-[#003A3A]/20 text-[#003A3A] px-8 py-4 rounded-full font-bold">Save for later</button>
+            <h3 class="text-5xl md:text-6xl font-black text-[#003A3A] mb-8 font-serif">
+                Now, you do not need to decide immediately.
+            </h3>
+            <p class="text-xl text-gray-500 font-light leading-relaxed max-w-3xl mx-auto mb-16">
+                The purpose of this page is not to push you into buying. It is to make the journey more understandable before you decide whether to move forward.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]">
+                    <div class="w-16 h-16 bg-[#003A3A] text-white rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="file-text" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Product details</h4>
+                    <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Move into plans and comparisons only if you feel ready.</p>
+                </div>
+                <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]">
+                    <div class="w-16 h-16 bg-[#E30613]/10 text-[#E30613] rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="save" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Save for later</h4>
+                    <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Leaving now does not mean failure. Come back when it feels right.</p>
+                </div>
+                <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]">
+                    <div class="w-16 h-16 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="share-2" class="w-8 h-8"></i>
+                    </div>
+                    <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Discuss it</h4>
+                    <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Many people need to talk it through with family before deciding.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <script>
-        // Init Icons
-        lucide.createIcons();
+    // Initialize Icons
+    lucide.createIcons();
 
-        // Reveal animations on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.12 });
+    // Scroll Animation Observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.12 });
 
-        document.querySelectorAll('.fade-section').forEach((section) => {
-            observer.observe(section);
+    document.querySelectorAll('.fade-section').forEach((section) => {
+        observer.observe(section);
+    });
+
+    // Simulator Logic
+    const slider = document.getElementById('premium-slider');
+    const displayPremium = document.getElementById('display-premium');
+    const displayCoverage = document.getElementById('display-coverage');
+    const transferAmount = document.getElementById('transfer-amount');
+    const transferProgress = document.getElementById('transfer-progress');
+    const leverageLabel = document.getElementById('leverage-label');
+
+    const beamScene = document.getElementById('beam-scene');
+    const leftUpright = document.getElementById('left-upright');
+    const rightUpright = document.getElementById('right-upright');
+    const riskWeight = document.getElementById('risk-weight');
+    const inputIcon = document.getElementById('input-icon');
+
+    const MIN_VALUE = 10;
+    const MAX_VALUE = 200;
+    const DEFAULT_VALUE = 45;
+    const LEVERAGE_MULTIPLIER = 7500;
+
+    function clamp(num, min, max) {
+        return Math.min(Math.max(num, min), max);
+    }
+
+    function updateSimulator(val) {
+        const coverage = val * LEVERAGE_MULTIPLIER;
+        const progress = (val - MIN_VALUE) / (MAX_VALUE - MIN_VALUE);
+        const delta = (val - DEFAULT_VALUE) / (MAX_VALUE - MIN_VALUE);
+
+        // Update Text
+        displayPremium.textContent = `£${val}`;
+        displayCoverage.textContent = `£${coverage.toLocaleString()}`;
+        transferAmount.textContent = `£${coverage.toLocaleString()}`;
+        transferProgress.style.width = `${progress * 100}%`;
+        leverageLabel.textContent = `Effect: ${LEVERAGE_MULTIPLIER}x leverage`;
+
+        // Balance Rotation
+        // When value is low (delta < 0), right side is heavier (positive rotation)
+        const baseRotation = 8;
+        const angle = baseRotation - (delta * 20);
+
+        beamScene.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+
+        // Counter-rotate the contents to keep them upright
+        leftUpright.style.transform = `translateY(-70px) rotate(${-angle}deg)`;
+        rightUpright.style.transform = `translateY(-95px) rotate(${-angle}deg)`;
+
+        // Visual Weight Scaling
+        const riskScale = clamp(1.18 - (progress * 0.52), 0.68, 1.18);
+        const riskOpacity = clamp(1 - (progress * 0.45), 0.5, 1);
+        riskWeight.style.transform = `scale(${riskScale})`;
+        riskWeight.style.opacity = riskOpacity;
+
+        const inputScale = clamp(0.92 + (progress * 0.18), 0.92, 1.1);
+        const inputOpacity = clamp(0.65 + (progress * 0.35), 0.65, 1);
+        inputIcon.style.transform = `scale(${inputScale})`;
+        inputIcon.style.opacity = inputOpacity;
+    }
+
+    if (slider) {
+        slider.addEventListener('input', (e) => {
+            updateSimulator(parseInt(e.target.value, 10));
         });
 
-        // Simulator Logic
-        const slider = document.getElementById('premium-slider');
-        const displayPremium = document.getElementById('display-premium');
-        const displayCoverage = document.getElementById('display-coverage');
-        const transferAmount = document.getElementById('transfer-amount');
-        const transferProgress = document.getElementById('transfer-progress');
-        const beamScene = document.getElementById('beam-scene');
-        const leftUpright = document.getElementById('left-upright');
-        const rightUpright = document.getElementById('right-upright');
-        const riskWeight = document.getElementById('risk-weight');
-        const inputIcon = document.getElementById('input-icon');
-
-        const MIN_VALUE = 10;
-        const MAX_VALUE = 200;
-        const LEVERAGE_MULTIPLIER = 7500;
-
-        function updateSimulator(val) {
-            const numVal = parseInt(val);
-            const coverage = numVal * LEVERAGE_MULTIPLIER;
-            const progress = (numVal - MIN_VALUE) / (MAX_VALUE - MIN_VALUE);
-
-            // Update text
-            displayPremium.textContent = `£${numVal}`;
-            displayCoverage.textContent = `£${coverage.toLocaleString()}`;
-            transferAmount.textContent = `£${coverage.toLocaleString()}`;
-            transferProgress.style.width = `${progress * 100}%`;
-
-            // Physics Visuals: Angle logic (45 is "balanced" at ~8deg tilt)
-            const baseValue = 45;
-            const delta = (numVal - baseValue) / (MAX_VALUE - MIN_VALUE);
-            const angle = 8 - (delta * 25);
-
-            // Apply rotations
-            beamScene.style.transform = `translateX(-50%) rotate(${angle}deg)`;
-            leftUpright.style.transform = `translateY(-70px) rotate(${-angle}deg)`;
-            rightUpright.style.transform = `translateY(-95px) rotate(${-angle}deg)`;
-
-            // Scale effects
-            const riskScale = Math.max(0.6, 1.2 - (progress * 0.5));
-            riskWeight.style.transform = `scale(${riskScale})`;
-            riskWeight.style.opacity = Math.max(0.5, 1 - (progress * 0.3));
-
-            const inputScale = Math.min(1.2, 0.9 + (progress * 0.3));
-            inputIcon.style.transform = `scale(${inputScale})`;
-        }
-
-        slider.addEventListener('input', (e) => updateSimulator(e.target.value));
-        // Initialize
-        updateSimulator(slider.value);
-    </script>
+        // Init
+        updateSimulator(parseInt(slider.value, 10));
+    }
+</script>
 </body>
 </html>
