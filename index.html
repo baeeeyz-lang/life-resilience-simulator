@@ -125,6 +125,18 @@
         #risk-weight,
         #input-icon {
             transition: transform 120ms linear, opacity 120ms linear;
+            /* 关键修改：添加z-index确保方块在文字上方但不遮挡 */
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 关键修改：为文字容器添加更高的z-index */
+        .weight-label-container {
+            position: relative;
+            z-index: 10;
+            background-color: rgba(248, 250, 249, 0.95); /* 半透明背景增强可读性 */
+            padding: 4px 8px;
+            border-radius: 8px;
         }
 
         .simulator-shell {
@@ -176,6 +188,64 @@
             line-height: 1.6 !important;  /* 修改：和说明文本保持一致的1.6 */
             letter-spacing: normal !important;
             margin-bottom: 1rem;         /* 新增：添加底部间距，保持排版美观 */
+        }
+
+        /* 优化天平样式 */
+        .balance-pivot {
+            position: absolute;
+            left: 50%;
+            bottom: 42px;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 60px;
+            background: linear-gradient(to bottom, #9CA3AF, #6B7280, #4B5563);
+            border-radius: 10px 10px 0 0;
+            z-index: 5;
+        }
+        
+        .balance-pivot::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 10px;
+            background: #4B5563;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .balance-beam {
+            position: absolute;
+            left: 50%;
+            bottom: 72px;
+            width: 78%;
+            height: 6px;
+            background: linear-gradient(to right, #003A3A, #004A4A, #003A3A);
+            border-radius: 3px;
+            transform-origin: center center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            z-index: 4;
+        }
+        
+        .balance-beam::before,
+        .balance-beam::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background: #002A2A;
+            border-radius: 50%;
+        }
+        
+        .balance-beam::before {
+            left: -6px;
+        }
+        
+        .balance-beam::after {
+            right: -6px;
         }
     </style>
 </head>
@@ -285,39 +355,37 @@
 
                 <!-- Balance Visualisation Card -->
                 <div class="bg-[#F8FAF9] p-10 md:p-12 rounded-[50px] border border-gray-100 shadow-sm relative overflow-visible simulator-visual flex flex-col justify-center">
-                    <div id="balance-stage" class="relative h-[340px] mb-16 overflow-visible">
-                        <!-- Pivot -->
-                        <div class="absolute left-1/2 bottom-[42px] -translate-x-1/2 w-0 h-0 border-l-[30px] border-l-transparent border-r-[30px] border-r-transparent border-b-[50px] border-b-gray-300 z-10"></div>
+                    <div id="balance-stage" class="relative h-[380px] mb-16 overflow-visible">
+                        <!-- 优化的天平支点 -->
+                        <div class="balance-pivot"></div>
 
-                        <!-- Rotating scene -->
-                        <div id="beam-scene" class="absolute left-1/2 bottom-[92px] w-[78%] h-[2px] beam-rotate origin-center z-20">
-                            <!-- Beam -->
-                            <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-2 bg-[#003A3A] rounded-full"></div>
+                        <!-- 优化的天平横梁 -->
+                        <div id="beam-scene" class="balance-beam"></div>
 
-                            <!-- Left endpoint -->
-                            <div class="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                                <div id="left-upright" class="flex flex-col items-center origin-center">
-                                    <div id="input-icon" class="w-16 h-16 bg-white shadow-xl rounded-2xl flex items-center justify-center border border-gray-50 mb-4">
-                                        <i data-lucide="check-circle" class="text-[#003A3A] w-8 h-8"></i>
-                                    </div>
-                                    <div class="text-center whitespace-nowrap">
-                                        <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest">Monthly cost</span>
-                                        <span id="display-premium" class="text-2xl font-bold text-[#003A3A]">£45</span>
-                                    </div>
+                        <!-- Left endpoint - 月保费 -->
+                        <div class="absolute left-0 bottom-[95px] -translate-x-1/2">
+                            <div id="left-upright" class="flex flex-col items-center origin-center">
+                                <div id="input-icon" class="w-16 h-16 bg-white shadow-xl rounded-2xl flex items-center justify-center border border-gray-50 mb-8">
+                                    <i data-lucide="check-circle" class="text-[#003A3A] w-8 h-8"></i>
+                                </div>
+                                <!-- 关键修改：添加容器类确保文字不被遮挡 -->
+                                <div class="text-center whitespace-nowrap weight-label-container">
+                                    <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest">Monthly cost</span>
+                                    <span id="display-premium" class="text-2xl font-bold text-[#003A3A]">£45</span>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Right endpoint -->
-                            <div class="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2">
-                                <div id="right-upright" class="flex flex-col items-center origin-center">
-                                    <div id="risk-weight" class="w-32 h-32 bg-gradient-to-br from-gray-800 to-black shadow-2xl rounded-[2.5rem] flex flex-col items-center justify-center text-white mb-4 relative overflow-hidden">
-                                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
-                                        <span class="relative z-10 text-[10px] uppercase font-black opacity-40 whitespace-nowrap">Cover amount</span>
-                                        <span id="display-coverage" class="relative z-10 text-xl font-bold whitespace-nowrap">£337,500</span>
-                                    </div>
-                                    <div class="text-center whitespace-nowrap">
-                                        <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest">Uncertainty burden</span>
-                                    </div>
+                        <!-- Right endpoint - 保障金额 -->
+                        <div class="absolute right-0 bottom-[95px] translate-x-1/2">
+                            <div id="right-upright" class="flex flex-col items-center origin-center">
+                                <div id="risk-weight" class="w-16 h-16 bg-black shadow-xl rounded-2xl flex items-center justify-center border border-gray-800 mb-8">
+                                    <i data-lucide="shield" class="text-white w-8 h-8"></i>
+                                </div>
+                                <!-- 关键修改：添加容器类确保文字不被遮挡 -->
+                                <div class="text-center whitespace-nowrap weight-label-container">
+                                    <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest">Cover amount</span>
+                                    <span id="display-coverage" class="text-2xl font-bold text-[#003A3A]">£337,500</span>
                                 </div>
                             </div>
                         </div>
@@ -327,7 +395,6 @@
                     <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm mt-8">
                         <div class="flex justify-between mb-6 gap-4">
                             <span class="text-xs font-black text-[#003A3A] uppercase tracking-widest">Adjust your contribution</span>
-                            <!-- 移除了 leverage-label 元素 -->
                         </div>
                         <input type="range" min="10" max="200" value="45" id="premium-slider" class="w-full cursor-pointer">
                     </div>
@@ -624,7 +691,6 @@
         function updateSimulator(val) {
             const coverage = val * LEVERAGE_MULTIPLIER;
             const progress = (val - MIN_VALUE) / (MAX_VALUE - MIN_VALUE);
-            const delta = (val - DEFAULT_VALUE) / (MAX_VALUE - MIN_VALUE);
 
             // Update Text
             displayPremium.textContent = `£${val}`;
@@ -635,27 +701,20 @@
             // 新增：更新动态标题
             resilienceTitle.textContent = `At £${val} a month, you can secure £${coverage.toLocaleString()} of cover for your family.`;
 
-            // Balance Rotation
-            // When value is low (delta < 0), right side is heavier (positive rotation)
-            const baseRotation = 8;
-            const angle = baseRotation - (delta * 20);
+            // 保持天平水平
+            beamScene.style.transform = `translateX(-50%) rotate(0deg)`;
+            leftUpright.style.transform = `rotate(0deg)`;
+            rightUpright.style.transform = `rotate(0deg)`;
 
-            beamScene.style.transform = `translateX(-50%) rotate(${angle}deg)`;
-
-            // Counter-rotate the contents to keep them upright
-            leftUpright.style.transform = `translateY(-70px) rotate(${-angle}deg)`;
-            rightUpright.style.transform = `translateY(-95px) rotate(${-angle}deg)`;
-
-            // Visual Weight Scaling
-            const riskScale = clamp(1.18 - (progress * 0.52), 0.68, 1.18);
-            const riskOpacity = clamp(1 - (progress * 0.45), 0.5, 1);
-            riskWeight.style.transform = `scale(${riskScale})`;
-            riskWeight.style.opacity = riskOpacity;
-
-            const inputScale = clamp(0.92 + (progress * 0.18), 0.92, 1.1);
-            const inputOpacity = clamp(0.65 + (progress * 0.35), 0.65, 1);
-            inputIcon.style.transform = `scale(${inputScale})`;
-            inputIcon.style.opacity = inputOpacity;
+            // 调整缩放比例（1.0倍 → 1.8倍），既明显又不遮挡
+            const scale = clamp(1.0 + (progress * 0.8), 1.0, 1.8);
+            
+            // 应用缩放比例
+            riskWeight.style.transform = `scale(${scale})`;
+            riskWeight.style.opacity = 1;
+            
+            inputIcon.style.transform = `scale(${scale})`;
+            inputIcon.style.opacity = 1;
         }
 
         if (slider) {
