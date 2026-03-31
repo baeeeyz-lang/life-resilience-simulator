@@ -515,10 +515,10 @@
         <div class="max-w-5xl mx-auto text-center fade-section">
             <div class="section-label mb-8">End of story layer</div>
             <h3 class="text-5xl md:text-6xl font-black text-[#003A3A] mb-8 font-serif">
-                Now, you do not need to decide immediately.
+                You do not need to decide today.
             </h3>
             <p class="text-xl text-gray-500 font-light leading-relaxed max-w-3xl mx-auto mb-16">
-                The purpose of this page is not to push you into buying. It is to make the journey more understandable before you decide whether to move forward.
+                This page is here to make the journey more understandable — not to push you into a decision. Whatever you choose to do next is entirely up to you.
             </p>
 
             <div class="grid md:grid-cols-3 gap-8">
@@ -528,16 +528,24 @@
                         <i data-lucide="file-text" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Product details</h4>
-                    <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Move into plans and comparisons only if you feel ready.</p>
+                    <p class="text-sm text-gray-500 mb-6 leading-7 font-light">If you feel ready to explore cover options, compare products, or get a quote, you can move into the main journey from here.</p>
                 </div>
                 
-                <!-- Save for later 卡片 - 保持不变 -->
-                <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]">
-                    <div class="w-16 h-16 bg-[#E30613]/10 text-[#E30613] rounded-2xl flex items-center justify-center mx-auto mb-6 lucide-icon-container">
-                        <i data-lucide="save" class="w-8 h-8"></i>
+                <!-- 修改：Save for later → Got a question? 客服咨询功能 -->
+                <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]" id="customer-support-card">
+                    <div class="w-16 h-16 bg-[#003A3A]/10 text-[#003A3A] rounded-2xl flex items-center justify-center mx-auto mb-6 lucide-icon-container">
+                        <i data-lucide="headphones" class="w-8 h-8"></i>
                     </div>
-                    <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Save for later</h4>
-                    <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Leaving now does not mean failure. Come back when it feels right.</p>
+                    <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Got a question?</h4>
+                    <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Speak to our friendly team for impartial advice with no pressure to buy.</p>
+                    <!-- 新增：显示客服联系方式 -->
+                    <div class="mt-4 text-center">
+                        <a href="tel:+448000271846" class="inline-flex items-center justify-center gap-2 text-[#003A3A] font-bold text-sm hover:text-[#005a5a] transition-colors">
+                            <i data-lucide="phone" class="w-4 h-4"></i>
+                            0800 027 1846
+                        </a>
+                        <p class="text-xs text-gray-400 mt-2">Lines open 8am-8pm, 7 days a week</p>
+                    </div>
                 </div>
                 
                 <!-- Discuss it 卡片 - 添加 WhatsApp 分享功能 -->
@@ -670,6 +678,18 @@
                 
                 // 打开 WhatsApp 分享窗口
                 window.open(whatsappUrl, '_blank', 'width=600,height=600');
+            });
+        }
+
+        // 新增：客服卡片点击事件（可选）
+        const customerSupportCard = document.getElementById('customer-support-card');
+        if (customerSupportCard) {
+            // 点击卡片其他区域也可以拨打电话
+            customerSupportCard.addEventListener('click', function(e) {
+                // 避免重复触发
+                if (!e.target.closest('a')) {
+                    window.location.href = 'tel:+448000271846';
+                }
             });
         }
     });
