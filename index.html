@@ -239,19 +239,19 @@
             <!-- Interaction Area -->
             <div class="lg:col-span-7 space-y-10 fade-section simulator-copy">
                 <div class="space-y-6">
-                    <div class="section-label">Chapter 1 · HOW PROTECTION WORKS</div>
+                    <div class="section-label">Chapter 1 · Protection logic</div>
 
                     <div class="flex items-center gap-3 text-[#E30613] font-bold text-sm tracking-widest uppercase">
                         <i data-lucide="scale" class="w-4 h-4"></i>
-                        EXPLORE · COVER & COST
+                        Interaction · Risk Balance
                     </div>
 
                     <h2 class="text-4xl md:text-5xl font-bold text-[#003A3A] font-serif leading-tight">
-                        A monthly premium provides a guaranteed level of cover for your family
+                        A small monthly cost can support a much larger protected amount.
                     </h2>
 
                     <p class="text-gray-500 text-lg font-light leading-relaxed max-w-2xl">
-                       Life insurance works by exchanging a fixed monthly premium for a guaranteed cover amount. If you die during your policy term, your family receives that amount — regardless of how long the policy has been in place. Use the slider to explore how different monthly premiums relate to different levels of cover.
+                        This is the first part of the story. It shows the basic logic of protection before product detail, application steps, or pricing comparison. As the monthly cost increases, the financial uncertainty carried by a household can be reduced through leverage.
                     </p>
                 </div>
 
@@ -299,7 +299,7 @@
                     <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm mt-8">
                         <div class="flex justify-between mb-6 gap-4">
                             <span class="text-xs font-black text-[#003A3A] uppercase tracking-widest">Adjust your contribution</span>
-                            <span id="leverage-label" class="text-xs font-bold text-[#E30613] whitespace-nowrap">Effect: 7500x leverage</span>
+                            <!-- 移除了 leverage-label 元素 -->
                         </div>
                         <input type="range" min="10" max="200" value="45" id="premium-slider" class="w-full cursor-pointer">
                     </div>
@@ -311,7 +311,10 @@
                 <div class="lg:sticky lg:top-32 fade-section simulator-sidebar">
                     <div class="bg-[#003A3A] p-8 md:p-10 rounded-[3rem] text-white space-y-10 shadow-2xl">
                         <div class="space-y-5">
-                            <h3 class="text-2xl font-bold font-serif">Resilience score</h3>
+                            <!-- 修改标题为动态文本 -->
+                            <h3 id="resilience-title" class="text-2xl font-bold font-serif">
+                                At £45 a month, you can secure £337,500 of cover for your family.
+                            </h3>
                             <p class="text-white/40 text-sm font-light leading-relaxed">
                                 By committing a small monthly amount, you are effectively transferring the following potential financial burden to us:
                             </p>
@@ -327,14 +330,16 @@
                             </div>
                         </div>
 
+                        <!-- 修改说明文本区域 -->
                         <div class="space-y-4">
-                            <div class="flex items-center gap-3 text-white/80">
-                                <i data-lucide="verified" class="w-5 h-5 text-green-400"></i>
-                                <span class="text-sm font-bold uppercase tracking-widest">99.4% claim certainty</span>
+                            <div class="flex items-start gap-3 text-white/80">
+                                <i data-lucide="info" class="w-5 h-5 text-green-400 mt-1 flex-shrink-0"></i>
+                                <div class="text-sm leading-relaxed">
+                                    Your monthly premium is fixed for the duration of your policy.<br>
+                                    If you die during the policy term, your family receives the cover amount you chose.<br>
+                                    If no claim is made, the policy ends and premiums are not returned — this is how insurance works.
+                                </div>
                             </div>
-                            <p class="text-xs text-white/30 leading-relaxed font-light italic">
-                                Based on 2023 life claims data. More than £202 million was paid out, supporting thousands of families through difficult periods.
-                            </p>
                         </div>
                     </div>
                 </div>
@@ -547,7 +552,7 @@
         const displayCoverage = document.getElementById('display-coverage');
         const transferAmount = document.getElementById('transfer-amount');
         const transferProgress = document.getElementById('transfer-progress');
-        const leverageLabel = document.getElementById('leverage-label');
+        const resilienceTitle = document.getElementById('resilience-title'); // 新增：获取标题元素
 
         const beamScene = document.getElementById('beam-scene');
         const leftUpright = document.getElementById('left-upright');
@@ -574,7 +579,9 @@
             displayCoverage.textContent = `£${coverage.toLocaleString()}`;
             transferAmount.textContent = `£${coverage.toLocaleString()}`;
             transferProgress.style.width = `${progress * 100}%`;
-            leverageLabel.textContent = `Effect: ${LEVERAGE_MULTIPLIER}x leverage`;
+            
+            // 新增：更新动态标题
+            resilienceTitle.textContent = `At £${val} a month, you can secure £${coverage.toLocaleString()} of cover for your family.`;
 
             // Balance Rotation
             // When value is low (delta < 0), right side is heavier (positive rotation)
