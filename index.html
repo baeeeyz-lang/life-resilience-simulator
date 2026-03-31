@@ -263,19 +263,29 @@
             position: relative;
         }
         
-        /* 轮播容器样式 - 新增 */
+        /* 轮播容器样式 - 新增（优化滑动体验） */
         .carousel-container {
             position: relative;
             overflow: hidden;
             min-height: 300px;
+            touch-action: pan-x; /* 优化移动端滑动 */
         }
         
-        /* 步骤指示器样式 - 新增 */
+        /* 步骤指示器样式 - 新增（移到下方后优化样式） */
         .indicator-dot {
             width: 10px;
             height: 10px;
             border-radius: 50%;
             transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        /* 指示器容器样式 - 新增 */
+        .indicators-container {
+            display: flex;
+            gap: 3px;
+            justify-content: center;
+            margin-top: 16px;
         }
         
         /* 2.5D插画容器样式 - 新增 */
@@ -554,7 +564,7 @@
         </div>
     </section>
 
-    <!-- 5. Claims journey - 替换为滑动切换版本 -->
+    <!-- 5. Claims journey - 改为滑动切换版本（移除按钮，指示器移到下方） -->
     <section id="claims" class="py-32 md:py-36 px-4 md:px-8 bg-[#003A3A] min-h-screen flex items-center">
         <div class="max-w-7xl mx-auto w-full">
             <div class="flex flex-col lg:flex-row gap-12 items-center fade-section">
@@ -567,22 +577,12 @@
                     <p class="text-white/50 font-light text-lg leading-relaxed">
                         The aim here is not to promise a perfect experience. It is to make the part of the journey that people fear most feel less uncertain — by showing what actually happens, step by step.
                     </p>
-                    
-                    <!-- 步骤指示器 -->
-                    <div class="flex gap-3 mt-12" id="stepIndicators">
-                        <div class="indicator-dot bg-green-400"></div>
-                        <div class="indicator-dot bg-white/20"></div>
-                        <div class="indicator-dot bg-white/20"></div>
-                        <div class="indicator-dot bg-white/20"></div>
-                        <div class="indicator-dot bg-white/20"></div>
-                        <div class="indicator-dot bg-white/20"></div>
-                    </div>
                 </div>
 
                 <!-- 右侧轮播区域 -->
                 <div class="lg:w-3/5 w-full">
                     <!-- 轮播容器 -->
-                    <div class="carousel-container">
+                    <div class="carousel-container" id="carousel">
                         <!-- 步骤1：Trigger & Notify -->
                         <div class="step-slide step-active bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden" data-step="1">
                             <div class="grid md:grid-cols-2 gap-0">
@@ -734,16 +734,14 @@
                         </div>
                     </div>
 
-                    <!-- 切换按钮 -->
-                    <div class="flex justify-between mt-8 px-4 md:px-0">
-                        <button id="prevBtn" class="flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-full transition-all disabled:opacity-30 disabled:cursor-not-allowed">
-                            <i data-lucide="chevron-left" class="w-5 h-5"></i>
-                            <span>Previous</span>
-                        </button>
-                        <button id="nextBtn" class="flex items-center gap-2 bg-green-400 hover:bg-green-500 text-[#003A3A] font-bold px-6 py-3 rounded-full transition-all">
-                            <span>Next</span>
-                            <i data-lucide="chevron-right" class="w-5 h-5"></i>
-                        </button>
+                    <!-- 步骤指示器（移到轮播下方） -->
+                    <div class="indicators-container" id="stepIndicators">
+                        <div class="indicator-dot bg-green-400"></div>
+                        <div class="indicator-dot bg-white/20"></div>
+                        <div class="indicator-dot bg-white/20"></div>
+                        <div class="indicator-dot bg-white/20"></div>
+                        <div class="indicator-dot bg-white/20"></div>
+                        <div class="indicator-dot bg-white/20"></div>
                     </div>
                 </div>
             </div>
@@ -925,18 +923,18 @@
             });
         }
 
-        // 理赔流程滑动切换逻辑 - 新增
+        // 理赔流程滑动切换逻辑 - 优化（移除按钮，新增滑动手势）
         const totalSteps = 6;
         let currentStep = 1;
         
         // DOM元素
         const steps = document.querySelectorAll('[data-step]');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
         const indicators = document.querySelectorAll('.indicator-dot');
+        const carousel = document.getElementById('carousel');
         
-        // 初始化按钮状态（第一步时上一页禁用）
-        updateButtonStates();
+        // 滑动手势变量
+        let touchStartX = 0;
+        let touchEndX = 0;
         
         // 更新步骤显示
         function updateStepDisplay() {
@@ -961,46 +959,23 @@
                     dot.classList.add('bg-white/20');
                 }
             });
-            
-            // 更新按钮状态
-            updateButtonStates();
         }
         
-        // 更新按钮状态
-        function updateButtonStates() {
-            // 第一步：禁用上一页
-            if (currentStep === 1) {
-                prevBtn.disabled = true;
-            } else {
-                prevBtn.disabled = false;
-            }
-            
-            // 最后一步：修改下一页按钮文字为"Finish"
-            if (currentStep === totalSteps) {
-                nextBtn.innerHTML = '<span>Finish</span><i data-lucide="check" class="w-5 h-5"></i>';
-            } else {
-                nextBtn.innerHTML = '<span>Next</span><i data-lucide="chevron-right" class="w-5 h-5"></i>';
-            }
-        }
-        
-        // 下一页按钮点击事件
-        nextBtn.addEventListener('click', () => {
+        // 下一页逻辑
+        function goToNextStep() {
             if (currentStep < totalSteps) {
                 currentStep++;
                 updateStepDisplay();
-            } else {
-                // 最后一步点击Finish可添加自定义逻辑
-                alert('You have completed the claims journey overview!');
             }
-        });
+        }
         
-        // 上一页按钮点击事件
-        prevBtn.addEventListener('click', () => {
+        // 上一页逻辑
+        function goToPrevStep() {
             if (currentStep > 1) {
                 currentStep--;
                 updateStepDisplay();
             }
-        });
+        }
         
         // 点击指示器切换步骤
         indicators.forEach((dot, index) => {
@@ -1010,14 +985,74 @@
             });
         });
         
+        // 监听滑动开始
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        // 监听滑动结束
+        carousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+        
+        // 处理滑动逻辑
+        function handleSwipe() {
+            const swipeThreshold = 50; // 滑动阈值（像素）
+            const swipeDistance = touchEndX - touchStartX;
+            
+            if (swipeDistance < -swipeThreshold) {
+                // 向左滑动 → 下一页
+                goToNextStep();
+            } else if (swipeDistance > swipeThreshold) {
+                // 向右滑动 → 上一页
+                goToPrevStep();
+            }
+        }
+        
+        // 桌面端鼠标拖拽支持（可选）
+        let isDragging = false;
+        let dragStartX = 0;
+        
+        carousel.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            dragStartX = e.clientX;
+            carousel.style.cursor = 'grabbing';
+        });
+        
+        carousel.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const dragDistance = e.clientX - dragStartX;
+            // 拖拽距离足够时触发切换
+            if (dragDistance < -50) {
+                goToNextStep();
+                isDragging = false;
+            } else if (dragDistance > 50) {
+                goToPrevStep();
+                isDragging = false;
+            }
+        });
+        
+        carousel.addEventListener('mouseup', () => {
+            isDragging = false;
+            carousel.style.cursor = 'grab';
+        });
+        
+        carousel.addEventListener('mouseleave', () => {
+            isDragging = false;
+            carousel.style.cursor = 'grab';
+        });
+        
+        // 初始化轮播
+        updateStepDisplay();
+        carousel.style.cursor = 'grab';
+        
         // 可选：支持键盘左右箭头切换
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' && currentStep < totalSteps) {
-                currentStep++;
-                updateStepDisplay();
-            } else if (e.key === 'ArrowLeft' && currentStep > 1) {
-                currentStep--;
-                updateStepDisplay();
+            if (e.key === 'ArrowRight') {
+                goToNextStep();
+            } else if (e.key === 'ArrowLeft') {
+                goToPrevStep();
             }
         });
     });
