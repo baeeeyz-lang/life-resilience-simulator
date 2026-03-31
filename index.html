@@ -149,6 +149,24 @@
             min-width: 24px;
             min-height: 24px;
         }
+        
+        /* 新增：优化说明文本的字体样式 */
+        .explanation-text {
+            font-size: 15px !important;
+            font-weight: 400 !important;
+            line-height: 1.6 !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+        
+        /* 新增：总标题样式 */
+        .what-it-means-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
     </style>
 </head>
 <body class="selection:bg-[#E30613] selection:text-white">
@@ -315,9 +333,7 @@
                             <h3 id="resilience-title" class="text-2xl font-bold font-serif">
                                 At £45 a month, you can secure £337,500 of cover for your family.
                             </h3>
-                            <p class="text-white/40 text-sm font-light leading-relaxed">
-                                By committing a small monthly amount, you are effectively transferring the following potential financial burden to us:
-                            </p>
+                            <!-- 删除了原来的那段文本 -->
                             <div class="p-7 md:p-8 bg-white/5 rounded-[2rem] border border-white/10">
                                 <div class="flex justify-between items-center mb-4">
                                     <span class="text-[11px] uppercase font-bold text-white/40 tracking-widest">Risk transferred</span>
@@ -331,13 +347,31 @@
                         </div>
 
                         <!-- 修改说明文本区域 -->
-                        <div class="space-y-4">
-                            <div class="flex items-start gap-3 text-white/80">
-                                <i data-lucide="info" class="w-5 h-5 text-green-400 mt-1 flex-shrink-0"></i>
-                                <div class="text-sm leading-relaxed">
-                                    Your monthly premium is fixed for the duration of your policy.<br>
-                                    If you die during the policy term, your family receives the cover amount you chose.<br>
-                                    If no claim is made, the policy ends and premiums are not returned — this is how insurance works.
+                        <div class="space-y-6">
+                            <!-- 新增总标题 -->
+                            <h4 class="what-it-means-title">What this actually means</h4>
+                            
+                            <!-- 第一段：固定月保费 -->
+                            <div class="flex items-start gap-4">
+                                <i data-lucide="dollar-sign" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
+                                <div class="explanation-text">
+                                    Life insurance works by exchanging a fixed monthly premium for a guaranteed cover amount.
+                                </div>
+                            </div>
+                            
+                            <!-- 第二段：赔付说明 -->
+                            <div class="flex items-start gap-4">
+                                <i data-lucide="shield-check" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
+                                <div class="explanation-text">
+                                    If you die during your policy term, your family receives that amount — regardless of how long the policy has been in place.
+                                </div>
+                            </div>
+                            
+                            <!-- 第三段：滑块说明 -->
+                            <div class="flex items-start gap-4">
+                                <i data-lucide="sliders" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
+                                <div class="explanation-text">
+                                    Use the slider to explore how different monthly premiums relate to different levels of cover.
                                 </div>
                             </div>
                         </div>
