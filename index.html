@@ -153,15 +153,13 @@
             }
         }
         
-        /* 核心修改：缩小图标容器间距和尺寸 */
+        /* 新增：确保图标容器尺寸稳定，避免加载延迟导致的布局偏移 */
         .lucide-icon-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 20px; /* 从24px缩小到20px */
-            min-height: 20px; /* 从24px缩小到20px */
-            /* 移除不必要的外边距，进一步缩小间距 */
-            margin: 0 !important;
+            min-width: 24px;
+            min-height: 24px;
         }
         
         /* 新增：优化说明文本的字体样式 - 统一字号为15px */
@@ -258,9 +256,6 @@
             opacity: 0;
             transform: translateX(100%);
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
         }
         .step-active {
             opacity: 1;
@@ -278,7 +273,7 @@
             -webkit-user-select: none;
         }
         
-        /* 核心修改：缩小指示器间距（从3px改为2px） */
+        /* 步骤指示器样式 - 新增（移到下方后优化样式） */
         .indicator-dot {
             width: 10px;
             height: 10px;
@@ -287,10 +282,10 @@
             cursor: pointer;
         }
         
-        /* 核心修改：缩小指示器容器间距（从3px改为2px） */
+        /* 指示器容器样式 - 新增 */
         .indicators-container {
             display: flex;
-            gap: 2px; /* 从3px缩小到2px */
+            gap: 3px;
             justify-content: center;
             margin-top: 16px;
         }
@@ -301,17 +296,6 @@
             height: 100%;
             object-fit: contain;
             max-height: 250px;
-        }
-
-        /* 核心修改：全局缩小图标与文字的间距 */
-        [data-lucide] {
-            margin-right: 4px !important; /* 图标右侧间距从默认值缩小到4px */
-            margin-left: 0 !important;
-        }
-
-        /* 核心修改：缩小卡片内图标容器的外边距 */
-        .step-card .lucide-icon-container {
-            margin-bottom: 6px !important; /* 从8px缩小到6px */
         }
     </style>
 </head>
@@ -356,7 +340,7 @@
             </p>
 
             <div class="flex flex-col items-center gap-6">
-                <a href="#journey" class="group bg-[#003A3A] text-white px-10 py-6 rounded-full font-bold text-xl transition-all flex items-center gap-2"> <!-- 核心修改：gap从3改为2 -->
+                <a href="#journey" class="group bg-[#003A3A] text-white px-10 py-6 rounded-full font-bold text-xl transition-all flex items-center gap-3 shadow-xl hover:-translate-y-1">
                     Start the journey <i data-lucide="arrow-down"></i>
                 </a>
                 <p class="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold">No quote · No form · No pressure</p>
@@ -405,7 +389,7 @@
                 <div class="space-y-6">
                     <div class="section-label">Chapter 1 · HOW PROTECTION WORKS</div>
 
-                    <div class="flex items-center gap-2 text-[#E30613] font-bold text-sm tracking-widest uppercase"> <!-- 核心修改：gap从3改为2 -->
+                    <div class="flex items-center gap-3 text-[#E30613] font-bold text-sm tracking-widest uppercase">
                         <i data-lucide="scale" class="w-4 h-4"></i>
                         EXPLORE · COVER & COST
                     </div>
@@ -431,7 +415,7 @@
                         <!-- Left endpoint - 月保费 -->
                         <div class="absolute left-0 bottom-[95px] -translate-x-1/2">
                             <div id="left-upright" class="flex flex-col items-center origin-center">
-                                <div id="input-icon" class="w-12 h-12 bg-white shadow-xl rounded-2xl flex items-center justify-center border border-gray-50 mb-6"> <!-- 核心修改：mb从8改为6 -->
+                                <div id="input-icon" class="w-16 h-16 bg-white shadow-xl rounded-2xl flex items-center justify-center border border-gray-50 mb-8">
                                     <i data-lucide="check-circle" class="text-[#003A3A] w-8 h-8"></i>
                                 </div>
                                 <!-- 关键修改：添加容器类确保文字不被遮挡 -->
@@ -445,7 +429,7 @@
                         <!-- Right endpoint - 保障金额 -->
                         <div class="absolute right-0 bottom-[95px] translate-x-1/2">
                             <div id="right-upright" class="flex flex-col items-center origin-center">
-                                <div id="risk-weight" class="w-18 h-18 bg-black shadow-xl rounded-2xl flex items-center justify-center border border-gray-800 mb-6"> <!-- 核心修改：mb从8改为6 -->
+                                <div id="risk-weight" class="w-16 h-16 bg-black shadow-xl rounded-2xl flex items-center justify-center border border-gray-800 mb-8">
                                     <i data-lucide="shield" class="text-white w-8 h-8"></i>
                                 </div>
                                 <!-- 关键修改：添加容器类确保文字不被遮挡 -->
@@ -490,12 +474,12 @@
                         </div>
 
                         <!-- 修改说明文本区域 -->
-                        <div class="space-y-5"> <!-- 核心修改：space-y从6改为5 -->
+                        <div class="space-y-6">
                             <!-- 新增总标题 -->
                             <h4 class="what-it-means-title">What this actually means</h4>
                             
                             <!-- 第一段：固定月保费 -->
-                            <div class="flex items-start gap-3"> <!-- 核心修改：gap从4改为3 -->
+                            <div class="flex items-start gap-4">
                                 <i data-lucide="dollar-sign" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
                                 <div class="explanation-text">
                                     Life insurance works by exchanging a fixed monthly premium for a guaranteed cover amount.
@@ -503,7 +487,7 @@
                             </div>
                             
                             <!-- 第二段：赔付说明 -->
-                            <div class="flex items-start gap-3"> <!-- 核心修改：gap从4改为3 -->
+                            <div class="flex items-start gap-4">
                                 <i data-lucide="shield-check" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
                                 <div class="explanation-text">
                                     If you die during your policy term, your family receives that amount — regardless of how long the policy has been in place.
@@ -511,7 +495,7 @@
                             </div>
                             
                             <!-- 第三段：滑块说明 -->
-                            <div class="flex items-start gap-3"> <!-- 核心修改：gap从4改为3 -->
+                            <div class="flex items-start gap-4">
                                 <i data-lucide="sliders" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
                                 <div class="explanation-text">
                                     Use the slider to explore how different monthly premiums relate to different levels of cover.
@@ -540,7 +524,7 @@
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- 卡片1：偿还房贷/租金 → 改回原来的房子图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container"> <!-- 核心修改：mb从8改为6 -->
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8 lucide-icon-container">
                         <i data-lucide="home" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Pay off the mortgage or rent</h4>
@@ -550,7 +534,7 @@
                 </div>
                 <!-- 卡片2：日常开支 → hand-coins 图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container"> <!-- 核心修改：mb从8改为6 -->
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8 lucide-icon-container">
                         <i data-lucide="hand-coins" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Support day-to-day living costs</h4>
@@ -560,7 +544,7 @@
                 </div>
                 <!-- 卡片3：偿还债务 → credit-card 图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container"> <!-- 核心修改：mb从8改为6 -->
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8 lucide-icon-container">
                         <i data-lucide="credit-card" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Settle outstanding loans or debts</h4>
@@ -570,7 +554,7 @@
                 </div>
                 <!-- 卡片4：安心喘息 → heart 图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container"> <!-- 核心修改：mb从8改为6 -->
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-8 lucide-icon-container">
                         <i data-lucide="heart" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Create space to make considered decisions</h4>
@@ -585,9 +569,9 @@
     <!-- 5. Claims journey - 改为滑动切换版本（移除按钮，指示器移到下方） -->
     <section id="claims" class="py-32 md:py-36 px-4 md:px-8 bg-[#003A3A] min-h-screen flex items-center">
         <div class="max-w-7xl mx-auto w-full">
-            <div class="flex flex-col lg:flex-row gap-10 items-center fade-section"> <!-- 核心修改：gap从12改为10 -->
+            <div class="flex flex-col lg:flex-row gap-12 items-center fade-section">
                 <!-- 左侧标题区域 -->
-                <div class="lg:w-2/5 space-y-7"> <!-- 核心修改：space-y从8改为7 -->
+                <div class="lg:w-2/5 space-y-8">
                     <div class="section-label-dark">Chapter 3 · Claim journey</div>
                     <h2 class="text-5xl font-black text-white font-serif leading-tight">
                         If something serious happens,<br><span class="text-green-400">what could the journey involve?</span>
@@ -606,7 +590,7 @@
                             <div class="grid md:grid-cols-2 gap-0">
                                 <!-- 左侧文字 -->
                                 <div class="p-8 md:p-10">
-                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
+                                    <div class="flex items-center gap-4 mb-4">
                                         <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
                                             <span class="text-[#003A3A] font-black text-lg">1</span>
                                         </div>
@@ -631,7 +615,7 @@
                             <div class="grid md:grid-cols-2 gap-0">
                                 <!-- 左侧文字 -->
                                 <div class="p-8 md:p-10">
-                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
+                                    <div class="flex items-center gap-4 mb-4">
                                         <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
                                             <span class="text-[#003A3A] font-black text-lg">2</span>
                                         </div>
@@ -656,7 +640,7 @@
                             <div class="grid md:grid-cols-2 gap-0">
                                 <!-- 左侧文字 -->
                                 <div class="p-8 md:p-10">
-                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
+                                    <div class="flex items-center gap-4 mb-4">
                                         <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
                                             <span class="text-[#003A3A] font-black text-lg">3</span>
                                         </div>
@@ -681,7 +665,7 @@
                             <div class="grid md:grid-cols-2 gap-0">
                                 <!-- 左侧文字 -->
                                 <div class="p-8 md:p-10">
-                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
+                                    <div class="flex items-center gap-4 mb-4">
                                         <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
                                             <span class="text-[#003A3A] font-black text-lg">4</span>
                                         </div>
@@ -706,7 +690,7 @@
                             <div class="grid md:grid-cols-2 gap-0">
                                 <!-- 左侧文字 -->
                                 <div class="p-8 md:p-10">
-                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
+                                    <div class="flex items-center gap-4 mb-4">
                                         <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
                                             <span class="text-[#003A3A] font-black text-lg">5</span>
                                         </div>
@@ -731,7 +715,7 @@
                             <div class="grid md:grid-cols-2 gap-0">
                                 <!-- 左侧文字 -->
                                 <div class="p-8 md:p-10">
-                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
+                                    <div class="flex items-center gap-4 mb-4">
                                         <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
                                             <span class="text-[#003A3A] font-black text-lg">6</span>
                                         </div>
@@ -777,10 +761,10 @@
                 This page is here to make the journey more understandable — not to push you into a decision. Whatever you choose to do next is entirely up to you.
             </p>
 
-            <div class="grid md:grid-cols-3 gap-7"> <!-- 核心修改：gap从8改为7 -->
+            <div class="grid md:grid-cols-3 gap-8">
                 <!-- Product details 卡片 - 添加跳转链接 -->
                 <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]" onclick="window.open('https://www.scottishwidows.co.uk/life-insurance.html', '_blank')">
-                    <div class="w-16 h-16 bg-[#003A3A] text-white rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container"> <!-- 核心修改：mb从6改为5 -->
+                    <div class="w-16 h-16 bg-[#003A3A] text-white rounded-2xl flex items-center justify-center mx-auto mb-6 lucide-icon-container">
                         <i data-lucide="file-text" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Product details</h4>
@@ -789,14 +773,14 @@
                 
                 <!-- 修改：Save for later → Got a question? 客服咨询功能 -->
                 <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]" id="customer-support-card">
-                    <div class="w-16 h-16 bg-[#003A3A]/10 text-[#003A3A] rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container"> <!-- 核心修改：mb从6改为5 -->
+                    <div class="w-16 h-16 bg-[#003A3A]/10 text-[#003A3A] rounded-2xl flex items-center justify-center mx-auto mb-6 lucide-icon-container">
                         <i data-lucide="headphones" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Got a question?</h4>
                     <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Speak to our friendly team for impartial advice with no pressure to buy.</p>
                     <!-- 新增：显示客服联系方式 -->
                     <div class="mt-4 text-center">
-                        <a href="tel:+448000271846" class="inline-flex items-center justify-center gap-2 text-[#003A3A] font-bold text-sm hover:text-[#005a5a] transition-colors"> <!-- 核心修改：gap从2改为1 -->
+                        <a href="tel:+448000271846" class="inline-flex items-center justify-center gap-2 text-[#003A3A] font-bold text-sm hover:text-[#005a5a] transition-colors">
                             <i data-lucide="phone" class="w-4 h-4"></i>
                             0800 027 1846
                         </a>
@@ -806,7 +790,7 @@
                 
                 <!-- Discuss it 卡片 - 添加 WhatsApp 分享功能 -->
                 <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]" id="whatsapp-share-card">
-                    <div class="w-16 h-16 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container"> <!-- 核心修改：mb从6改为5 -->
+                    <div class="w-16 h-16 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center mx-auto mb-6 lucide-icon-container">
                         <i data-lucide="share-2" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Discuss it</h4>
@@ -817,19 +801,28 @@
     </section>
 
     <script>
-    // 强制立即执行代码，确保修改生效
-    (function() {
+    // 2. 优化图标初始化逻辑（确保DOM加载完成后再初始化）
+    document.addEventListener('DOMContentLoaded', function() {
         // 初始化所有 Lucide 图标
         try {
             lucide.createIcons({
                 attrs: {
+                    // 统一设置图标默认尺寸，避免显示不一致
                     width: '24',
                     height: '24',
                     strokeWidth: '1.5'
                 }
             });
+            console.log('Lucide 图标初始化成功');
         } catch (error) {
             console.error('Lucide 图标初始化失败:', error);
+            // 容错：手动创建缺失的图标（如果有）
+            const missingIcons = document.querySelectorAll('[data-lucide]:not([data-icon-initialized])');
+            missingIcons.forEach(iconEl => {
+                const iconName = iconEl.getAttribute('data-lucide');
+                iconEl.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><use href="#lucide-${iconName}" /></svg>`;
+                iconEl.setAttribute('data-icon-initialized', 'true');
+            });
         }
 
         // Scroll Animation Observer
@@ -851,7 +844,7 @@
         const displayCoverage = document.getElementById('display-coverage');
         const transferAmount = document.getElementById('transfer-amount');
         const transferProgress = document.getElementById('transfer-progress');
-        const resilienceTitle = document.getElementById('resilience-title');
+        const resilienceTitle = document.getElementById('resilience-title'); // 新增：获取标题元素
 
         const beamScene = document.getElementById('beam-scene');
         const leftUpright = document.getElementById('left-upright');
@@ -878,7 +871,7 @@
             transferAmount.textContent = `£${coverage.toLocaleString()}`;
             transferProgress.style.width = `${progress * 100}%`;
             
-            // 更新动态标题
+            // 新增：更新动态标题
             resilienceTitle.textContent = `At £${val} a month, you can secure £${coverage.toLocaleString()} of cover for your family.`;
 
             // 保持天平水平
@@ -886,7 +879,7 @@
             leftUpright.style.transform = `rotate(0deg)`;
             rightUpright.style.transform = `rotate(0deg)`;
 
-            // 调整缩放比例
+            // 调整缩放比例（1.0倍 → 1.8倍），既明显又不遮挡
             const scale = clamp(1.0 + (progress * 0.8), 1.0, 1.8);
             
             // 应用缩放比例
@@ -897,70 +890,78 @@
             inputIcon.style.opacity = 1;
         }
 
-        // 立即初始化滑块
         if (slider) {
-            updateSimulator(parseInt(slider.value, 10));
             slider.addEventListener('input', (e) => {
                 updateSimulator(parseInt(e.target.value, 10));
             });
+
+            // Init
+            updateSimulator(parseInt(slider.value, 10));
         }
 
         // WhatsApp 分享功能
         const whatsappShareCard = document.getElementById('whatsapp-share-card');
         if (whatsappShareCard) {
             whatsappShareCard.addEventListener('click', function() {
+                // 自定义分享文本和链接
                 const shareText = encodeURIComponent('Check out this life insurance guide: ');
                 const shareUrl = encodeURIComponent(window.location.href);
                 const whatsappUrl = `https://api.whatsapp.com/send?text=${shareText}${shareUrl}`;
+                
+                // 打开 WhatsApp 分享窗口
                 window.open(whatsappUrl, '_blank', 'width=600,height=600');
             });
         }
 
-        // 客服卡片点击事件
+        // 新增：客服卡片点击事件（可选）
         const customerSupportCard = document.getElementById('customer-support-card');
         if (customerSupportCard) {
+            // 点击卡片其他区域也可以拨打电话
             customerSupportCard.addEventListener('click', function(e) {
+                // 避免重复触发
                 if (!e.target.closest('a')) {
                     window.location.href = 'tel:+448000271846';
                 }
             });
         }
 
-        // 理赔流程滑动切换逻辑
+        // 理赔流程滑动切换逻辑 - 鼠标悬浮滑动版（仿移动端体验）
         const totalSteps = 6;
         let currentStep = 1;
-        let isHovering = false;
-        let mouseX = 0;
-        let lastMouseX = 0;
-        let isAnimating = false;
-        const sensitivity = 2;
-        const animationDuration = 300;
+        let isHovering = false; // 是否鼠标悬浮在轮播区域
+        let mouseX = 0; // 记录鼠标X坐标
+        let lastMouseX = 0; // 记录上一帧鼠标X坐标
+        let isAnimating = false; // 防止动画过程中重复触发
+        const sensitivity = 5; // 灵敏度（数值越小越灵敏，建议1-5）
+        const animationDuration = 300; // 切换动画时长(ms)
         
         // DOM元素
         const steps = document.querySelectorAll('[data-step]');
         const indicators = document.querySelectorAll('.indicator-dot');
         const carousel = document.getElementById('carousel');
         
-        // 更新步骤显示
+        // 更新步骤显示（带动画）
         function updateStepDisplay() {
             if (isAnimating) return;
             isAnimating = true;
             
+            // 隐藏所有步骤
             steps.forEach(step => {
                 step.classList.remove('step-active');
                 step.classList.add('step-hidden');
             });
             
+            // 显示当前步骤
             const activeStep = document.querySelector(`[data-step="${currentStep}"]`);
             activeStep.classList.remove('step-hidden');
             activeStep.classList.add('step-active');
             
-            // 更新指示器
+            // 更新指示器（带缩放动画）
             indicators.forEach((dot, index) => {
                 if (index + 1 === currentStep) {
                     dot.classList.remove('bg-white/20');
                     dot.classList.add('bg-green-400');
-                    dot.style.transform = 'scale(1.2)';
+                    dot.style.transform = 'scale(1.2)'; // 激活的指示器放大
                 } else {
                     dot.classList.remove('bg-green-400');
                     dot.classList.add('bg-white/20');
@@ -969,8 +970,10 @@
                 dot.style.transition = 'all 0.2s ease';
             });
             
+            // 更新ARIA属性（无障碍支持）
             carousel.setAttribute('aria-valuenow', currentStep);
             
+            // 动画结束后重置状态
             setTimeout(() => {
                 isAnimating = false;
             }, animationDuration);
@@ -986,107 +989,117 @@
             updateStepDisplay();
         }
         
-        // 下一页/上一页
-        function goToNextStep() { goToStep(currentStep + 1); }
-        function goToPrevStep() { goToStep(currentStep - 1); }
+        // 下一页逻辑
+        function goToNextStep() {
+            goToStep(currentStep + 1);
+        }
         
-        // 鼠标移动检测
+        // 上一页逻辑
+        function goToPrevStep() {
+            goToStep(currentStep - 1);
+        }
+        
+        // 鼠标移动检测（核心逻辑：悬浮时仅移动鼠标即可切换）
         function handleMouseMove(e) {
             if (!isHovering || isAnimating) return;
             
             mouseX = e.clientX;
-            const deltaX = mouseX - lastMouseX;
+            const deltaX = mouseX - lastMouseX; // 鼠标移动距离
             
+            // 当鼠标移动距离超过阈值时触发切换
             if (Math.abs(deltaX) > sensitivity) {
-                deltaX < 0 ? goToNextStep() : goToPrevStep();
-                lastMouseX = mouseX;
+                if (deltaX < 0) {
+                    // 鼠标向左移动 → 下一页
+                    goToNextStep();
+                } else {
+                    // 鼠标向右移动 → 上一页
+                    goToPrevStep();
+                }
+                lastMouseX = mouseX; // 重置起始位置
             }
         }
         
-        // 绑定轮播事件
-        if (carousel) {
-            carousel.addEventListener('mouseenter', (e) => {
-                isHovering = true;
-                lastMouseX = e.clientX;
-                carousel.style.cursor = 'grab';
-            });
-            
-            carousel.addEventListener('mouseleave', () => {
-                isHovering = false;
-                carousel.style.cursor = 'default';
-            });
-            
-            carousel.addEventListener('mousemove', handleMouseMove);
-            
-            // 指示器点击
-            indicators.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    goToStep(index + 1);
-                });
-                
-                dot.addEventListener('mouseenter', () => {
-                    if (!dot.classList.contains('bg-green-400')) {
-                        dot.style.transform = 'scale(1.3)';
-                        dot.style.backgroundColor = 'rgba(255,255,255,0.4)';
-                    }
-                });
-                
-                dot.addEventListener('mouseleave', () => {
-                    if (!dot.classList.contains('bg-green-400')) {
-                        dot.style.transform = 'scale(1)';
-                        dot.style.backgroundColor = 'rgba(255,255,255,0.2)';
-                    }
-                });
-            });
-            
-            // 触摸事件
-            carousel.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            }, { passive: true });
-            
-            carousel.addEventListener('touchend', (e) => {
-                const touchEndX = e.changedTouches[0].screenX;
-                const swipeDistance = touchEndX - touchStartX;
-                
-                if (Math.abs(swipeDistance) > 50) {
-                    swipeDistance < 0 ? goToNextStep() : goToPrevStep();
-                }
-            }, { passive: true });
-            
-            // 键盘导航
-            document.addEventListener('keydown', (e) => {
-                const isCarouselFocused = document.activeElement === carousel || 
-                                          carousel.contains(document.activeElement);
-                
-                if (isCarouselFocused || e.target.tagName === 'BODY') {
-                    if (e.key === 'ArrowRight') {
-                        e.preventDefault();
-                        goToNextStep();
-                    } else if (e.key === 'ArrowLeft') {
-                        e.preventDefault();
-                        goToPrevStep();
-                    }
-                }
-            });
-            
-            // 初始化轮播
-            carousel.tabIndex = 0;
-            carousel.setAttribute('role', 'slider');
-            carousel.setAttribute('aria-valuemin', '1');
-            carousel.setAttribute('aria-valuemax', totalSteps);
-            carousel.setAttribute('aria-valuenow', currentStep);
-            
-            // 立即更新轮播显示
-            updateStepDisplay();
-        }
+        // 绑定鼠标悬浮事件
+        carousel.addEventListener('mouseenter', (e) => {
+            isHovering = true;
+            lastMouseX = e.clientX; // 初始化鼠标位置
+            carousel.style.cursor = 'grab'; // 提示可滑动
+        });
         
-        // 强制触发所有动画元素显示（调试用）
-        setTimeout(() => {
-            document.querySelectorAll('.fade-section').forEach(el => {
-                el.classList.add('visible');
+        carousel.addEventListener('mouseleave', () => {
+            isHovering = false;
+            carousel.style.cursor = 'default';
+        });
+        
+        // 绑定鼠标移动事件（核心）
+        carousel.addEventListener('mousemove', handleMouseMove);
+        
+        // 点击指示器切换步骤（保留）
+        indicators.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                goToStep(index + 1);
             });
-        }, 100);
-    })();
+            
+            // 指示器hover效果增强
+            dot.addEventListener('mouseenter', () => {
+                if (!dot.classList.contains('bg-green-400')) {
+                    dot.style.transform = 'scale(1.3)';
+                    dot.style.backgroundColor = 'rgba(255,255,255,0.4)';
+                }
+            });
+            
+            dot.addEventListener('mouseleave', () => {
+                if (!dot.classList.contains('bg-green-400')) {
+                    dot.style.transform = 'scale(1)';
+                    dot.style.backgroundColor = 'rgba(255,255,255,0.2)';
+                }
+            });
+        });
+        
+        // 保留移动端触摸事件
+        let touchStartX = 0;
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        carousel.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const swipeDistance = touchEndX - touchStartX;
+            
+            if (Math.abs(swipeDistance) > 50) {
+                if (swipeDistance < 0) {
+                    goToNextStep();
+                } else {
+                    goToPrevStep();
+                }
+            }
+        }, { passive: true });
+        
+        // 保留键盘导航
+        document.addEventListener('keydown', (e) => {
+            const isCarouselFocused = document.activeElement === carousel || 
+                                      carousel.contains(document.activeElement);
+            
+            if (isCarouselFocused || e.target.tagName === 'BODY') {
+                if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    goToNextStep();
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    goToPrevStep();
+                }
+            }
+        });
+        
+        // 初始化轮播
+        updateStepDisplay();
+        // 给carousel添加tabindex，支持键盘聚焦
+        carousel.tabIndex = 0;
+        carousel.setAttribute('role', 'slider');
+        carousel.setAttribute('aria-valuemin', '1');
+        carousel.setAttribute('aria-valuemax', totalSteps);
+        carousel.setAttribute('aria-valuenow', currentStep);
+    });
     </script>
 </body>
 </html>
