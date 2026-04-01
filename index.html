@@ -330,6 +330,29 @@
         .step-illustration:hover {
             transform: scale(1.02);
         }
+        
+        /* 图片加载失败的兜底样式 */
+        .step-illustration::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .step-illustration:invalid::after {
+            opacity: 1;
+            content: '📄 Image not found';
+            font-size: 18px;
+            color: #003A3A;
+        }
     </style>
 </head>
 <body class="selection:bg-[#E30613] selection:text-white">
@@ -636,9 +659,9 @@
                                         For illness-related claims, you can notify us by completing an online claim form or by calling our specialist claims team. For life cover claims following a bereavement, a family member can contact us via our dedicated bereavement support page. The first step is to establish what has happened and what you need to do next.
                                     </p>
                                 </div>
-                                <!-- 右侧插画 - 替换为步骤1的图片 -->
+                                <!-- 右侧插画 - 步骤1的图片 -->
                                 <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
-                                    <img src="2 3 1.png" alt="Trigger & Notify - Claim application information" class="step-illustration" loading="lazy">
+                                    <img src="Frame4325.png" alt="Trigger & Notify - Claim application information" class="step-illustration" loading="lazy">
                                 </div>
                             </div>
                         </div>
@@ -661,9 +684,9 @@
                                         Depending on your claim type, you will need to provide specific documents. These typically include your policy number, details of your diagnosis, and your GP or hospital specialist's contact details. Copies of medical notes or correspondence are also helpful and can speed up the process. We will contact your GP or consultant directly if additional information is needed.
                                     </p>
                                 </div>
-                                <!-- 右侧插画 - 替换为步骤2的图片 -->
+                                <!-- 右侧插画 - 步骤2的图片 -->
                                 <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
-                                    <img src="2 3 2.png" alt="Evidence Gathering - Document collection and verification" class="step-illustration" loading="lazy">
+                                    <img src="Frame4326.png" alt="Evidence Gathering - Document collection and verification" class="step-illustration" loading="lazy">
                                 </div>
                             </div>
                         </div>
@@ -686,9 +709,9 @@
                                         Your claim is reviewed by a dedicated claims team, who check it against your policy terms and the evidence provided. You will receive updates on progress throughout this stage, so you always know where things stand.
                                     </p>
                                 </div>
-                                <!-- 右侧插画 - 替换为步骤3的图片 -->
+                                <!-- 右侧插画 - 步骤3的图片 -->
                                 <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
-                                    <img src="2 3 3.png" alt="Assessment & Review - Claims team reviewing documents" class="step-illustration" loading="lazy">
+                                    <img src="Frame4327.png" alt="Assessment & Review - Claims team reviewing documents" class="step-illustration" loading="lazy">
                                 </div>
                             </div>
                         </div>
@@ -711,9 +734,9 @@
                                         Once the assessment is complete, you will be informed of the outcome clearly. Scottish Widows paid 99% of life cover claims in 2024. If a claim is not approved, the reason will be explained to you.
                                     </p>
                                 </div>
-                                <!-- 右侧插画 - 替换为步骤4的图片 -->
+                                <!-- 右侧插画 - 步骤4的图片 -->
                                 <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
-                                    <img src="2 3 4.png" alt="The Decision - Claim approval decision (99% success rate)" class="step-illustration" loading="lazy">
+                                    <img src="Frame4328.png" alt="The Decision - Claim approval decision (99% success rate)" class="step-illustration" loading="lazy">
                                 </div>
                             </div>
                         </div>
@@ -736,9 +759,9 @@
                                         Approved claims are paid as promptly as possible. Life insurance and critical illness cover pay out as a lump sum. Income protection provides regular monthly payments for the duration agreed under your policy. Payment is made to the nominated beneficiary or bank account.
                                     </p>
                                 </div>
-                                <!-- 右侧插画 - 替换为步骤5的图片 -->
+                                <!-- 右侧插画 - 步骤5的图片 -->
                                 <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
-                                    <img src="2 3 5.png" alt="Payout & Relief - Financial payout" class="step-illustration" loading="lazy">
+                                    <img src="Frame4329.png" alt="Payout & Relief - Financial payout" class="step-illustration" loading="lazy">
                                 </div>
                             </div>
                         </div>
@@ -761,9 +784,9 @@
                                         Throughout the process, we will keep you updated on the progress of your claim. You can contact us at any time with questions. If you hold a Scottish Widows Protect policy, you also have access to Scottish Widows Care, which provides practical and emotional support through RedArc — at no additional cost.
                                     </p>
                                 </div>
-                                <!-- 右侧插画 - 替换为步骤6的图片 -->
+                                <!-- 右侧插画 - 步骤6的图片 -->
                                 <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
-                                    <img src="2 3 6.png" alt="Ongoing Support - Care and support services" class="step-illustration" loading="lazy">
+                                    <img src="Frame4330.png" alt="Ongoing Support - Care and support services" class="step-illustration" loading="lazy">
                                 </div>
                             </div>
                         </div>
