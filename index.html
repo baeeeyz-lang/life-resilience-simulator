@@ -6,6 +6,7 @@
     <title>Protection Journey Prototype - Rethink Lab</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <!-- 1. 优先加载 Lucide 图标库（使用更稳定的 CDN 地址） -->
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.323.0/dist/umd/lucide.min.js"></script>
     <style>
         :root {
@@ -30,7 +31,7 @@
 
         .step-card {
             transition: all 0.3s ease;
-            cursor: pointer;
+            cursor: pointer; /* 新增：添加鼠标指针样式 */
         }
 
         .step-card:hover {
@@ -124,14 +125,16 @@
         #risk-weight,
         #input-icon {
             transition: transform 120ms linear, opacity 120ms linear;
+            /* 关键修改：添加z-index确保方块在文字上方但不遮挡 */
             position: relative;
             z-index: 1;
         }
 
+        /* 关键修改：为文字容器添加更高的z-index */
         .weight-label-container {
             position: relative;
             z-index: 10;
-            background-color: rgba(248, 250, 249, 0.95);
+            background-color: rgba(248, 250, 249, 0.95); /* 半透明背景增强可读性 */
             padding: 4px 8px;
             border-radius: 8px;
         }
@@ -150,15 +153,18 @@
             }
         }
         
+        /* 核心修改：缩小图标容器间距和尺寸 */
         .lucide-icon-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 20px;
-            min-height: 20px;
+            min-width: 20px; /* 从24px缩小到20px */
+            min-height: 20px; /* 从24px缩小到20px */
+            /* 移除不必要的外边距，进一步缩小间距 */
             margin: 0 !important;
         }
         
+        /* 新增：优化说明文本的字体样式 - 统一字号为15px */
         .explanation-text {
             font-size: 15px !important;
             font-weight: 400 !important;
@@ -166,6 +172,7 @@
             color: rgba(255, 255, 255, 0.9) !important;
         }
         
+        /* 新增：总标题样式 */
         .what-it-means-title {
             font-size: 18px;
             font-weight: 700;
@@ -175,15 +182,17 @@
             letter-spacing: 0.05em;
         }
         
+        /* 关键修改：统一标题字体样式（和说明文本完全一致） */
         #resilience-title {
             font-family: 'Inter', sans-serif !important;
             font-weight: 400 !important;
-            font-size: 15px !important;
-            line-height: 1.6 !important;
+            font-size: 15px !important;  /* 修改：和说明文本保持一致的15px */
+            line-height: 1.6 !important;  /* 修改：和说明文本保持一致的1.6 */
             letter-spacing: normal !important;
-            margin-bottom: 1rem;
+            margin-bottom: 1rem;         /* 新增：添加底部间距，保持排版美观 */
         }
 
+        /* 优化天平样式 */
         .balance-pivot {
             position: absolute;
             left: 50%;
@@ -241,102 +250,73 @@
             right: -6px;
         }
 
-        /* 新增：线性流程图样式 */
-        .claims-timeline {
-            position: relative;
-            padding: 2rem 0;
+        /* 轮播动画样式 - 新增 */
+        .step-slide {
+            transition: all 0.5s ease-in-out;
         }
-        
-        .claims-timeline::before {
-            content: '';
+        .step-hidden {
+            opacity: 0;
+            transform: translateX(100%);
             position: absolute;
             top: 0;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            background: rgba(255, 255, 255, 0.2);
-            z-index: 1;
+            left: 0;
+            width: 100%;
         }
-        
-        .timeline-step {
+        .step-active {
+            opacity: 1;
+            transform: translateX(0);
             position: relative;
-            z-index: 2;
-            margin-bottom: 4rem;
         }
         
-        .timeline-step:last-child {
-            margin-bottom: 0;
+        /* 轮播容器样式 - 新增（优化滑动体验） */
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
+            touch-action: pan-x; /* 优化移动端滑动 */
+            user-select: none; /* 防止拖拽时选中文字 */
+            -webkit-user-select: none;
         }
         
-        .step-number {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
-            background: white;
+        /* 核心修改：缩小指示器间距（从3px改为2px） */
+        .indicator-dot {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        /* 核心修改：缩小指示器容器间距（从3px改为2px） */
+        .indicators-container {
             display: flex;
-            align-items: center;
+            gap: 2px; /* 从3px缩小到2px */
             justify-content: center;
-            z-index: 3;
-            border: 4px solid var(--primary-dark);
-            font-weight: 900;
-            color: var(--primary-dark);
+            margin-top: 16px;
         }
         
-        .step-content {
-            width: 45%;
-            padding: 2rem;
+        /* 2.5D插画容器样式 - 新增 */
+        .step-illustration {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            max-height: 250px;
             border-radius: 1rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .step-left {
-            margin-right: auto;
-            text-align: right;
-        }
-        
-        .step-right {
-            margin-left: auto;
-        }
-        
-        .step-illustration-full {
-            max-width: 100%;
-            border-radius: 0.5rem;
-            margin-top: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        
-        @media (max-width: 768px) {
-            .claims-timeline::before {
-                left: 2rem;
-            }
-            
-            .step-number {
-                left: 2rem;
-            }
-            
-            .step-content {
-                width: calc(100% - 6rem);
-                margin-left: 4rem !important;
-                margin-right: 0 !important;
-                text-align: left !important;
-            }
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
+        /* 核心修改：全局缩小图标与文字的间距 */
         [data-lucide] {
-            margin-right: 4px !important;
+            margin-right: 4px !important; /* 图标右侧间距从默认值缩小到4px */
             margin-left: 0 !important;
         }
 
+        /* 核心修改：缩小卡片内图标容器的外边距 */
         .step-card .lucide-icon-container {
-            margin-bottom: 6px !important;
+            margin-bottom: 6px !important; /* 从8px缩小到6px */
         }
         
+        /* 图片加载过渡效果 */
         .illustration-wrapper {
             position: relative;
             overflow: hidden;
@@ -393,7 +373,7 @@
             </p>
 
             <div class="flex flex-col items-center gap-6">
-                <a href="#journey" class="group bg-[#003A3A] text-white px-10 py-6 rounded-full font-bold text-xl transition-all flex items-center gap-2">
+                <a href="#journey" class="group bg-[#003A3A] text-white px-10 py-6 rounded-full font-bold text-xl transition-all flex items-center gap-2"> <!-- 核心修改：gap从3改为2 -->
                     Start the journey <i data-lucide="arrow-down"></i>
                 </a>
                 <p class="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold">No quote · No form · No pressure</p>
@@ -442,7 +422,7 @@
                 <div class="space-y-6">
                     <div class="section-label">Chapter 1 · HOW PROTECTION WORKS</div>
 
-                    <div class="flex items-center gap-2 text-[#E30613] font-bold text-sm tracking-widest uppercase">
+                    <div class="flex items-center gap-2 text-[#E30613] font-bold text-sm tracking-widest uppercase"> <!-- 核心修改：gap从3改为2 -->
                         <i data-lucide="scale" class="w-4 h-4"></i>
                         EXPLORE · COVER & COST
                     </div>
@@ -468,9 +448,10 @@
                         <!-- Left endpoint - 月保费 -->
                         <div class="absolute left-0 bottom-[95px] -translate-x-1/2">
                             <div id="left-upright" class="flex flex-col items-center origin-center">
-                                <div id="input-icon" class="w-12 h-12 bg-white shadow-xl rounded-2xl flex items-center justify-center border border-gray-50 mb-6">
-                                    <i data-lucide="check-circle" class="text-[#003A3A] w-6 h-6"></i>
+                                <div id="input-icon" class="w-12 h-12 bg-white shadow-xl rounded-2xl flex items-center justify-center border border-gray-50 mb-6"> <!-- 修改：尺寸改为w-12 h-12 -->
+                                    <i data-lucide="check-circle" class="text-[#003A3A] w-6 h-6"></i> <!-- 调整图标尺寸保持比例 -->
                                 </div>
+                                <!-- 关键修改：添加容器类确保文字不被遮挡 -->
                                 <div class="text-center whitespace-nowrap weight-label-container">
                                     <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest">Monthly cost</span>
                                     <span id="display-premium" class="text-2xl font-bold text-[#003A3A]">£45</span>
@@ -481,9 +462,10 @@
                         <!-- Right endpoint - 保障金额 -->
                         <div class="absolute right-0 bottom-[95px] translate-x-1/2">
                             <div id="right-upright" class="flex flex-col items-center origin-center">
-                                <div id="risk-weight" class="w-20 h-20 bg-black shadow-xl rounded-2xl flex items-center justify-center border border-gray-800 mb-6">
-                                    <i data-lucide="shield" class="text-white w-10 h-10"></i>
+                                <div id="risk-weight" class="w-20 h-20 bg-black shadow-xl rounded-2xl flex items-center justify-center border border-gray-800 mb-6"> <!-- 修复：使用有效的Tailwind类w-20 h-20 -->
+                                    <i data-lucide="shield" class="text-white w-10 h-10"></i> <!-- 调整图标尺寸保持比例 -->
                                 </div>
+                                <!-- 关键修改：添加容器类确保文字不被遮挡 -->
                                 <div class="text-center whitespace-nowrap weight-label-container">
                                     <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest">Cover amount</span>
                                     <span id="display-coverage" class="text-2xl font-bold text-[#003A3A]">£337,500</span>
@@ -507,9 +489,11 @@
                 <div class="lg:sticky lg:top-32 fade-section simulator-sidebar">
                     <div class="bg-[#003A3A] p-8 md:p-10 rounded-[3rem] text-white space-y-10 shadow-2xl">
                         <div class="space-y-5">
+                            <!-- 修改标题为动态文本 -->
                             <h3 id="resilience-title" class="font-serif">
                                 At £45 a month, you can secure £337,500 of cover for your family.
                             </h3>
+                            <!-- 删除了原来的那段文本 -->
                             <div class="p-7 md:p-8 bg-white/5 rounded-[2rem] border border-white/10">
                                 <div class="flex justify-between items-center mb-4">
                                     <span class="text-[11px] uppercase font-bold text-white/40 tracking-widest">Risk transferred</span>
@@ -522,24 +506,29 @@
                             </div>
                         </div>
 
-                        <div class="space-y-5">
+                        <!-- 修改说明文本区域 -->
+                        <div class="space-y-5"> <!-- 核心修改：space-y从6改为5 -->
+                            <!-- 新增总标题 -->
                             <h4 class="what-it-means-title">What this actually means</h4>
                             
-                            <div class="flex items-start gap-3">
+                            <!-- 第一段：固定月保费 -->
+                            <div class="flex items-start gap-3"> <!-- 核心修改：gap从4改为3 -->
                                 <i data-lucide="dollar-sign" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
                                 <div class="explanation-text">
                                     Life insurance works by exchanging a fixed monthly premium for a guaranteed cover amount.
                                 </div>
                             </div>
                             
-                            <div class="flex items-start gap-3">
+                            <!-- 第二段：赔付说明 -->
+                            <div class="flex items-start gap-3"> <!-- 核心修改：gap从4改为3 -->
                                 <i data-lucide="shield-check" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
                                 <div class="explanation-text">
                                     If you die during your policy term, your family receives that amount — regardless of how long the policy has been in place.
                                 </div>
                             </div>
                             
-                            <div class="flex items-start gap-3">
+                            <!-- 第三段：滑块说明 -->
+                            <div class="flex items-start gap-3"> <!-- 核心修改：gap从4改为3 -->
                                 <i data-lucide="sliders" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
                                 <div class="explanation-text">
                                     Use the slider to explore how different monthly premiums relate to different levels of cover.
@@ -566,8 +555,9 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
+                <!-- 卡片1：偿还房贷/租金 → 改回原来的房子图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container"> <!-- 核心修改：mb从8改为6 -->
                         <i data-lucide="home" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Pay off the mortgage or rent</h4>
@@ -575,8 +565,9 @@
                        A payout could be used to settle an outstanding mortgage or cover rent, helping your family stay in their home without that financial pressure falling on them. 
                     </p>
                 </div>
+                <!-- 卡片2：日常开支 → hand-coins 图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container"> <!-- 核心修改：mb从8改为6 -->
                         <i data-lucide="hand-coins" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Support day-to-day living costs</h4>
@@ -584,8 +575,9 @@
                         Without your income, everyday costs — food, bills, childcare, transport — still need to be met. A lump sum can help bridge that gap while your family adjusts.
                     </p>
                 </div>
+                <!-- 卡片3：偿还债务 → credit-card 图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container"> <!-- 核心修改：mb从8改为6 -->
                         <i data-lucide="credit-card" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Settle outstanding loans or debts</h4>
@@ -593,8 +585,9 @@
                         Life cover can also help clear other financial obligations — such as personal loans or outstanding debts — so your family is not left managing these alone.
                     </p>
                 </div>
+                <!-- 卡片4：安心喘息 → heart 图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container"> <!-- 核心修改：mb从8改为6 -->
                         <i data-lucide="heart" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Create space to make considered decisions</h4>
@@ -606,96 +599,184 @@
         </div>
     </section>
 
-    <!-- 5. Claims journey - 修改为线性流程图形式 -->
-    <section id="claims" class="py-32 md:py-36 px-4 md:px-8 bg-[#003A3A] min-h-screen">
-        <div class="max-w-7xl mx-auto w-full fade-section">
-            <div class="text-center mb-16">
-                <div class="section-label-dark inline-block mb-6">Chapter 3 · Claim journey</div>
-                <h2 class="text-5xl font-black text-white font-serif leading-tight mb-6">
-                    If something serious happens,<br><span class="text-green-400">what could the journey involve?</span>
-                </h2>
-                <p class="text-white/50 font-light text-lg leading-relaxed max-w-3xl mx-auto">
-                    The aim here is not to promise a perfect experience. It is to make the part of the journey that people fear most feel less uncertain — by showing what actually happens, step by step.
-                </p>
-            </div>
-
-            <!-- 线性流程图 -->
-            <div class="claims-timeline">
-                <!-- 步骤1：Trigger & Notify -->
-                <div class="timeline-step">
-                    <div class="step-number">1</div>
-                    <div class="step-content step-left">
-                        <h4 class="text-2xl font-bold text-white mb-2">Trigger & Notify</h4>
-                        <span class="text-xs text-green-400 uppercase font-bold tracking-widest mb-4 inline-block">INITIAL CONTACT</span>
-                        <p class="text-white/70 font-light leading-relaxed mb-4">
-                            For illness-related claims, you can notify us by completing an online claim form or by calling our specialist claims team. For life cover claims following a bereavement, a family member can contact us via our dedicated bereavement support page. The first step is to establish what has happened and what you need to do next.
-                        </p>
-                        <img src="2 3 1.png" alt="Trigger & Notify - Claim application information" class="step-illustration-full" loading="lazy">
-                    </div>
+    <!-- 5. Claims journey - 改为滑动切换版本（移除按钮，指示器移到下方） -->
+    <section id="claims" class="py-32 md:py-36 px-4 md:px-8 bg-[#003A3A] min-h-screen flex items-center">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="flex flex-col lg:flex-row gap-10 items-center fade-section"> <!-- 核心修改：gap从12改为10 -->
+                <!-- 左侧标题区域 -->
+                <div class="lg:w-2/5 space-y-7"> <!-- 核心修改：space-y从8改为7 -->
+                    <div class="section-label-dark">Chapter 3 · Claim journey</div>
+                    <h2 class="text-5xl font-black text-white font-serif leading-tight">
+                        If something serious happens,<br><span class="text-green-400">what could the journey involve?</span>
+                    </h2>
+                    <p class="text-white/50 font-light text-lg leading-relaxed">
+                        The aim here is not to promise a perfect experience. It is to make the part of the journey that people fear most feel less uncertain — by showing what actually happens, step by step.
+                    </p>
                 </div>
 
-                <!-- 步骤2：Evidence Gathering -->
-                <div class="timeline-step">
-                    <div class="step-number">2</div>
-                    <div class="step-content step-right">
-                        <h4 class="text-2xl font-bold text-white mb-2">Evidence Gathering</h4>
-                        <span class="text-xs text-green-400 uppercase font-bold tracking-widest mb-4 inline-block">VERIFICATION</span>
-                        <p class="text-white/70 font-light leading-relaxed mb-4">
-                            Depending on your claim type, you will need to provide specific documents. These typically include your policy number, details of your diagnosis, and your GP or hospital specialist's contact details. Copies of medical notes or correspondence are also helpful and can speed up the process. We will contact your GP or consultant directly if additional information is needed.
-                        </p>
-                        <img src="2 3 2.png" alt="Evidence Gathering - Document collection and verification" class="step-illustration-full" loading="lazy">
-                    </div>
-                </div>
+                <!-- 右侧轮播区域 -->
+                <div class="lg:w-3/5 w-full">
+                    <!-- 轮播容器 -->
+                    <div class="carousel-container" id="carousel">
+                        <!-- 步骤1：Trigger & Notify -->
+                        <div class="step-slide step-active bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden" data-step="1">
+                            <div class="grid md:grid-cols-2 gap-0">
+                                <!-- 左侧文字 -->
+                                <div class="p-8 md:p-10">
+                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
+                                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-[#003A3A] font-black text-lg">1</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-2xl font-bold text-white">Trigger & Notify</h4>
+                                            <span class="text-xs text-green-400 uppercase font-bold tracking-widest">INITIAL CONTACT</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-white/70 font-light leading-relaxed">
+                                        For illness-related claims, you can notify us by completing an online claim form or by calling our specialist claims team. For life cover claims following a bereavement, a family member can contact us via our dedicated bereavement support page. The first step is to establish what has happened and what you need to do next.
+                                    </p>
+                                </div>
+                                <!-- 右侧插画 - 替换为步骤1的图片 -->
+                                <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
+                                    <img src="2 3 1.png" alt="Trigger & Notify - Claim application information" class="step-illustration" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
 
-                <!-- 步骤3：Assessment & Review -->
-                <div class="timeline-step">
-                    <div class="step-number">3</div>
-                    <div class="step-content step-left">
-                        <h4 class="text-2xl font-bold text-white mb-2">Assessment & Review</h4>
-                        <span class="text-xs text-green-400 uppercase font-bold tracking-widest mb-4 inline-block">DEEP REVIEW</span>
-                        <p class="text-white/70 font-light leading-relaxed mb-4">
-                            Your claim is reviewed by a dedicated claims team, who check it against your policy terms and the evidence provided. You will receive updates on progress throughout this stage, so you always know where things stand.
-                        </p>
-                        <img src="2 3 3.png" alt="Assessment & Review - Claims team reviewing documents" class="step-illustration-full" loading="lazy">
-                    </div>
-                </div>
+                        <!-- 步骤2：Evidence Gathering -->
+                        <div class="step-slide step-hidden bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden" data-step="2">
+                            <div class="grid md:grid-cols-2 gap-0">
+                                <!-- 左侧文字 -->
+                                <div class="p-8 md:p-10">
+                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
+                                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-[#003A3A] font-black text-lg">2</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-2xl font-bold text-white">Evidence Gathering</h4>
+                                            <span class="text-xs text-green-400 uppercase font-bold tracking-widest">VERIFICATION</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-white/70 font-light leading-relaxed">
+                                        Depending on your claim type, you will need to provide specific documents. These typically include your policy number, details of your diagnosis, and your GP or hospital specialist's contact details. Copies of medical notes or correspondence are also helpful and can speed up the process. We will contact your GP or consultant directly if additional information is needed.
+                                    </p>
+                                </div>
+                                <!-- 右侧插画 - 替换为步骤2的图片 -->
+                                <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
+                                    <img src="2 3 2.png" alt="Evidence Gathering - Document collection and verification" class="step-illustration" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
 
-                <!-- 步骤4：The Decision -->
-                <div class="timeline-step">
-                    <div class="step-number">4</div>
-                    <div class="step-content step-right">
-                        <h4 class="text-2xl font-bold text-white mb-2">The Decision</h4>
-                        <span class="text-xs text-green-400 uppercase font-bold tracking-widest mb-4 inline-block">OUTCOME</span>
-                        <p class="text-white/70 font-light leading-relaxed mb-4">
-                            Once the assessment is complete, you will be informed of the outcome clearly. Scottish Widows paid 99% of life cover claims in 2024. If a claim is not approved, the reason will be explained to you.
-                        </p>
-                        <img src="2 3 4.png" alt="The Decision - Claim approval decision (99% success rate)" class="step-illustration-full" loading="lazy">
-                    </div>
-                </div>
+                        <!-- 步骤3：Assessment & Review -->
+                        <div class="step-slide step-hidden bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden" data-step="3">
+                            <div class="grid md:grid-cols-2 gap-0">
+                                <!-- 左侧文字 -->
+                                <div class="p-8 md:p-10">
+                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
+                                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-[#003A3A] font-black text-lg">3</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-2xl font-bold text-white">Assessment & Review</h4>
+                                            <span class="text-xs text-green-400 uppercase font-bold tracking-widest">DEEP REVIEW</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-white/70 font-light leading-relaxed">
+                                        Your claim is reviewed by a dedicated claims team, who check it against your policy terms and the evidence provided. You will receive updates on progress throughout this stage, so you always know where things stand.
+                                    </p>
+                                </div>
+                                <!-- 右侧插画 - 替换为步骤3的图片 -->
+                                <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
+                                    <img src="2 3 3.png" alt="Assessment & Review - Claims team reviewing documents" class="step-illustration" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
 
-                <!-- 步骤5：Payout & Relief -->
-                <div class="timeline-step">
-                    <div class="step-number">5</div>
-                    <div class="step-content step-left">
-                        <h4 class="text-2xl font-bold text-white mb-2">Payout & Relief</h4>
-                        <span class="text-xs text-green-400 uppercase font-bold tracking-widest mb-4 inline-block">COMPLETION</span>
-                        <p class="text-white/70 font-light leading-relaxed mb-4">
-                            Approved claims are paid as promptly as possible. Life insurance and critical illness cover pay out as a lump sum. Income protection provides regular monthly payments for the duration agreed under your policy. Payment is made to the nominated beneficiary or bank account.
-                        </p>
-                        <img src="2 3 5.png" alt="Payout & Relief - Financial payout" class="step-illustration-full" loading="lazy">
-                    </div>
-                </div>
+                        <!-- 步骤4：The Decision -->
+                        <div class="step-slide step-hidden bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden" data-step="4">
+                            <div class="grid md:grid-cols-2 gap-0">
+                                <!-- 左侧文字 -->
+                                <div class="p-8 md:p-10">
+                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
+                                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-[#003A3A] font-black text-lg">4</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-2xl font-bold text-white">The Decision</h4>
+                                            <span class="text-xs text-green-400 uppercase font-bold tracking-widest">OUTCOME</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-white/70 font-light leading-relaxed">
+                                        Once the assessment is complete, you will be informed of the outcome clearly. Scottish Widows paid 99% of life cover claims in 2024. If a claim is not approved, the reason will be explained to you.
+                                    </p>
+                                </div>
+                                <!-- 右侧插画 - 替换为步骤4的图片 -->
+                                <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
+                                    <img src="2 3 4.png" alt="The Decision - Claim approval decision (99% success rate)" class="step-illustration" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
 
-                <!-- 步骤6：Ongoing Support -->
-                <div class="timeline-step">
-                    <div class="step-number">6</div>
-                    <div class="step-content step-right">
-                        <h4 class="text-2xl font-bold text-white mb-2">Ongoing Support</h4>
-                        <span class="text-xs text-green-400 uppercase font-bold tracking-widest mb-4 inline-block">POST-CLAIM</span>
-                        <p class="text-white/70 font-light leading-relaxed mb-4">
-                            Throughout the process, we will keep you updated on the progress of your claim. You can contact us at any time with questions. If you hold a Scottish Widows Protect policy, you also have access to Scottish Widows Care, which provides practical and emotional support through RedArc — at no additional cost.
-                        </p>
-                        <img src="2 3 6.png" alt="Ongoing Support - Care and support services" class="step-illustration-full" loading="lazy">
+                        <!-- 步骤5：Payout & Relief -->
+                        <div class="step-slide step-hidden bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden" data-step="5">
+                            <div class="grid md:grid-cols-2 gap-0">
+                                <!-- 左侧文字 -->
+                                <div class="p-8 md:p-10">
+                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
+                                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-[#003A3A] font-black text-lg">5</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-2xl font-bold text-white">Payout & Relief</h4>
+                                            <span class="text-xs text-green-400 uppercase font-bold tracking-widest">COMPLETION</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-white/70 font-light leading-relaxed">
+                                        Approved claims are paid as promptly as possible. Life insurance and critical illness cover pay out as a lump sum. Income protection provides regular monthly payments for the duration agreed under your policy. Payment is made to the nominated beneficiary or bank account.
+                                    </p>
+                                </div>
+                                <!-- 右侧插画 - 替换为步骤5的图片 -->
+                                <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
+                                    <img src="2 3 5.png" alt="Payout & Relief - Financial payout" class="step-illustration" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 步骤6：Ongoing Support -->
+                        <div class="step-slide step-hidden bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden" data-step="6">
+                            <div class="grid md:grid-cols-2 gap-0">
+                                <!-- 左侧文字 -->
+                                <div class="p-8 md:p-10">
+                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
+                                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
+                                            <span class="text-[#003A3A] font-black text-lg">6</span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-2xl font-bold text-white">Ongoing Support</h4>
+                                            <span class="text-xs text-green-400 uppercase font-bold tracking-widest">POST-CLAIM</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-white/70 font-light leading-relaxed">
+                                        Throughout the process, we will keep you updated on the progress of your claim. You can contact us at any time with questions. If you hold a Scottish Widows Protect policy, you also have access to Scottish Widows Care, which provides practical and emotional support through RedArc — at no additional cost.
+                                    </p>
+                                </div>
+                                <!-- 右侧插画 - 替换为步骤6的图片 -->
+                                <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
+                                    <img src="2 3 6.png" alt="Ongoing Support - Care and support services" class="step-illustration" loading="lazy">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 步骤指示器（移到轮播下方） -->
+                    <div class="indicators-container" id="stepIndicators">
+                        <div class="indicator-dot bg-green-400"></div>
+                        <div class="indicator-dot bg-white/20"></div>
+                        <div class="indicator-dot bg-white/20"></div>
+                        <div class="indicator-dot bg-white/20"></div>
+                        <div class="indicator-dot bg-white/20"></div>
+                        <div class="indicator-dot bg-white/20"></div>
                     </div>
                 </div>
             </div>
@@ -713,23 +794,26 @@
                 This page is here to make the journey more understandable — not to push you into a decision. Whatever you choose to do next is entirely up to you.
             </p>
 
-            <div class="grid md:grid-cols-3 gap-7">
+            <div class="grid md:grid-cols-3 gap-7"> <!-- 核心修改：gap从8改为7 -->
+                <!-- Product details 卡片 - 添加跳转链接 -->
                 <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]" onclick="window.open('https://www.scottishwidows.co.uk/life-insurance.html', '_blank')">
-                    <div class="w-16 h-16 bg-[#003A3A] text-white rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container">
+                    <div class="w-16 h-16 bg-[#003A3A] text-white rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container"> <!-- 核心修改：mb从6改为5 -->
                         <i data-lucide="file-text" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Product details</h4>
                     <p class="text-sm text-gray-500 mb-6 leading-7 font-light">If you feel ready to explore cover options, compare products, or get a quote, you can move into the main journey from here.</p>
                 </div>
                 
+                <!-- 修改：Save for later → Got a question? 客服咨询功能 -->
                 <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]" id="customer-support-card">
-                    <div class="w-16 h-16 bg-[#003A3A]/10 text-[#003A3A] rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container">
+                    <div class="w-16 h-16 bg-[#003A3A]/10 text-[#003A3A] rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container"> <!-- 核心修改：mb从6改为5 -->
                         <i data-lucide="headphones" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Got a question?</h4>
                     <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Speak to our friendly team for impartial advice with no pressure to buy.</p>
+                    <!-- 新增：显示客服联系方式 -->
                     <div class="mt-4 text-center">
-                        <a href="tel:+448000271846" class="inline-flex items-center justify-center gap-2 text-[#003A3A] font-bold text-sm hover:text-[#005a5a] transition-colors">
+                        <a href="tel:+448000271846" class="inline-flex items-center justify-center gap-2 text-[#003A3A] font-bold text-sm hover:text-[#005a5a] transition-colors"> <!-- 核心修改：gap从2改为1 -->
                             <i data-lucide="phone" class="w-4 h-4"></i>
                             0800 027 1846
                         </a>
@@ -737,8 +821,9 @@
                     </div>
                 </div>
                 
+                <!-- Discuss it 卡片 - 添加 WhatsApp 分享功能 -->
                 <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]" id="whatsapp-share-card">
-                    <div class="w-16 h-16 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container">
+                    <div class="w-16 h-16 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container"> <!-- 核心修改：mb从6改为5 -->
                         <i data-lucide="share-2" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Discuss it</h4>
@@ -749,7 +834,9 @@
     </section>
 
     <script>
+    // 强制立即执行代码，确保修改生效
     (function() {
+        // 初始化所有 Lucide 图标
         try {
             lucide.createIcons({
                 attrs: {
@@ -762,6 +849,7 @@
             console.error('Lucide 图标初始化失败:', error);
         }
 
+        // Scroll Animation Observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -801,19 +889,24 @@
             const coverage = val * LEVERAGE_MULTIPLIER;
             const progress = (val - MIN_VALUE) / (MAX_VALUE - MIN_VALUE);
 
+            // Update Text
             displayPremium.textContent = `£${val}`;
             displayCoverage.textContent = `£${coverage.toLocaleString()}`;
             transferAmount.textContent = `£${coverage.toLocaleString()}`;
             transferProgress.style.width = `${progress * 100}%`;
             
+            // 更新动态标题
             resilienceTitle.textContent = `At £${val} a month, you can secure £${coverage.toLocaleString()} of cover for your family.`;
 
+            // 保持天平水平
             beamScene.style.transform = `translateX(-50%) rotate(0deg)`;
             leftUpright.style.transform = `rotate(0deg)`;
             rightUpright.style.transform = `rotate(0deg)`;
 
+            // 调整缩放比例（适配新的图标尺寸）
             const scale = clamp(1.0 + (progress * 0.6), 1.0, 1.6);
             
+            // 应用缩放比例
             riskWeight.style.transform = `scale(${scale})`;
             riskWeight.style.opacity = 1;
             
@@ -821,6 +914,7 @@
             inputIcon.style.opacity = 1;
         }
 
+        // 立即初始化滑块
         if (slider) {
             updateSimulator(parseInt(slider.value, 10));
             slider.addEventListener('input', (e) => {
@@ -849,6 +943,162 @@
             });
         }
 
+        // 理赔流程滑动切换逻辑
+        const totalSteps = 6;
+        let currentStep = 1;
+        let isHovering = false;
+        let mouseX = 0;
+        let lastMouseX = 0;
+        let isAnimating = false;
+        let touchStartX = 0; // 修复：声明触摸事件变量
+        const sensitivity = 2;
+        const animationDuration = 300;
+        
+        // DOM元素
+        const steps = document.querySelectorAll('[data-step]');
+        const indicators = document.querySelectorAll('.indicator-dot');
+        const carousel = document.getElementById('carousel');
+        
+        // 更新步骤显示
+        function updateStepDisplay() {
+            if (isAnimating) return;
+            isAnimating = true;
+            
+            steps.forEach(step => {
+                step.classList.remove('step-active');
+                step.classList.add('step-hidden');
+            });
+            
+            const activeStep = document.querySelector(`[data-step="${currentStep}"]`);
+            activeStep.classList.remove('step-hidden');
+            activeStep.classList.add('step-active');
+            
+            // 更新指示器
+            indicators.forEach((dot, index) => {
+                if (index + 1 === currentStep) {
+                    dot.classList.remove('bg-white/20');
+                    dot.classList.add('bg-green-400');
+                    dot.style.transform = 'scale(1.2)';
+                } else {
+                    dot.classList.remove('bg-green-400');
+                    dot.classList.add('bg-white/20');
+                    dot.style.transform = 'scale(1)';
+                }
+                dot.style.transition = 'all 0.2s ease';
+            });
+            
+            carousel.setAttribute('aria-valuenow', currentStep);
+            
+            setTimeout(() => {
+                isAnimating = false;
+            }, animationDuration);
+        }
+        
+        // 切换到指定步骤
+        function goToStep(targetStep) {
+            if (targetStep < 1 || targetStep > totalSteps || isAnimating || targetStep === currentStep) {
+                return;
+            }
+            
+            currentStep = targetStep;
+            updateStepDisplay();
+        }
+        
+        // 下一页/上一页
+        function goToNextStep() { goToStep(currentStep + 1); }
+        function goToPrevStep() { goToStep(currentStep - 1); }
+        
+        // 鼠标移动检测
+        function handleMouseMove(e) {
+            if (!isHovering || isAnimating) return;
+            
+            mouseX = e.clientX;
+            const deltaX = mouseX - lastMouseX;
+            
+            if (Math.abs(deltaX) > sensitivity) {
+                deltaX < 0 ? goToNextStep() : goToPrevStep();
+                lastMouseX = mouseX;
+            }
+        }
+        
+        // 绑定轮播事件
+        if (carousel) {
+            carousel.addEventListener('mouseenter', (e) => {
+                isHovering = true;
+                lastMouseX = e.clientX;
+                carousel.style.cursor = 'grab';
+            });
+            
+            carousel.addEventListener('mouseleave', () => {
+                isHovering = false;
+                carousel.style.cursor = 'default';
+            });
+            
+            carousel.addEventListener('mousemove', handleMouseMove);
+            
+            // 指示器点击
+            indicators.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    goToStep(index + 1);
+                });
+                
+                dot.addEventListener('mouseenter', () => {
+                    if (!dot.classList.contains('bg-green-400')) {
+                        dot.style.transform = 'scale(1.3)';
+                        dot.style.backgroundColor = 'rgba(255,255,255,0.4)';
+                    }
+                });
+                
+                dot.addEventListener('mouseleave', () => {
+                    if (!dot.classList.contains('bg-green-400')) {
+                        dot.style.transform = 'scale(1)';
+                        dot.style.backgroundColor = 'rgba(255,255,255,0.2)';
+                    }
+                });
+            });
+            
+            // 触摸事件
+            carousel.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            
+            carousel.addEventListener('touchend', (e) => {
+                const touchEndX = e.changedTouches[0].screenX;
+                const swipeDistance = touchEndX - touchStartX;
+                
+                if (Math.abs(swipeDistance) > 50) {
+                    swipeDistance < 0 ? goToNextStep() : goToPrevStep();
+                }
+            }, { passive: true });
+            
+            // 键盘导航
+            document.addEventListener('keydown', (e) => {
+                const isCarouselFocused = document.activeElement === carousel || 
+                                          carousel.contains(document.activeElement);
+                
+                if (isCarouselFocused || e.target.tagName === 'BODY') {
+                    if (e.key === 'ArrowRight') {
+                        e.preventDefault();
+                        goToNextStep();
+                    } else if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        goToPrevStep();
+                    }
+                }
+            });
+            
+            // 初始化轮播
+            carousel.tabIndex = 0;
+            carousel.setAttribute('role', 'slider');
+            carousel.setAttribute('aria-valuemin', '1');
+            carousel.setAttribute('aria-valuemax', totalSteps);
+            carousel.setAttribute('aria-valuenow', currentStep);
+            
+            // 立即更新轮播显示
+            updateStepDisplay();
+        }
+        
+        // 强制触发所有动画元素显示（调试用）
         setTimeout(() => {
             document.querySelectorAll('.fade-section').forEach(el => {
                 el.classList.add('visible');
