@@ -250,51 +250,32 @@
             right: -6px;
         }
 
-        /* 轮播动画样式 - 新增 */
-        .step-slide {
-            transition: all 0.5s ease-in-out;
-        }
-        .step-hidden {
-            opacity: 0;
-            transform: translateX(100%);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-        }
-        .step-active {
-            opacity: 1;
-            transform: translateX(0);
-            position: relative;
-        }
-        
-        /* 轮播容器样式 - 新增（优化滑动体验） */
-        .carousel-container {
-            position: relative;
-            overflow: hidden;
-            min-height: 300px;
-            touch-action: pan-x; /* 优化移动端滑动 */
-            user-select: none; /* 防止拖拽时选中文字 */
-            -webkit-user-select: none;
-        }
-        
-        /* 核心修改：缩小指示器间距（从3px改为2px） */
-        .indicator-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        /* 核心修改：缩小指示器容器间距（从3px改为2px） */
-        .indicators-container {
-            display: flex;
-            gap: 2px; /* 从3px缩小到2px */
-            justify-content: center;
-            margin-top: 16px;
-        }
-        
+        /* --- Claim Journey Z-Path 专用 --- */
+.claims-grid-container {
+    position: relative;
+}
+
+/* 桌面端中轴线 - 使用半透明绿色引导感 */
+@media (min-width: 768px) {
+    .claims-grid-container::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 40px;
+        bottom: 40px;
+        width: 2px;
+        background: linear-gradient(to bottom, transparent, rgba(74, 222, 128, 0.2), transparent);
+        transform: translateX(-50%);
+    }
+}
+
+.step-node {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-node:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
         /* 2.5D插画容器样式 - 新增 */
         .step-illustration {
             width: 100%;
@@ -330,6 +311,29 @@
         .step-illustration:hover {
             transform: scale(1.02);
         }
+
+        /* 针对理赔流程的对齐优化 */
+.claims-layout-grid {
+    display: grid;
+    grid-template-columns: 1fr 500px 1fr; /* 中间栏放大到500px，左右栏平分 */
+    align-items: start;
+    gap: 20px;
+}
+
+@media (max-width: 1024px) {
+    .claims-layout-grid {
+        grid-template-columns: 1fr 400px 1fr;
+    }
+}
+
+/* 移动端降级为单列 */
+@media (max-width: 768px) {
+    .claims-layout-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
     </style>
 </head>
 <body class="selection:bg-[#E30613] selection:text-white">
@@ -598,190 +602,84 @@
             </div>
         </div>
     </section>
+<!-- 5. Ending -->
+    <section id="claims" class="py-24 md:py-32 px-4 md:px-8 bg-[#F8FAF9]">
+    <div class="max-w-7xl mx-auto">
+        <div class="mb-20 text-center fade-section">
+            <div class="section-label mb-6">Chapter 3 · Claim journey</div>
+            <h2 class="text-5xl md:text-6xl font-black text-[#003A3A] font-serif leading-tight">
+                If something serious happens,<br><span class="text-green-600">how does the journey work?</span>
+            </h2>
+        </div>
 
-    <!-- 5. Claims journey - 改为滑动切换版本（移除按钮，指示器移到下方） -->
-    <section id="claims" class="py-32 md:py-36 px-4 md:px-8 bg-[#003A3A] min-h-screen flex items-center">
-        <div class="max-w-7xl mx-auto w-full">
-            <div class="flex flex-col lg:flex-row gap-10 items-center fade-section"> <!-- 核心修改：gap从12改为10 -->
-                <!-- 左侧标题区域 -->
-                <div class="lg:w-2/5 space-y-7"> <!-- 核心修改：space-y从8改为7 -->
-                    <div class="section-label-dark">Chapter 3 · Claim journey</div>
-                    <h2 class="text-5xl font-black text-white font-serif leading-tight">
-                        If something serious happens,<br><span class="text-green-400">what could the journey involve?</span>
-                    </h2>
-                    <p class="text-white/50 font-light text-lg leading-relaxed">
-                        The aim here is not to promise a perfect experience. It is to make the part of the journey that people fear most feel less uncertain — by showing what actually happens, step by step.
+        <div class="claims-layout-grid fade-section">
+            
+            <div class="hidden md:flex flex-col">
+                <div class="mt-[20px] text-right pr-8">
+                    <h4 class="text-2xl font-bold text-[#003A3A] mb-2">Trigger & Notify</h4>
+                    <span class="text-[10px] text-green-600 uppercase font-bold tracking-widest block mb-3">INITIAL CONTACT</span>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        For illness-related claims, notify us via our online form or specialist team. For life cover, family can use our bereavement support page.
                     </p>
                 </div>
 
-                <!-- 右侧轮播区域 -->
-                <div class="lg:w-3/5 w-full">
-                    <!-- 轮播容器 -->
-                    <div class="carousel-container" id="carousel">
-                        <!-- 步骤1：Trigger & Notify -->
-                        <div class="step-slide step-active bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden" data-step="1">
-                            <div class="grid md:grid-cols-2 gap-0">
-                                <!-- 左侧文字 -->
-                                <div class="p-8 md:p-10">
-                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
-                                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
-                                            <span class="text-[#003A3A] font-black text-lg">1</span>
-                                        </div>
-                                        <div>
-                                            <h4 class="text-2xl font-bold text-white">Trigger & Notify</h4>
-                                            <span class="text-xs text-green-400 uppercase font-bold tracking-widest">INITIAL CONTACT</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-white/70 font-light leading-relaxed">
-                                        For illness-related claims, you can notify us by completing an online claim form or by calling our specialist claims team. For life cover claims following a bereavement, a family member can contact us via our dedicated bereavement support page. The first step is to establish what has happened and what you need to do next.
-                                    </p>
-                                </div>
-                                <!-- 右侧插画 - 替换为步骤1的图片 -->
-                                <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
-                                    <img src="2 3 1.png" alt="Trigger & Notify - Claim application information" class="step-illustration" loading="lazy">
-                                </div>
-                            </div>
-                        </div>
+                <div class="mt-[320px] text-right pr-8">
+                    <h4 class="text-2xl font-bold text-[#003A3A] mb-2">Assessment & Review</h4>
+                    <span class="text-[10px] text-green-600 uppercase font-bold tracking-widest block mb-3">DEEP REVIEW</span>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Your claim is reviewed by a dedicated claims team against policy terms. You will receive updates on progress throughout.
+                    </p>
+                </div>
 
-                        <!-- 步骤2：Evidence Gathering -->
-                        <div class="step-slide step-hidden bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden" data-step="2">
-                            <div class="grid md:grid-cols-2 gap-0">
-                                <!-- 左侧文字 -->
-                                <div class="p-8 md:p-10">
-                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
-                                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
-                                            <span class="text-[#003A3A] font-black text-lg">2</span>
-                                        </div>
-                                        <div>
-                                            <h4 class="text-2xl font-bold text-white">Evidence Gathering</h4>
-                                            <span class="text-xs text-green-400 uppercase font-bold tracking-widest">VERIFICATION</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-white/70 font-light leading-relaxed">
-                                        Depending on your claim type, you will need to provide specific documents. These typically include your policy number, details of your diagnosis, and your GP or hospital specialist's contact details. Copies of medical notes or correspondence are also helpful and can speed up the process. We will contact your GP or consultant directly if additional information is needed.
-                                    </p>
-                                </div>
-                                <!-- 右侧插画 - 替换为步骤2的图片 -->
-                                <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
-                                    <img src="2 3 2.png" alt="Evidence Gathering - Document collection and verification" class="step-illustration" loading="lazy">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 步骤3：Assessment & Review -->
-                        <div class="step-slide step-hidden bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden" data-step="3">
-                            <div class="grid md:grid-cols-2 gap-0">
-                                <!-- 左侧文字 -->
-                                <div class="p-8 md:p-10">
-                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
-                                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
-                                            <span class="text-[#003A3A] font-black text-lg">3</span>
-                                        </div>
-                                        <div>
-                                            <h4 class="text-2xl font-bold text-white">Assessment & Review</h4>
-                                            <span class="text-xs text-green-400 uppercase font-bold tracking-widest">DEEP REVIEW</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-white/70 font-light leading-relaxed">
-                                        Your claim is reviewed by a dedicated claims team, who check it against your policy terms and the evidence provided. You will receive updates on progress throughout this stage, so you always know where things stand.
-                                    </p>
-                                </div>
-                                <!-- 右侧插画 - 替换为步骤3的图片 -->
-                                <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
-                                    <img src="2 3 3.png" alt="Assessment & Review - Claims team reviewing documents" class="step-illustration" loading="lazy">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 步骤4：The Decision -->
-                        <div class="step-slide step-hidden bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden" data-step="4">
-                            <div class="grid md:grid-cols-2 gap-0">
-                                <!-- 左侧文字 -->
-                                <div class="p-8 md:p-10">
-                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
-                                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
-                                            <span class="text-[#003A3A] font-black text-lg">4</span>
-                                        </div>
-                                        <div>
-                                            <h4 class="text-2xl font-bold text-white">The Decision</h4>
-                                            <span class="text-xs text-green-400 uppercase font-bold tracking-widest">OUTCOME</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-white/70 font-light leading-relaxed">
-                                        Once the assessment is complete, you will be informed of the outcome clearly. Scottish Widows paid 99% of life cover claims in 2024. If a claim is not approved, the reason will be explained to you.
-                                    </p>
-                                </div>
-                                <!-- 右侧插画 - 替换为步骤4的图片 -->
-                                <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
-                                    <img src="2 3 4.png" alt="The Decision - Claim approval decision (99% success rate)" class="step-illustration" loading="lazy">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 步骤5：Payout & Relief -->
-                        <div class="step-slide step-hidden bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden" data-step="5">
-                            <div class="grid md:grid-cols-2 gap-0">
-                                <!-- 左侧文字 -->
-                                <div class="p-8 md:p-10">
-                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
-                                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
-                                            <span class="text-[#003A3A] font-black text-lg">5</span>
-                                        </div>
-                                        <div>
-                                            <h4 class="text-2xl font-bold text-white">Payout & Relief</h4>
-                                            <span class="text-xs text-green-400 uppercase font-bold tracking-widest">COMPLETION</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-white/70 font-light leading-relaxed">
-                                        Approved claims are paid as promptly as possible. Life insurance and critical illness cover pay out as a lump sum. Income protection provides regular monthly payments for the duration agreed under your policy. Payment is made to the nominated beneficiary or bank account.
-                                    </p>
-                                </div>
-                                <!-- 右侧插画 - 替换为步骤5的图片 -->
-                                <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
-                                    <img src="2 3 5.png" alt="Payout & Relief - Financial payout" class="step-illustration" loading="lazy">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 步骤6：Ongoing Support -->
-                        <div class="step-slide step-hidden bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden" data-step="6">
-                            <div class="grid md:grid-cols-2 gap-0">
-                                <!-- 左侧文字 -->
-                                <div class="p-8 md:p-10">
-                                    <div class="flex items-center gap-3 mb-4"> <!-- 核心修改：gap从4改为3 -->
-                                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center flex-shrink-0">
-                                            <span class="text-[#003A3A] font-black text-lg">6</span>
-                                        </div>
-                                        <div>
-                                            <h4 class="text-2xl font-bold text-white">Ongoing Support</h4>
-                                            <span class="text-xs text-green-400 uppercase font-bold tracking-widest">POST-CLAIM</span>
-                                        </div>
-                                    </div>
-                                    <p class="text-white/70 font-light leading-relaxed">
-                                        Throughout the process, we will keep you updated on the progress of your claim. You can contact us at any time with questions. If you hold a Scottish Widows Protect policy, you also have access to Scottish Widows Care, which provides practical and emotional support through RedArc — at no additional cost.
-                                    </p>
-                                </div>
-                                <!-- 右侧插画 - 替换为步骤6的图片 -->
-                                <div class="bg-white/8 flex items-center justify-center p-4 md:p-8 illustration-wrapper">
-                                    <img src="2 3 6.png" alt="Ongoing Support - Care and support services" class="step-illustration" loading="lazy">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 步骤指示器（移到轮播下方） -->
-                    <div class="indicators-container" id="stepIndicators">
-                        <div class="indicator-dot bg-green-400"></div>
-                        <div class="indicator-dot bg-white/20"></div>
-                        <div class="indicator-dot bg-white/20"></div>
-                        <div class="indicator-dot bg-white/20"></div>
-                        <div class="indicator-dot bg-white/20"></div>
-                        <div class="indicator-dot bg-white/20"></div>
-                    </div>
+                <div class="mt-[340px] text-right pr-8">
+                    <h4 class="text-2xl font-bold text-[#003A3A] mb-2">Payout & Relief</h4>
+                    <span class="text-[10px] text-green-600 uppercase font-bold tracking-widest block mb-3">COMPLETION</span>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Approved claims are paid promptly. Life insurance pays out as a lump sum to the nominated beneficiary or bank account.
+                    </p>
                 </div>
             </div>
+
+            <div class="w-full">
+                <img src="1.png" alt="Claim Journey Path" class="w-full h-auto">
+            </div>
+
+            <div class="hidden md:flex flex-col">
+                <div class="mt-[160px] text-left pl-8">
+                    <h4 class="text-2xl font-bold text-[#003A3A] mb-2">Evidence Gathering</h4>
+                    <span class="text-[10px] text-green-600 uppercase font-bold tracking-widest block mb-3">VERIFICATION</span>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Provide specific documents. Copies of medical notes are helpful. We may contact your GP directly to speed up the process.
+                    </p>
+                </div>
+
+                <div class="mt-[330px] text-left pl-8">
+                    <h4 class="text-2xl font-bold text-[#003A3A] mb-2">The Decision</h4>
+                    <span class="text-[10px] text-green-600 uppercase font-bold tracking-widest block mb-3">OUTCOME</span>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        You will be informed of the outcome clearly. Scottish Widows paid 99% of life cover claims in 2024.
+                    </p>
+                </div>
+
+                <div class="mt-[340px] text-left pl-8">
+                    <h4 class="text-2xl font-bold text-[#003A3A] mb-2">Ongoing Support</h4>
+                    <span class="text-[10px] text-green-600 uppercase font-bold tracking-widest block mb-3">POST-CLAIM</span>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        If you hold a Scottish Widows Protect policy, you have access to practical and emotional support through RedArc.
+                    </p>
+                </div>
+            </div>
+
+            <div class="md:hidden w-full space-y-6">
+                <img src="1.png" class="w-full max-w-sm mx-auto mb-8 opacity-40">
+                <div class="p-6 bg-white rounded-3xl border border-gray-100 shadow-sm">
+                    <h4 class="font-bold text-[#003A3A]">1. Trigger & Notify</h4>
+                    <p class="text-gray-500 text-sm mt-2">For illness-related claims, notify us via our online form or specialist team.</p>
+                </div>
+                </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- 6. Ending -->
     <section id="next" class="py-28 md:py-36 px-4 md:px-8 bg-white">
