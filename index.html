@@ -334,6 +334,66 @@
         align-items: center;
     }
 }
+
+/* 新增：时间轴样式 */
+.timeline-container {
+    max-width: 800px;
+    margin: 3rem auto;
+    width: 100%;
+}
+
+.timeline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 0 1rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 2rem;
+    right: 2rem;
+    height: 1px;
+    background-color: #ccc;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.timeline-dot {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #333;
+    position: relative;
+    z-index: 2;
+}
+
+.timeline-label {
+    position: absolute;
+    bottom: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: #666;
+    white-space: nowrap;
+}
+
+.timeline-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
     </style>
 </head>
 <body class="selection:bg-[#E30613] selection:text-white">
@@ -349,14 +409,13 @@
 
         <div class="hidden lg:flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
             <a href="#intro" class="hover:text-[#003A3A] transition-colors">Intro</a>
-            <a href="#journey" class="hover:text-[#003A3A] transition-colors">Journey</a>
             <a href="#simulator" class="hover:text-[#003A3A] transition-colors">Logic</a>
             <a href="#claims" class="hover:text-[#003A3A] transition-colors">Claim</a>
             <a href="#next" class="hover:text-[#003A3A] transition-colors">Next</a>
         </div>
     </nav>
 
-    <!-- 1. Intro -->
+    <!-- 1. 合并后的 Intro + Journey Overview -->
     <section id="intro" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
         <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#003A3A]/5 rounded-full blur-[100px]"></div>
         <div class="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] bg-[#E30613]/5 rounded-full blur-[120px]"></div>
@@ -367,53 +426,48 @@
                 Protection Journey Preview
             </div>
 
-            <h1 class="text-5xl md:text-7xl font-bold mb-8 leading-[1.08] font-serif text-[#003A3A] tracking-tight">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-[1.08] font-serif text-[#003A3A] tracking-tight">
                 Take Your Time,<br />
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#003A3A] to-[#005a5a]">Get the Clarity</span>
             </h1>
 
-            <p class="text-lg md:text-xl mb-12 text-gray-600/80 max-w-3xl mx-auto leading-relaxed font-light">
-                This journey is here to help you understand how life insurance works — before you're ready to compare products or get a quote.  
+            <p class="text-lg md:text-xl mb-8 text-gray-600/80 max-w-3xl mx-auto leading-relaxed font-light">
+                Before you purchase anything, see how protection actually works.
             </p>
 
+            <h2 class="text-xl font-bold text-[#003A3A] mb-6">What you'll learn on this journey</h2>
+            
+            <!-- 时间轴 -->
+            <div class="timeline-container mb-10">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot">1</div>
+                        <div class="timeline-label">Balance</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">2</div>
+                        <div class="timeline-label">Value</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">3</div>
+                        <div class="timeline-label">Coverage</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">4</div>
+                        <div class="timeline-label">Claims</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">5</div>
+                        <div class="timeline-label">Apply</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="flex flex-col items-center gap-6">
-                <a href="#journey" class="group bg-[#003A3A] text-white px-10 py-6 rounded-full font-bold text-xl transition-all flex items-center gap-2"> <!-- 核心修改：gap从3改为2 -->
+                <a href="#simulator" class="group bg-[#003A3A] text-white px-10 py-6 rounded-full font-bold text-xl transition-all flex items-center gap-2">
                     Start the journey <i data-lucide="arrow-down"></i>
                 </a>
                 <p class="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold">No quote · No form · No pressure</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- 2. Journey Overview -->
-    <section id="journey" class="py-28 md:py-36 px-4 md:px-8">
-        <div class="max-w-7xl mx-auto fade-section">
-            <div class="max-w-3xl mb-20">
-                <div class="section-label mb-6">Journey overview</div>
-                <h2 class="text-5xl md:text-6xl font-black text-[#003A3A] font-serif leading-tight mb-7">
-                    What you'll learn on this journey
-                </h2>
-                <p class="text-xl text-gray-500 font-light leading-relaxed">
-                    Through simple interactions and card-reading, you’ll clear the fog around protection and build the perspective you need to judge for yourself. 
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="step-card p-8 rounded-[2rem] bg-white border border-black/[0.05] shadow-sm">
-                    <div class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-black mb-4">01</div>
-                    <h3 class="text-lg font-bold text-[#003A3A] mb-3">Value & Cost</h3>
-                    <p class="text-sm text-gray-500 leading-7 font-light">See how a monthly cost relates to a Cover Amount. </p>
-                </div>
-                <div class="step-card p-8 rounded-[2rem] bg-white border border-black/[0.05] shadow-sm">
-                    <div class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-black mb-4">02</div>
-                    <h3 class="text-lg font-bold text-[#003A3A] mb-3">See what it means in life</h3>
-                    <p class="text-sm text-gray-500 leading-7 font-light">See exactly how protection supports your family’s daily life. </p>
-                </div>
-                <div class="step-card p-8 rounded-[2rem] bg-white border border-black/[0.05] shadow-sm">
-                    <div class="text-[11px] uppercase tracking-[0.2em] text-gray-400 font-black mb-4">03</div>
-                    <h3 class="text-lg font-bold text-[#003A3A] mb-3">The Claims Process</h3>
-                    <p class="text-sm text-gray-500 leading-7 font-light">See exactly how the process actually works.</p>
-                </div>
             </div>
         </div>
     </section>
@@ -426,7 +480,7 @@
                 <div class="space-y-6">
                     <div class="section-label">Chapter 1 · HOW PROTECTION WORKS</div>
 
-                    <div class="flex items-center gap-2 text-[#E30613] font-bold text-sm tracking-widest uppercase"> <!-- 核心修改：gap从3改为2 -->
+                    <div class="flex items-center gap-2 text-[#E30613] font-bold text-sm tracking-widest uppercase">
                         <i data-lucide="scale" class="w-4 h-4"></i>
                         EXPLORE · COVER & COST
                     </div>
@@ -452,8 +506,8 @@
                         <!-- Left endpoint - 月保费 -->
                         <div class="absolute left-0 bottom-[95px] -translate-x-1/2">
                             <div id="left-upright" class="flex flex-col items-center origin-center">
-                                <div id="input-icon" class="w-12 h-12 bg-white shadow-xl rounded-2xl flex items-center justify-center border border-gray-50 mb-6"> <!-- 修改：尺寸改为w-12 h-12 -->
-                                    <i data-lucide="check-circle" class="text-[#003A3A] w-6 h-6"></i> <!-- 调整图标尺寸保持比例 -->
+                                <div id="input-icon" class="w-12 h-12 bg-white shadow-xl rounded-2xl flex items-center justify-center border border-gray-50 mb-6">
+                                    <i data-lucide="check-circle" class="text-[#003A3A] w-6 h-6"></i>
                                 </div>
                                 <!-- 关键修改：添加容器类确保文字不被遮挡 -->
                                 <div class="text-center whitespace-nowrap weight-label-container">
@@ -466,8 +520,8 @@
                         <!-- Right endpoint - 保障金额 -->
                         <div class="absolute right-0 bottom-[95px] translate-x-1/2">
                             <div id="right-upright" class="flex flex-col items-center origin-center">
-                                <div id="risk-weight" class="w-20 h-20 bg-black shadow-xl rounded-2xl flex items-center justify-center border border-gray-800 mb-6"> <!-- 修复：使用有效的Tailwind类w-20 h-20 -->
-                                    <i data-lucide="shield" class="text-white w-10 h-10"></i> <!-- 调整图标尺寸保持比例 -->
+                                <div id="risk-weight" class="w-20 h-20 bg-black shadow-xl rounded-2xl flex items-center justify-center border border-gray-800 mb-6">
+                                    <i data-lucide="shield" class="text-white w-10 h-10"></i>
                                 </div>
                                 <!-- 关键修改：添加容器类确保文字不被遮挡 -->
                                 <div class="text-center whitespace-nowrap weight-label-container">
@@ -511,12 +565,12 @@
                         </div>
 
                         <!-- 修改说明文本区域 -->
-                        <div class="space-y-5"> <!-- 核心修改：space-y从6改为5 -->
+                        <div class="space-y-5">
                             <!-- 新增总标题 -->
                             <h4 class="what-it-means-title">What this actually means</h4>
                             
                             <!-- 第一段：固定月保费 -->
-                            <div class="flex items-start gap-3"> <!-- 核心修改：gap从4改为3 -->
+                            <div class="flex items-start gap-3">
                                 <i data-lucide="dollar-sign" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
                                 <div class="explanation-text">
                                     Life insurance works by exchanging a fixed monthly premium for a guaranteed cover amount.
@@ -524,7 +578,7 @@
                             </div>
                             
                             <!-- 第二段：赔付说明 -->
-                            <div class="flex items-start gap-3"> <!-- 核心修改：gap从4改为3 -->
+                            <div class="flex items-start gap-3">
                                 <i data-lucide="shield-check" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
                                 <div class="explanation-text">
                                     If you die during your policy term, your family receives that amount — regardless of how long the policy has been in place.
@@ -532,7 +586,7 @@
                             </div>
                             
                             <!-- 第三段：滑块说明 -->
-                            <div class="flex items-start gap-3"> <!-- 核心修改：gap从4改为3 -->
+                            <div class="flex items-start gap-3">
                                 <i data-lucide="sliders" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
                                 <div class="explanation-text">
                                     Use the slider to explore how different monthly premiums relate to different levels of cover.
@@ -561,7 +615,7 @@
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- 卡片1：偿还房贷/租金 → 改回原来的房子图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container"> <!-- 核心修改：mb从8改为6 -->
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
                         <i data-lucide="home" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Pay off the mortgage or rent</h4>
@@ -571,7 +625,7 @@
                 </div>
                 <!-- 卡片2：日常开支 → hand-coins 图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container"> <!-- 核心修改：mb从8改为6 -->
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
                         <i data-lucide="hand-coins" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Support day-to-day living costs</h4>
@@ -581,7 +635,7 @@
                 </div>
                 <!-- 卡片3：偿还债务 → credit-card 图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container"> <!-- 核心修改：mb从8改为6 -->
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
                         <i data-lucide="credit-card" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Settle outstanding loans or debts</h4>
@@ -591,7 +645,7 @@
                 </div>
                 <!-- 卡片4：安心喘息 → heart 图标 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container"> <!-- 核心修改：mb从8改为6 -->
+                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
                         <i data-lucide="heart" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Create space to make considered decisions</h4>
@@ -711,10 +765,10 @@
                 This page is here to make the journey more understandable — not to push you into a decision. Whatever you choose to do next is entirely up to you.
             </p>
 
-            <div class="grid md:grid-cols-3 gap-7"> <!-- 核心修改：gap从8改为7 -->
+            <div class="grid md:grid-cols-3 gap-7">
                 <!-- Product details 卡片 - 添加跳转链接 -->
                 <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]" onclick="window.open('https://www.scottishwidows.co.uk/life-insurance.html', '_blank')">
-                    <div class="w-16 h-16 bg-[#003A3A] text-white rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container"> <!-- 核心修改：mb从6改为5 -->
+                    <div class="w-16 h-16 bg-[#003A3A] text-white rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container">
                         <i data-lucide="file-text" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Product details</h4>
@@ -723,14 +777,14 @@
                 
                 <!-- 修改：Save for later → Got a question? 客服咨询功能 -->
                 <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]" id="customer-support-card">
-                    <div class="w-16 h-16 bg-[#003A3A]/10 text-[#003A3A] rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container"> <!-- 核心修改：mb从6改为5 -->
+                    <div class="w-16 h-16 bg-[#003A3A]/10 text-[#003A3A] rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container">
                         <i data-lucide="headphones" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Got a question?</h4>
                     <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Speak to our friendly team for impartial advice with no pressure to buy.</p>
                     <!-- 新增：显示客服联系方式 -->
                     <div class="mt-4 text-center">
-                        <a href="tel:+448000271846" class="inline-flex items-center justify-center gap-2 text-[#003A3A] font-bold text-sm hover:text-[#005a5a] transition-colors"> <!-- 核心修改：gap从2改为1 -->
+                        <a href="tel:+448000271846" class="inline-flex items-center justify-center gap-2 text-[#003A3A] font-bold text-sm hover:text-[#005a5a] transition-colors">
                             <i data-lucide="phone" class="w-4 h-4"></i>
                             0800 027 1846
                         </a>
@@ -740,7 +794,7 @@
                 
                 <!-- Discuss it 卡片 - 添加 WhatsApp 分享功能 -->
                 <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]" id="whatsapp-share-card">
-                    <div class="w-16 h-16 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container"> <!-- 核心修改：mb从6改为5 -->
+                    <div class="w-16 h-16 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container">
                         <i data-lucide="share-2" class="w-8 h-8"></i>
                     </div>
                     <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Discuss it</h4>
