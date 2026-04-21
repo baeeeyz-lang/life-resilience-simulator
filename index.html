@@ -383,6 +383,98 @@
     flex-direction: column;
     align-items: center;
 }
+
+/* ========== 新增：拓展区域样式 ========== */
+.expandable-section {
+    /* 移除背景色和边框 */
+    margin-top: 4rem;
+}
+
+.expand-btn {
+    background-color: #F8FAF9;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    color: #003A3A;
+    cursor: pointer;
+}
+
+.expand-btn:hover {
+    background-color: #f3f4f6;
+}
+
+.expand-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+    /* 移除背景、边框和内边距 */
+    margin-top: 1rem;
+}
+
+.expand-content.open {
+    max-height: 2000px;
+}
+
+.cover-types-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cover-types-table th,
+.cover-types-table td {
+    padding: 1rem;
+    text-align: left;
+    border: 1px solid #e5e7eb;
+}
+
+.cover-types-table th {
+    background-color: #F8FAF9;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #003A3A;
+}
+
+.cover-types-table td {
+    font-size: 0.875rem;
+    color: #4b5563;
+}
+
+.service-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    background-color: #F8FAF9;
+}
+
+.service-card img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.service-card-content {
+    flex: 1;
+}
+
+.service-card-title {
+    font-weight: 600;
+    color: #003A3A;
+    margin-bottom: 0.25rem;
+}
+
+.service-card-desc {
+    font-size: 0.875rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
     </style>
 </head>
 <body class="selection:bg-[#E30613] selection:text-white">
@@ -653,8 +745,100 @@
                     </p>
                 </div>
             </div>
+
+            <!-- ========== 新增：拓展区域 (Chapter 2 之后) ========== -->
+            <div class="expandable-section mt-16">
+                <div class="max-w-6xl mx-auto">
+                    <!-- 拓展按钮 -->
+                    <button id="expand-button" class="expand-btn flex items-center justify-center gap-2">
+                        <span>Show more details about cover types & additional services</span>
+                        <i id="expand-icon" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i>
+                    </button>
+
+                    <!-- 拓展内容 -->
+                    <div id="expand-content" class="expand-content">
+                        <div class="max-w-5xl mx-auto space-y-10">
+                            <!-- Cover types 部分 -->
+                            <div>
+                                <h3 class="text-2xl font-bold text-[#003A3A] mb-6">Cover types</h3>
+                                <p class="text-gray-600 mb-6">There are different types of cover depending on what you might need it for.</p>
+                                <div class="overflow-x-auto">
+                                    <table class="cover-types-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Cover option</th>
+                                                <th>What this means</th>
+                                                <th>Why you might need it</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Level cover</td>
+                                                <td>The amount of cover you choose and your premium will remain the same through the term of your policy.</td>
+                                                <td>The amount of cover won't change over time so you and your family know how much will be received in the event of a claim.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Decreasing cover</td>
+                                                <td>The amount of cover you choose reduces each month, but your premium remains the same.</td>
+                                                <td>This is normally chosen to cover a repayment mortgage.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Increasing cover</td>
+                                                <td>The amount of cover you choose increases each year in line with the Retail Prices Index (RPI). Your premium will also increase for this type of cover, so that your cover amount stays in line with inflation.</td>
+                                                <td>As this type of cover stays in line with inflation, it is designed to combat price rises, maintaining its real value throughout the term.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Additional Services Included 部分 -->
+                            <div>
+                                <h3 class="text-2xl font-bold text-[#003A3A] mb-6">Additional Services Included</h3>
+                                
+                                <!-- Clinic in a Pocket -->
+                                <div class="service-card">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Clinic in a Pocket">
+                                    <div class="service-card-content">
+                                        <h4 class="service-card-title">Clinic in a Pocket™</h4>
+                                        <p class="service-card-desc">Provided by Square Health. 24/7 remote GP service for policyholder, spouse, and children. Includes free repeat prescription delivery.</p>
+                                    </div>
+                                </div>
+
+                                <!-- RedArc Nurse Support -->
+                                <div class="service-card">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Nurse Support">
+                                    <div class="service-card-content">
+                                        <h4 class="service-card-title">RedArc Nurse Support</h4>
+                                        <p class="service-card-desc">Long-term care advice and emotional support from RedArc, available from day one without needing to claim.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Macmillan Cancer Support Advance -->
+                                <div class="service-card">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Macmillan Support">
+                                    <div class="service-card-content">
+                                        <h4 class="service-card-title">Macmillan Cancer Support Advance</h4>
+                                        <p class="service-card-desc">Request a £3,000 advance during critical illness claim processing to ease financial pressure.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Disney+ -->
+                                <div class="service-card">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Disney Plus">
+                                    <div class="service-card-content">
+                                        <h4 class="service-card-title">Disney+ (12 Months)</h4>
+                                        <p class="service-card-desc">Buy a new policy directly via scottishwidows.co.uk and get 12 months of Disney+ Standard with Ads.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+
 <!-- 5. Ending -->
     <section id="claims" class="py-24 md:py-36 px-4 bg-[#F8FAF9] overflow-hidden">
     <div class="max-w-7xl mx-auto">
@@ -1098,10 +1282,41 @@
                 carousel.tabIndex = 0;
                 carousel.setAttribute('role', 'slider');
                 carousel.setAttribute('aria-valuemin', '1');
-                carousel.setAttribute('aria-valuemax', totalSteps);
+                carousel.setAttribute('aria-valuemax', 'totalSteps');
                 carousel.setAttribute('aria-valuenow', currentStep);
                 
                 updateStepDisplay();
+            }
+            
+            /* ==========================================
+               D. 新增：拓展区域交互逻辑
+               ========================================== */
+            const expandButton = document.getElementById('expand-button');
+            const expandContent = document.getElementById('expand-content');
+            const expandIcon = document.getElementById('expand-icon');
+            
+            if (expandButton && expandContent && expandIcon) {
+                expandButton.addEventListener('click', function() {
+                    // 切换内容显示状态
+                    expandContent.classList.toggle('open');
+                    
+                    // 切换图标旋转和按钮文本
+                    if (expandContent.classList.contains('open')) {
+                        expandIcon.style.transform = 'rotate(180deg)';
+                        expandButton.innerHTML = `
+                            <span>Hide additional details</span>
+                            <i id="expand-icon" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300" style="transform: rotate(180deg);"></i>
+                        `;
+                    } else {
+                        expandIcon.style.transform = 'rotate(0)';
+                        expandButton.innerHTML = `
+                            <span>Show more details about cover types & additional services</span>
+                            <i id="expand-icon" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i>
+                        `;
+                    }
+                    // 重新初始化图标
+                    lucide.createIcons();
+                });
             }
             
             // 强制触发所有动画元素显示（防止 Observer 失败的兜底方案）
