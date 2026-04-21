@@ -508,47 +508,33 @@
 }
 
 /* 新增：购买流程样式 */
+/* --- 购买流程 (Buying Process) 静态美化版 --- */
 .buying-process-section {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 4rem auto 6rem auto;
     padding: 2rem;
     text-align: center;
 }
 
-.buying-process-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #003A3A;
-    margin-bottom: 1rem;
-}
-
-.buying-process-subtitle {
-    font-size: 1rem;
-    color: #6b7280;
-    margin-bottom: 3rem;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .buying-process-timeline {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     position: relative;
-    padding: 0 1rem;
+    padding: 0;
+    margin-top: 3rem;
     margin-bottom: 4rem;
 }
 
+/* 连接线：精准穿过 72px 圆圈的中心点 (36px) */
 .buying-process-timeline::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 2rem;
-    right: 2rem;
+    top: 36px; 
+    left: 10%;
+    right: 10%;
     height: 2px;
     background-color: #e5e7eb;
-    transform: translateY(-50%);
     z-index: 1;
 }
 
@@ -558,33 +544,48 @@
     flex-direction: column;
     align-items: center;
     z-index: 2;
+    flex: 1;
+    cursor: default; /* 强制使用标准箭头光标，暗示不可点击 */
 }
 
+/* 图片圆圈容器：增大至 72px，移除所有 Hover 动画 */
 .buying-process-dot {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
     background-color: white;
     border: 2px solid #003A3A;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     position: relative;
+    padding: 16px; /* 通过增加内边距来控制内部图片的大小，使其看起来更精致 */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.buying-process-dot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .buying-process-step {
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: 0.85rem;
+    font-weight: 800;
     color: #003A3A;
     margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 .buying-process-label {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     color: #6b7280;
     text-align: center;
-    max-width: 100px;
+    max-width: 140px;
+    line-height: 1.5;
+    font-weight: 500;
 }
 
 /* 删除：Validation 标签样式（已移除） */
@@ -1374,7 +1375,7 @@
             <div class="buying-process-timeline">
                 <div class="buying-process-item">
                     <div class="buying-process-dot">
-                        <i data-lucide="timer" class="w-4 h-4 text-[#003A3A]"></i>
+                        <img src="step1.png" alt="Quick quote">
                     </div>
                     <div class="buying-process-step">Step 1</div>
                     <div class="buying-process-label">Quick quote</div>
@@ -1382,7 +1383,7 @@
                 
                 <div class="buying-process-item">
                     <div class="buying-process-dot">
-                        <i data-lucide="shield" class="w-4 h-4 text-[#003A3A]"></i>
+                        <img src="step2.png" alt="Choose cover">
                     </div>
                     <div class="buying-process-step">Step 2</div>
                     <div class="buying-process-label">Choose cover & amount</div>
@@ -1390,7 +1391,7 @@
                 
                 <div class="buying-process-item">
                     <div class="buying-process-dot">
-                        <i data-lucide="file-text" class="w-4 h-4 text-[#003A3A]"></i>
+                        <img src="step3.png" alt="Detail quote">
                     </div>
                     <div class="buying-process-step">Step 3</div>
                     <div class="buying-process-label">Detail quote</div>
@@ -1398,8 +1399,7 @@
                 
                 <div class="buying-process-item">
                     <div class="buying-process-dot">
-                        <i data-lucide="check-circle" class="w-4 h-4 text-[#003A3A]"></i>
-                        <!-- 删除：Validation 标签 -->
+                        <img src="step4.png" alt="Information verification">
                     </div>
                     <div class="buying-process-step">Step 4</div>
                     <div class="buying-process-label">Information verification completed</div>
@@ -1407,7 +1407,7 @@
                 
                 <div class="buying-process-item">
                     <div class="buying-process-dot">
-                        <i data-lucide="lock" class="w-4 h-4 text-[#003A3A]"></i>
+                        <img src="step5.png" alt="Policy starts">
                     </div>
                     <div class="buying-process-step">Step 5</div>
                     <div class="buying-process-label">Policy starts</div>
