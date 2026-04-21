@@ -29,14 +29,12 @@
             font-family: 'Playfair Display', serif;
         }
 
+        /* 核心修改：完全移除step-card的hover动效和指针样式 */
         .step-card {
-            transition: all 0.3s ease;
-            cursor: pointer; /* 新增：添加鼠标指针样式 */
+            /* 移除所有transition和cursor样式 */
         }
 
-        .step-card:hover {
-            transform: translateY(-4px);
-        }
+        /* 完全删除step-card的hover样式 */
 
         .timeline-card {
             transition: all 0.3s ease;
