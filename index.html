@@ -384,97 +384,87 @@
     align-items: center;
 }
 
-/* ========== 新增：拓展区域样式 ========== */
-.expandable-section {
-    /* 移除背景色和边框 */
-    margin-top: 4rem;
-}
-
-.expand-btn {
-    background-color: #F8FAF9;
-    border: 1px solid #e5e7eb;
-    transition: all 0.3s ease;
-    width: 100%;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    color: #003A3A;
-    cursor: pointer;
-}
-
-.expand-btn:hover {
-    background-color: #f3f4f6;
-}
-
-.expand-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-in-out;
-    /* 移除背景、边框和内边距 */
-    margin-top: 1rem;
-}
-
-.expand-content.open {
-    max-height: 2000px;
-}
-
-.cover-types-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.cover-types-table th,
-.cover-types-table td {
-    padding: 1rem;
-    text-align: left;
-    border: 1px solid #e5e7eb;
-}
-
-.cover-types-table th {
-    background-color: #F8FAF9;
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: #003A3A;
-}
-
-.cover-types-table td {
-    font-size: 0.875rem;
-    color: #4b5563;
-}
-
-.service-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-    background-color: #F8FAF9;
-}
-
-.service-card img {
-    width: 48px;
-    height: 48px;
-    object-fit: contain;
-    flex-shrink: 0;
-}
-
-.service-card-content {
-    flex: 1;
-}
-
-.service-card-title {
-    font-weight: 600;
-    color: #003A3A;
-    margin-bottom: 0.25rem;
-}
-
-.service-card-desc {
-    font-size: 0.875rem;
-    color: #4b5563;
-    line-height: 1.5;
-}
+/* --- 饼图专用的交互与视觉样式 --- */
+        .pie-svg-wrap { 
+            width: 100%; 
+            max-width: 850px; 
+            margin: 0 auto; 
+            overflow: visible; 
+            font-family: 'Inter', sans-serif; 
+        }
+        .pie-group { 
+            cursor: pointer; 
+            transform-origin: 500px 500px; 
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); 
+        }
+        .pie-slice { 
+            stroke: white; 
+            stroke-width: 3px; 
+            stroke-linejoin: round; 
+            transition: all 0.3s; 
+        }
+        
+        /* 默认状态（未激活）：显示外部标签，隐藏内部图文 */
+        .pie-group foreignObject { 
+            opacity: 0; 
+            transition: opacity 0.3s; 
+            pointer-events: none; 
+        }
+        .pie-group .outside-label { 
+            opacity: 1; 
+            transition: opacity 0.3s; 
+            font-size: 16px; 
+            font-weight: 700; 
+            fill: #4B5563; 
+        }
+        
+        /* 激活状态：向外弹出并放大，显示内部图文，隐藏外部标签 */
+        .pie-group.active { 
+            transform: scale(1.15); 
+            z-index: 10;
+        }
+        .pie-group.active .pie-slice { 
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); 
+        }
+        .pie-group.active foreignObject { 
+            opacity: 1; 
+            pointer-events: auto; 
+            transition-delay: 0.1s; 
+        }
+        .pie-group.active .outside-label { 
+            opacity: 0; 
+        }
+        
+        .slice-content {
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center;
+            width: 100%; 
+            height: 100%; 
+            color: white; 
+            padding: 20px;
+        }
+        .slice-icon { 
+            margin-bottom: 12px; 
+            opacity: 0.95; 
+            background: rgba(255,255,255,0.15);
+            padding: 12px;
+            border-radius: 16px;
+        }
+        .slice-title { 
+            font-size: 18px; 
+            font-weight: 800; 
+            line-height: 1.25; 
+            margin-bottom: 8px; 
+        }
+        .slice-desc { 
+            font-size: 12px; 
+            line-height: 1.5; 
+            font-weight: 400; 
+            opacity: 0.9; 
+        }
     </style>
 </head>
 <body class="selection:bg-[#E30613] selection:text-white">
@@ -709,7 +699,7 @@
                     <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
                         <i data-lucide="home" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
-                    <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Keep the home stable</h4>
+                    <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Pay off the mortgage or rent</h4>
                     <p class="text-sm text-gray-500 leading-relaxed font-light">
                        A payout could be used to settle an outstanding mortgage or cover rent, helping your family stay in their home without that financial pressure falling on them. 
                     </p>
@@ -719,7 +709,7 @@
                     <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
                         <i data-lucide="hand-coins" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
-                    <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Protect everyday living costs</h4>
+                    <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Support day-to-day living costs</h4>
                     <p class="text-sm text-gray-500 leading-relaxed font-light">
                         Without your income, everyday costs — food, bills, childcare, transport — still need to be met. A lump sum can help bridge that gap while your family adjusts.
                     </p>
@@ -745,105 +735,208 @@
                     </p>
                 </div>
             </div>
-
-            <!-- ========== 新增：拓展区域 (Chapter 2 之后) ========== -->
-            <div class="expandable-section mt-16">
-                <div class="max-w-6xl mx-auto">
-                    <!-- 拓展按钮 -->
-                    <button id="expand-button" class="expand-btn flex items-center justify-center gap-2">
-                        <span>Show more details about cover types & additional services</span>
-                        <i id="expand-icon" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i>
-                    </button>
-
-                    <!-- 拓展内容 -->
-                    <div id="expand-content" class="expand-content">
-                        <div class="max-w-5xl mx-auto space-y-10">
-                            <!-- Cover types 部分 -->
-                            <div>
-                                <h3 class="text-2xl font-bold text-[#003A3A] mb-6">Cover types</h3>
-                                <p class="text-gray-600 mb-6">There are different types of cover depending on what you might need it for.</p>
-                                <div class="overflow-x-auto">
-                                    <table class="cover-types-table">
-                                        <thead>
-                                            <tr>
-                                                <th>Cover option</th>
-                                                <th>What this means</th>
-                                                <th>Why you might need it</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Level cover</td>
-                                                <td>The amount of cover you choose and your premium will remain the same through the term of your policy.</td>
-                                                <td>The amount of cover won't change over time so you and your family know how much will be received in the event of a claim.</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Decreasing cover</td>
-                                                <td>The amount of cover you choose reduces each month, but your premium remains the same.</td>
-                                                <td>This is normally chosen to cover a repayment mortgage.</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Increasing cover</td>
-                                                <td>The amount of cover you choose increases each year in line with the Retail Prices Index (RPI). Your premium will also increase for this type of cover, so that your cover amount stays in line with inflation.</td>
-                                                <td>As this type of cover stays in line with inflation, it is designed to combat price rises, maintaining its real value throughout the term.</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Additional Services Included 部分 -->
-                            <div>
-                                <h3 class="text-2xl font-bold text-[#003A3A] mb-6">Additional Services Included</h3>
-                                
-                                <!-- Clinic in a Pocket -->
-                                <div class="service-card">
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Clinic in a Pocket">
-                                    <div class="service-card-content">
-                                        <h4 class="service-card-title">Clinic in a Pocket™</h4>
-                                        <p class="service-card-desc">Provided by Square Health. 24/7 remote GP service for policyholder, spouse, and children. Includes free repeat prescription delivery.</p>
-                                    </div>
-                                </div>
-
-                                <!-- RedArc Nurse Support -->
-                                <div class="service-card">
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Nurse Support">
-                                    <div class="service-card-content">
-                                        <h4 class="service-card-title">RedArc Nurse Support</h4>
-                                        <p class="service-card-desc">Long-term care advice and emotional support from RedArc, available from day one without needing to claim.</p>
-                                    </div>
-                                </div>
-
-                                <!-- Macmillan Cancer Support Advance -->
-                                <div class="service-card">
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Macmillan Support">
-                                    <div class="service-card-content">
-                                        <h4 class="service-card-title">Macmillan Cancer Support Advance</h4>
-                                        <p class="service-card-desc">Request a £3,000 advance during critical illness claim processing to ease financial pressure.</p>
-                                    </div>
-                                </div>
-
-                                <!-- Disney+ -->
-                                <div class="service-card">
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Disney Plus">
-                                    <div class="service-card-content">
-                                        <h4 class="service-card-title">Disney+ (12 Months)</h4>
-                                        <p class="service-card-desc">Buy a new policy directly via scottishwidows.co.uk and get 12 months of Disney+ Standard with Ads.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
+        <!-- 3. lifecycle -->
+        <section id="lifecycle" class="py-24 md:py-36 px-4 bg-[#F8FAF9] overflow-hidden border-t border-gray-100">
+        <style>
+            .pie-svg-wrap {
+                width: 100%;
+                max-width: 900px;
+                margin: 0 auto;
+                overflow: visible;
+            }
+            .pie-group {
+                cursor: pointer;
+                transform-origin: 500px 500px;
+                transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+            .pie-slice {
+                stroke: transparent;
+                transition: fill 0.4s ease, filter 0.4s ease;
+                fill: var(--base-fill);
+            }
 
+            /* --- 闲置状态的标题 --- */
+            .idle-text {
+                fill: rgba(255, 255, 255, 0.95);
+                font-family: 'Inter', sans-serif;
+                font-weight: 700;
+                font-size: 14px;
+                pointer-events: none;
+                transition: opacity 0.4s ease, transform 0.4s ease;
+            }
+            .pie-group.active .idle-text {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            /* --- 激活状态的图文容器 (180x220 极限安全尺寸) --- */
+            .pie-group foreignObject {
+                pointer-events: none;
+                opacity: 0;
+                transform: scale(0.9) translateY(10px);
+                transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .pie-group.active foreignObject {
+                pointer-events: auto;
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+
+            .slice-content-wrapper {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                width: 100%;
+                height: 100%;
+                color: white;
+            }
+
+            /* 图标：缩小高度，并双重保障去除白底 */
+            .slice-illustration {
+                height: 120px; 
+                object-fit: contain;
+                margin-bottom: 6px;
+                background-color: transparent !important;
+                mix-blend-mode: multiply; 
+            }
+
+            /* 文本：强制限制 170px 宽度，塑造紧凑排版 */
+            .slice-title {
+                font-size: 13px;
+                font-weight: 800;
+                line-height: 1.2;
+                width: 100%;
+                max-width: 170px;
+                margin: 0 auto 4px auto;
+                text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            }
+
+            .slice-description {
+                font-size: 10.5px;
+                line-height: 1.35;
+                opacity: 0.95;
+                width: 100%;
+                max-width: 170px; 
+                margin: 0 auto;
+            }
+
+            /* --- 抽出动效：缩放 1.25 倍并顺着中轴线平移 --- */
+            .pie-group.active .pie-slice { 
+                fill: #2EA265 !important; 
+                filter: drop-shadow(0 20px 40px rgba(0,0,0,0.25)); 
+            }
+            
+            .pie-group[data-index="1"].active { transform: translate(18px, -24px) scale(1.25); z-index: 50; }
+            .pie-group[data-index="2"].active { transform: translate(24px, 8px) scale(1.25); z-index: 50; }
+            .pie-group[data-index="3"].active { transform: translate(0px, 28px) scale(1.25); z-index: 50; }
+            .pie-group[data-index="4"].active { transform: translate(-24px, 8px) scale(1.25); z-index: 50; }
+            .pie-group[data-index="5"].active { transform: translate(-18px, -24px) scale(1.25); z-index: 50; }
+
+            @media (max-width: 768px) {
+                .pie-group.active { transform: scale(1.15) !important; }
+                .slice-illustration { height: 45px; }
+                .slice-title { font-size: 11px; }
+                .slice-description { font-size: 9.5px; max-width: 150px; }
+            }
+        </style>
+
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16 fade-section text-center">
+                <div class="section-label mb-6">Chapter 3 · Lifecycle</div>
+                <h2 class="text-4xl md:text-6xl font-black text-[#003A3A] font-serif leading-tight">
+                    An Insurance Policy Lifecycle
+                </h2>
+            </div>
+
+            <div class="pie-svg-wrap fade-section relative mt-10">
+                <svg viewBox="0 0 1000 1000" width="100%" height="auto" class="overflow-visible">
+                    <g id="pie-slices-container">
+                        
+                        <g class="pie-group active" data-index="1" style="--base-fill: #1E4E45;">
+                            <path class="pie-slice" d="M 500 500 L 500 160 A 340 340 0 0 1 823.3 395.1 Z" />
+                            <text class="idle-text" x="617" y="345" text-anchor="middle">1. Quote & Application</text>
+                            
+                            <foreignObject x="545" y="204" width="180" height="220">
+                                <div class="slice-content-wrapper">
+                                    <img src="3 1.png" class="slice-illustration" />
+                                    <div class="slice-title">1. Quote & Application</div>
+                                    <div class="slice-description">Customers explore insurance options and submit info to receive a coverage offer.</div>
+                                </div>
+                            </foreignObject>
+                        </g>
+
+                        <g class="pie-group" data-index="2" style="--base-fill: #24584C;">
+                            <path class="pie-slice" d="M 500 500 L 823.3 395.1 A 340 340 0 0 1 700 775.1 Z" />
+                            <text class="idle-text" text-anchor="middle">
+                                <tspan x="690" y="550">2. Underwriting &</tspan>
+                                <tspan x="690" y="570">Policy Issuance</tspan>
+                            </text>
+                            
+                            <foreignObject x="628" y="461" width="180" height="220">
+                                <div class="slice-content-wrapper">
+                                    <img src="3 2.png" class="slice-illustration" />
+                                    <div class="slice-title">2. Underwriting &<br>Policy Issuance</div>
+                                    <div class="slice-description">The insurer assesses risk, verifies GP records and third party data, then issues the policy.</div>
+                                </div>
+                            </foreignObject>
+                        </g>
+
+                        <g class="pie-group" data-index="3" style="--base-fill: #1D4B42;">
+                            <path class="pie-slice" d="M 500 500 L 700 775.1 A 340 340 0 0 1 300 775.1 Z" />
+                            <text class="idle-text" x="500" y="700" text-anchor="middle">3. Policy Administration</text>
+                            
+                            <foreignObject x="410" y="620" width="180" height="220">
+                                <div class="slice-content-wrapper">
+                                    <img src="3 3.png" class="slice-illustration" />
+                                    <div class="slice-title">3. Policy Administration</div>
+                                    <div class="slice-description">During the active period, policies are managed through updates and payments.</div>
+                                </div>
+                            </foreignObject>
+                        </g>
+
+                        <g class="pie-group" data-index="4" style="--base-fill: #153831;">
+                            <path class="pie-slice" d="M 500 500 L 300 775.1 A 340 340 0 0 1 176.7 395.1 Z" />
+                            <text class="idle-text" text-anchor="middle">
+                                <tspan x="310" y="550">4. Claims</tspan>
+                                <tspan x="310" y="570">Management</tspan>
+                            </text>
+                            
+                            <foreignObject x="191" y="461" width="180" height="220">
+                                <div class="slice-content-wrapper">
+                                    <img src="3 4.png" class="slice-illustration" />
+                                    <div class="slice-title">4. Claims Management</div>
+                                    <div class="slice-description">When unexpected events occur, file claims and receive support based on coverage.</div>
+                                </div>
+                            </foreignObject>
+                        </g>
+
+                        <g class="pie-group" data-index="5" style="--base-fill: #205349;">
+                            <path class="pie-slice" d="M 500 500 L 176.7 395.1 A 340 340 0 0 1 500 160 Z" />
+                            <text class="idle-text" x="382" y="345" text-anchor="middle">5. Expiration</text>
+                            
+                            <foreignObject x="275" y="204" width="180" height="220">
+                                <div class="slice-content-wrapper">
+                                    <img src="3 5.png" class="slice-illustration" />
+                                    <div class="slice-title">5. Expiration</div>
+                                    <div class="slice-description">The policy concludes if it is not renewed or is terminated, completing the cycle.</div>
+                                </div>
+                            </foreignObject>
+                        </g>
+                    </g>
+                    <circle cx="500" cy="500" r="4" fill="#ffffff" />
+                </svg>
+            </div>
+        </div>
+        </section>
 <!-- 5. Ending -->
     <section id="claims" class="py-24 md:py-36 px-4 bg-[#F8FAF9] overflow-hidden">
     <div class="max-w-7xl mx-auto">
         <div class="mb-20 text-center fade-section">
-            <div class="section-label mb-6">Chapter 3 · Claim journey</div>
+            <div class="section-label mb-6">Chapter 4 · Claim journey</div>
             <h2 class="text-5xl md:text-6xl font-black text-[#003A3A] font-serif leading-tight">
                 If something serious happens,<br><span class="text-green-600">how does the claim journey work?</span>
             </h2>
@@ -1130,7 +1223,31 @@
                 slider.addEventListener('input', updateSimulator);
                 updateSimulator();
             }
-
+            /* ==========================================
+               D. 饼图生命周期逻辑 (Pie Chart Logic)
+               ========================================== */
+            const pieGroups = document.querySelectorAll('.pie-group');
+            const pieContainer = document.getElementById('pie-slices-container');
+            
+            if (pieGroups.length > 0 && pieContainer) {
+                const activateGroup = function() {
+                    // 移除所有切片的 active 类
+                    pieGroups.forEach(g => g.classList.remove('active'));
+                    // 给当前悬停的切片加上 active 类
+                    this.classList.add('active');
+                    // DOM 操作：把激活的元素移到最下面，保证它的层级(z-index)在视觉上最高
+                    pieContainer.appendChild(this);
+                    
+                    // 重新刷新一下当前高亮切片内的 Lucide 图标（防止重绘丢失）
+                    lucide.createIcons();
+                };
+                
+                pieGroups.forEach(group => {
+                    group.addEventListener('mouseenter', activateGroup);
+                    // 兼容手机端点击
+                    group.addEventListener('click', activateGroup); 
+                });
+            }
             /* ==========================================
                B. 底部卡片点击与分享逻辑
                ========================================== */
@@ -1282,41 +1399,10 @@
                 carousel.tabIndex = 0;
                 carousel.setAttribute('role', 'slider');
                 carousel.setAttribute('aria-valuemin', '1');
-                carousel.setAttribute('aria-valuemax', 'totalSteps');
+                carousel.setAttribute('aria-valuemax', totalSteps);
                 carousel.setAttribute('aria-valuenow', currentStep);
                 
                 updateStepDisplay();
-            }
-            
-            /* ==========================================
-               D. 新增：拓展区域交互逻辑
-               ========================================== */
-            const expandButton = document.getElementById('expand-button');
-            const expandContent = document.getElementById('expand-content');
-            const expandIcon = document.getElementById('expand-icon');
-            
-            if (expandButton && expandContent && expandIcon) {
-                expandButton.addEventListener('click', function() {
-                    // 切换内容显示状态
-                    expandContent.classList.toggle('open');
-                    
-                    // 切换图标旋转和按钮文本
-                    if (expandContent.classList.contains('open')) {
-                        expandIcon.style.transform = 'rotate(180deg)';
-                        expandButton.innerHTML = `
-                            <span>Hide additional details</span>
-                            <i id="expand-icon" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300" style="transform: rotate(180deg);"></i>
-                        `;
-                    } else {
-                        expandIcon.style.transform = 'rotate(0)';
-                        expandButton.innerHTML = `
-                            <span>Show more details about cover types & additional services</span>
-                            <i id="expand-icon" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i>
-                        `;
-                    }
-                    // 重新初始化图标
-                    lucide.createIcons();
-                });
             }
             
             // 强制触发所有动画元素显示（防止 Observer 失败的兜底方案）
