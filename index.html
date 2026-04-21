@@ -29,13 +29,6 @@
             font-family: 'Playfair Display', serif;
         }
 
-        /* 核心修改：完全移除step-card的hover动效和指针样式 */
-        .step-card {
-            /* 移除所有transition和cursor样式 */
-        }
-
-        /* 完全删除step-card的hover样式 */
-
         .timeline-card {
             transition: all 0.3s ease;
         }
@@ -469,163 +462,169 @@
     </section>
 
     <!-- 3. Simulator chapter -->
-    <section id="simulator" class="py-16 xl:py-32 px-4 md:px-8 bg-white border-y border-gray-100">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 xl:gap-14 items-start">
+    <section id="simulator" class="py-16 xl:py-24 px-4 md:px-8 bg-white border-y border-gray-100">
+        <div class="max-w-7xl mx-auto space-y-16 xl:space-y-20">
             
-            <div class="lg:col-span-7 space-y-8 xl:space-y-10 fade-section">
-                <div class="space-y-4 xl:space-y-6">
-                    <div class="section-label">Chapter 1 · HOW PROTECTION WORKS</div>
-                    <h2 class="text-3xl md:text-4xl xl:text-5xl font-bold text-[#003A3A] leading-tight">
-                        A monthly premium & Cover
-                    </h2>
-                    <p class="text-gray-600 text-[15px] xl:text-[17px] font-light leading-relaxed max-w-2xl">
-                        Life insurance works like this: you pay a set amount each month, and your family gets a guaranteed sum if you pass away while the policy is active. They'll get the full amount no matter how long you've had the policy. Use the slider to see how much cover you can get for different monthly payments.
-                    </p>
+            <div class="space-y-6 max-w-4xl fade-section">
+                <div class="section-label">Chapter 1 · HOW PROTECTION WORKS</div>
+                <h2 class="text-4xl md:text-5xl xl:text-6xl font-bold text-[#003A3A] leading-tight">
+                    Your Premium & Cover
+                </h2>
+                <p class="text-gray-600 text-[16px] xl:text-[18px] font-light leading-relaxed">
+                    Life insurance works like this: you pay a set amount each month, and your family gets a guaranteed sum if you pass away while the policy is active. They'll get the full amount no matter how long you've had the policy. Use the slider to see how much cover you can get for different monthly payments.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-10 xl:gap-16 items-start fade-section">
+                
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="bg-white p-6 md:p-10 xl:p-12 rounded-[40px] border border-gray-100 relative overflow-visible shadow-sm">
+                        <div id="balance-stage" class="relative h-[420px] xl:h-[450px] overflow-visible mb-12">
+                    <div class="balance-pivot"></div>
+                    <div id="beam-scene" class="balance-beam transition-transform duration-150 ease-out">
+                        
+                        <div class="absolute left-0 bottom-[6px] -translate-x-1/2">
+                            <div id="left-upright" class="flex flex-col items-center transition-transform duration-150" style="transform-origin: bottom;">
+                                
+                                <div class="h-56 flex items-end justify-center mb-6">
+                                    <div id="premium-box" class="w-20 h-20 bg-[#4B5563] rounded-2xl flex items-center justify-center shadow-xl transition-all duration-150 transform-gpu" style="transform-origin: bottom;">
+                                        <i data-lucide="check-circle-2" class="w-8 h-8 text-white"></i>
+                                    </div>
+                                </div>
+
+                                <span class="text-[10px] font-black text-gray-400 mb-1 uppercase tracking-wider">Monthly payment</span>
+                                <span class="text-2xl font-bold text-[#003A3A]">£<span id="display-premium">45</span></span>
+                                
+                                <div id="active-risks-slot" class="flex gap-1.5 mt-3 h-8 w-full justify-center min-h-[32px]"></div>
+                            </div>
+                        </div>
+
+                        <div class="absolute right-0 bottom-[6px] translate-x-1/2">
+                            <div id="right-upright" class="flex flex-col items-center transition-transform duration-150" style="transform-origin: bottom;">
+                                
+                                <div class="h-56 flex items-end justify-center mb-6">
+                                    <div id="cover-box" class="w-40 h-40 bg-[#004A4A] rounded-3xl flex items-center justify-center shadow-xl transition-all duration-150 transform-gpu" style="transform-origin: bottom;">
+                                        <i data-lucide="shield" class="w-10 h-10 text-white"></i>
+                                    </div>
+                                </div>
+
+                                <span class="text-[10px] font-black text-gray-400 mb-1 uppercase tracking-wider">Cover amount</span>
+                                <span class="text-3xl lg:text-4xl font-bold text-[#003A3A]">£<span id="display-coverage">337,500</span></span>
+                                
+                                <div class="mt-3 h-8 w-full min-h-[32px]"></div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
 
-                <div class="bg-white p-6 lg:p-8 xl:p-16 rounded-[30px] xl:rounded-[40px] border border-gray-100 relative overflow-visible mt-8 xl:mt-12 shadow-sm">
-                    
-                    <div id="balance-stage" class="relative h-[300px] xl:h-[380px] overflow-visible mb-8 xl:mb-12">
-                        <div class="balance-pivot"></div>
-                        <div id="beam-scene" class="balance-beam transition-transform duration-150 ease-out">
-                            
-                            <div class="absolute left-0 bottom-[6px] -translate-x-1/2">
-                                <div id="left-upright" class="flex flex-col items-center transition-transform duration-150" style="transform-origin: bottom;">
-                                    
-                                    <div class="h-40 xl:h-48 flex items-end justify-center mb-4 xl:mb-6">
-                                        <div id="premium-box" class="w-16 h-16 bg-[#4B5563] rounded-2xl flex items-center justify-center shadow-xl transition-all duration-150 transform-gpu" style="transform-origin: bottom;">
-                                            <i data-lucide="check-circle-2" class="w-6 h-6 xl:w-8 xl:h-8 text-white"></i>
-                                        </div>
-                                    </div>
-
-                                    <span class="text-[9px] xl:text-[10px] font-black text-gray-400 mb-1 uppercase tracking-wider whitespace-nowrap">Monthly payment</span>
-                                    <span class="text-xl xl:text-2xl font-bold text-[#003A3A]">£<span id="display-premium">45</span></span>
-                                    
-                                    <div id="active-risks-slot" class="flex gap-1 mt-2 xl:mt-3 h-8 w-full justify-center min-h-[32px]"></div>
-                                </div>
-                            </div>
-
-                            <div class="absolute right-0 bottom-[6px] translate-x-1/2">
-                                <div id="right-upright" class="flex flex-col items-center transition-transform duration-150" style="transform-origin: bottom;">
-                                    
-                                    <div class="h-40 xl:h-48 flex items-end justify-center mb-4 xl:mb-6">
-                                        <div id="cover-box" class="w-28 h-28 lg:w-32 lg:h-32 xl:w-40 xl:h-40 bg-[#004A4A] rounded-[1.5rem] xl:rounded-3xl flex items-center justify-center shadow-xl transition-all duration-150 transform-gpu" style="transform-origin: bottom;">
-                                            <i data-lucide="shield" class="w-8 h-8 xl:w-10 xl:h-10 text-white"></i>
-                                        </div>
-                                    </div>
-
-                                    <span class="text-[9px] xl:text-[10px] font-black text-gray-400 mb-1 uppercase tracking-wider whitespace-nowrap">Cover amount</span>
-                                    <span class="text-2xl lg:text-3xl xl:text-4xl font-bold text-[#003A3A]">£<span id="display-coverage">337,500</span></span>
-                                    
-                                    <div class="mt-2 xl:mt-3 h-8 w-full min-h-[32px]"></div>
-                                </div>
-                            </div>
+                        <div class="px-6 py-8 mb-4 bg-[#F8FAF9] rounded-[2rem] border border-gray-100/50">
+                            <label class="block text-[10px] font-black text-[#003A3A] mb-5 uppercase tracking-widest text-center">Adjust your contribution</label>
+                            <input type="range" min="10" max="200" value="45" id="premium-slider" class="w-full cursor-pointer">
                         </div>
                     </div>
 
-                    <div class="px-6 py-6 xl:py-8 mb-6 xl:mb-10 bg-[#F8FAF9] rounded-[2rem] border border-gray-100/50">
-                        <label class="block text-[10px] font-black text-[#003A3A] mb-4 xl:mb-5 uppercase tracking-widest text-center">Adjust your contribution</label>
-                        <input type="range" min="10" max="200" value="45" id="premium-slider" class="w-full cursor-pointer">
-                    </div>
-                </div>
-
-                <div class="space-y-6 xl:space-y-8">
-                    <p class="font-bold italic text-xs xl:text-sm text-gray-800 bg-gray-50 p-4 rounded-xl border border-gray-100">
+                    <p class="font-bold italic text-sm text-gray-800 px-4">
                         Note: This is a simple example. Actual cover depends on full application details.
                     </p>
-                    <div class="space-y-2 xl:space-y-4">
-                        <h3 class="font-bold text-lg xl:text-xl text-[#003A3A]">Your health and lifestyle can affect available cover.</h3>
-                        <p class="text-gray-600 text-sm xl:text-base">Based on your health and personal circumstances, the cover available to you may change. Use the options below to see how different situations affect your cover.</p>
+                </div>
+
+                <div class="lg:col-span-5 space-y-8 pt-4">
+                    <div class="space-y-4">
+                        <h3 class="font-bold text-xl text-[#003A3A] leading-snug">Your health and lifestyle can affect available cover.</h3>
+                        <p class="text-gray-600 text-[15px] leading-relaxed">
+                            Based on your health and personal circumstances, the cover available to you may change.
+                        </p>
+                        <p class="text-gray-600 text-[15px] leading-relaxed">
+                            Use the options below to place a weight on the left side of the balance and see how different situations can affect your final cover amount.<br>
+                            Double-click a weight to remove it and compare outcomes.
+                        </p>
                     </div>
 
                     <div class="flex flex-wrap gap-3 xl:gap-4 pt-2 xl:pt-4">
+                        
                         <button class="risk-btn group flex flex-col items-center gap-2" data-id="smoking" data-penalty="0.15">
                             <div class="w-12 h-12 xl:w-14 xl:h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
                                 <i data-lucide="cigarette" class="w-6 h-6 xl:w-7 xl:h-7 text-gray-500"></i>
                             </div>
-                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center leading-tight">Smoking</span>
+                            <span class="text-[10px] font-bold text-gray-500 uppercase text-center leading-tight">Smoking</span>
                         </button>
-                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="bmi" data-penalty="0.12">
+
+                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="alcohol" data-penalty="0.15">
                             <div class="w-12 h-12 xl:w-14 xl:h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
-                                <i data-lucide="scale" class="w-6 h-6 xl:w-7 xl:h-7 text-gray-500"></i>
+                                <i data-lucide="wine" class="w-6 h-6 xl:w-7 xl:h-7 text-gray-500"></i>
                             </div>
-                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center leading-tight">High<br>BMI</span>
+                            <span class="text-[10px] font-bold text-gray-500 uppercase text-center leading-tight">Heavy<br>Drinking</span>
                         </button>
-                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="mental" data-penalty="0.10">
+
+                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="history" data-penalty="0.10">
                             <div class="w-12 h-12 xl:w-14 xl:h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
-                                <i data-lucide="brain" class="w-6 h-6 xl:w-7 xl:h-7 text-gray-500"></i>
+                                <i data-lucide="clipboard-list" class="w-6 h-6 xl:w-7 xl:h-7 text-gray-500"></i>
                             </div>
-                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center leading-tight">Mental<br>Health</span>
+                            <span class="text-[10px] font-bold text-gray-500 uppercase text-center leading-tight">Medical<br>History</span>
                         </button>
+
                         <button class="risk-btn group flex flex-col items-center gap-2" data-id="treatment" data-penalty="0.15">
                             <div class="w-12 h-12 xl:w-14 xl:h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
                                 <i data-lucide="stethoscope" class="w-6 h-6 xl:w-7 xl:h-7 text-gray-500"></i>
                             </div>
-                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center leading-tight">Treatment</span>
+                            <span class="text-[10px] font-bold text-gray-500 uppercase text-center leading-tight">Ongoing<br>Treatment</span>
                         </button>
-                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="diabetes" data-penalty="0.15">
-                            <div class="w-12 h-12 xl:w-14 xl:h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
-                                <i data-lucide="droplets" class="w-6 h-6 xl:w-7 xl:h-7 text-gray-500"></i>
-                            </div>
-                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center leading-tight">Diabetes</span>
-                        </button>
-                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="pressure" data-penalty="0.10">
-                            <div class="w-12 h-12 xl:w-14 xl:h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
-                                <i data-lucide="activity" class="w-6 h-6 xl:w-7 xl:h-7 text-gray-500"></i>
-                            </div>
-                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center leading-tight">BP</span>
-                        </button>
-                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="job" data-penalty="0.12">
-                            <div class="w-12 h-12 xl:w-14 xl:h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
-                                <i data-lucide="hard-hat" class="w-6 h-6 xl:w-7 xl:h-7 text-gray-500"></i>
-                            </div>
-                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center leading-tight">Risky<br>Job</span>
-                        </button>
+
                         <button class="risk-btn group flex flex-col items-center gap-2" data-id="family" data-penalty="0.08">
                             <div class="w-12 h-12 xl:w-14 xl:h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
                                 <i data-lucide="users" class="w-6 h-6 xl:w-7 xl:h-7 text-gray-500"></i>
                             </div>
-                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center leading-tight">Family</span>
+                            <span class="text-[10px] font-bold text-gray-500 uppercase text-center leading-tight">Family<br>History</span>
                         </button>
+
+                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="job" data-penalty="0.12">
+                            <div class="w-12 h-12 xl:w-14 xl:h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
+                                <i data-lucide="hard-hat" class="w-6 h-6 xl:w-7 xl:h-7 text-gray-500"></i>
+                            </div>
+                            <span class="text-[10px] font-bold text-gray-500 uppercase text-center leading-tight">Risky<br>Job</span>
+                        </button>
+
                     </div>
                 </div>
+
             </div>
 
-            <div class="lg:col-span-5 lg:pt-8 xl:pt-[18rem]">
-                <div class="lg:sticky lg:top-24 xl:top-32 fade-section">
-                    <div class="bg-[#003A3A] p-6 lg:p-8 xl:p-10 rounded-[2rem] xl:rounded-[3rem] text-white shadow-2xl">
-                        <div class="space-y-4 xl:space-y-6 mb-8 xl:mb-10">
-                            <h3 id="resilience-title" class="text-[14px] xl:text-[15px] font-normal leading-relaxed opacity-90">
-                                At £45 a month, you can secure £337,500 of cover for your family.
-                            </h3>
-                            <div class="p-6 xl:p-8 bg-white/5 rounded-[1.5rem] xl:rounded-[2rem] border border-white/10">
-                                <div class="flex justify-between items-center mb-3 xl:mb-4 text-[10px] xl:text-[11px] uppercase font-bold text-white/40 tracking-widest">
-                                    <span>Risk transferred</span>
-                                    <i data-lucide="refresh-cw" class="w-4 h-4 text-green-400"></i>
-                                </div>
-                                <div id="transfer-amount" class="text-3xl xl:text-4xl font-black mb-3 xl:mb-4 tracking-tighter">£337,500</div>
-                                <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                                    <div id="transfer-progress" class="h-full bg-green-400 w-1/3 transition-all duration-700"></div>
-                                </div>
+            <div class="bg-[#003A3A] p-8 md:p-12 xl:p-16 rounded-[3rem] text-white shadow-2xl fade-section">
+                <div class="grid md:grid-cols-2 gap-10 xl:gap-20 items-center">
+                    
+                    <div class="space-y-6">
+                        <h3 id="resilience-title" class="text-[15px] xl:text-[16px] font-normal leading-relaxed opacity-90">
+                            At £45 a month, you can secure £337,500 of cover for your family.
+                        </h3>
+                        <div class="p-8 bg-white/5 rounded-[2rem] border border-white/10 relative overflow-hidden">
+                            <div class="flex justify-between items-center mb-4 text-[11px] uppercase font-bold text-white/40 tracking-widest relative z-10">
+                                <span>Risk transferred</span>
+                                <i data-lucide="refresh-cw" class="w-4 h-4 text-green-400"></i>
                             </div>
-                        </div>
-
-                        <div class="space-y-5 xl:space-y-6">
-                            <h4 class="text-[16px] xl:text-[18px] font-bold text-white uppercase tracking-wider mb-4 xl:mb-6">What this actually means</h4>
-                            <div class="flex items-start gap-3 xl:gap-4">
-                                <i data-lucide="dollar-sign" class="w-5 h-5 xl:w-6 xl:h-6 text-green-400 mt-0.5 xl:mt-1 shrink-0"></i>
-                                <p class="text-[14px] xl:text-[15px] leading-relaxed text-white/90">Life insurance works by exchanging a fixed monthly premium for a guaranteed cover amount.</p>
-                            </div>
-                            <div class="flex items-start gap-3 xl:gap-4">
-                                <i data-lucide="shield-check" class="w-5 h-5 xl:w-6 xl:h-6 text-green-400 mt-0.5 xl:mt-1 shrink-0"></i>
-                                <p class="text-[14px] xl:text-[15px] leading-relaxed text-white/90">If you die during your policy term, your family receives that amount — regardless of how long the policy has been in place.</p>
-                            </div>
-                            <div class="flex items-start gap-3 xl:gap-4">
-                                <i data-lucide="sliders" class="w-5 h-5 xl:w-6 xl:h-6 text-green-400 mt-0.5 xl:mt-1 shrink-0"></i>
-                                <p class="text-[14px] xl:text-[15px] leading-relaxed text-white/90">Use the slider to explore how different monthly premiums relate to different levels of cover.</p>
+                            <div id="transfer-amount" class="text-4xl xl:text-5xl font-black mb-6 tracking-tighter relative z-10">£337,500</div>
+                            <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden relative z-10">
+                                <div id="transfer-progress" class="h-full bg-green-400 w-1/3 transition-all duration-700"></div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="space-y-6">
+                        <h4 class="text-[18px] font-bold text-white uppercase tracking-wider mb-8">What this actually means</h4>
+                        <div class="flex items-start gap-4">
+                            <i data-lucide="dollar-sign" class="w-6 h-6 text-green-400 mt-1 shrink-0"></i>
+                            <p class="explanation-text text-white/90">Life insurance works by exchanging a fixed monthly premium for a guaranteed cover amount.</p>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <i data-lucide="shield-check" class="w-6 h-6 text-green-400 mt-1 shrink-0"></i>
+                            <p class="explanation-text text-white/90">If you die during your policy term, your family receives that amount — regardless of how long the policy has been in place.</p>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <i data-lucide="sliders" class="w-6 h-6 text-green-400 mt-1 shrink-0"></i>
+                            <p class="explanation-text text-white/90">Use the slider to explore how different monthly premiums relate to different levels of cover.</p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
