@@ -192,17 +192,18 @@
             margin-bottom: 1rem;         /* 新增：添加底部间距，保持排版美观 */
         }
 
-        /* 优化天平样式 */
+/* 恢复高质感天平样式 */
         .balance-pivot {
             position: absolute;
             left: 50%;
-            bottom: 42px;
+            bottom: 30px;
             transform: translateX(-50%);
             width: 20px;
             height: 60px;
             background: linear-gradient(to bottom, #9CA3AF, #6B7280, #4B5563);
             border-radius: 10px 10px 0 0;
             z-index: 5;
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.2);
         }
         
         .balance-pivot::after {
@@ -215,6 +216,7 @@
             height: 10px;
             background: #4B5563;
             border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         
         .balance-beam {
@@ -228,6 +230,7 @@
             transform-origin: center center;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
             z-index: 4;
+            transition: transform 0.5s ease-out;
         }
         
         .balance-beam::before,
@@ -242,13 +245,8 @@
             border-radius: 50%;
         }
         
-        .balance-beam::before {
-            left: -6px;
-        }
-        
-        .balance-beam::after {
-            right: -6px;
-        }
+        .balance-beam::before { left: -6px; }
+        .balance-beam::after { right: -6px; }
 
         /* --- Claim Journey Z-Path 专用 --- */
 .claims-grid-container {
@@ -474,128 +472,164 @@
 
     <!-- 3. Simulator chapter -->
     <section id="simulator" class="py-24 md:py-32 px-4 md:px-8 bg-white border-y border-gray-100">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-14 simulator-shell">
-            <!-- Interaction Area -->
-            <div class="lg:col-span-7 space-y-10 fade-section simulator-copy">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-14 items-start">
+            
+            <div class="lg:col-span-7 space-y-10 fade-section">
                 <div class="space-y-6">
                     <div class="section-label">Chapter 1 · HOW PROTECTION WORKS</div>
-
-                    <div class="flex items-center gap-2 text-[#E30613] font-bold text-sm tracking-widest uppercase">
-                        <i data-lucide="scale" class="w-4 h-4"></i>
-                        EXPLORE · COVER & COST
-                    </div>
-
-                    <h2 class="text-4xl md:text-5xl font-bold text-[#003A3A] font-serif leading-tight">
-                        A monthly premium provides a guaranteed level of cover for your family. 
+                    <h2 class="text-4xl md:text-5xl font-bold text-[#003A3A] leading-tight">
+                        A monthly premium & Cover
                     </h2>
-
-                    <p class="text-gray-500 text-lg font-light leading-relaxed max-w-2xl">
-                        Life insurance works by exchanging a fixed monthly premium for a guaranteed cover amount. If you die during your policy term, your family receives that amount — regardless of how long the policy has been in place. Use the slider to explore how different monthly premiums relate to different levels of cover.
+                    <p class="text-gray-600 text-[17px] font-light leading-relaxed max-w-2xl">
+                        Life insurance works like this: you pay a set amount each month, and your family gets a guaranteed sum if you pass away while the policy is active. They'll get the full amount no matter how long you've had the policy. Use the slider to see how much cover you can get for different monthly payments.
                     </p>
                 </div>
 
-                <!-- Balance Visualisation Card -->
-                <div class="bg-[#F8FAF9] p-10 md:p-12 rounded-[50px] border border-gray-100 shadow-sm relative overflow-visible simulator-visual flex flex-col justify-center">
-                    <div id="balance-stage" class="relative h-[380px] mb-16 overflow-visible">
-                        <!-- 优化的天平支点 -->
+                <div class="bg-white p-6 md:p-16 rounded-[40px] border border-gray-100 relative overflow-visible mt-12 shadow-sm">
+                    <div id="balance-stage" class="relative h-[380px] overflow-visible mb-12">
                         <div class="balance-pivot"></div>
+                        <div id="beam-scene" class="balance-beam transition-transform duration-150 ease-out">
+                            
+                            <div class="absolute left-0 bottom-[6px] -translate-x-1/2">
+                                <div id="left-upright" class="flex flex-col items-center transition-transform duration-150" style="transform-origin: bottom;">
+                                    
+                                    <div class="h-48 flex items-end justify-center mb-6">
+                                        <div id="premium-box" class="w-20 h-20 bg-[#4B5563] rounded-2xl flex items-center justify-center shadow-xl transition-all duration-150 transform-gpu" style="transform-origin: bottom;">
+                                            <i data-lucide="check-circle-2" class="w-8 h-8 text-white"></i>
+                                        </div>
+                                    </div>
 
-                        <!-- 优化的天平横梁 -->
-                        <div id="beam-scene" class="balance-beam"></div>
-
-                        <!-- Left endpoint - 月保费 -->
-                        <div class="absolute left-0 bottom-[95px] -translate-x-1/2">
-                            <div id="left-upright" class="flex flex-col items-center origin-center">
-                                <div id="input-icon" class="w-12 h-12 bg-white shadow-xl rounded-2xl flex items-center justify-center border border-gray-50 mb-6">
-                                    <i data-lucide="check-circle" class="text-[#003A3A] w-6 h-6"></i>
-                                </div>
-                                <!-- 关键修改：添加容器类确保文字不被遮挡 -->
-                                <div class="text-center whitespace-nowrap weight-label-container">
-                                    <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest">Monthly cost</span>
-                                    <span id="display-premium" class="text-2xl font-bold text-[#003A3A]">£45</span>
+                                    <span class="text-[10px] font-black text-gray-400 mb-1 uppercase tracking-wider">Monthly payment</span>
+                                    <span class="text-2xl font-bold text-[#003A3A]">£<span id="display-premium">45</span></span>
+                                    
+                                    <div id="active-risks-slot" class="flex gap-1.5 mt-3 h-8 w-full justify-center min-h-[32px]"></div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Right endpoint - 保障金额 -->
-                        <div class="absolute right-0 bottom-[95px] translate-x-1/2">
-                            <div id="right-upright" class="flex flex-col items-center origin-center">
-                                <div id="risk-weight" class="w-20 h-20 bg-black shadow-xl rounded-2xl flex items-center justify-center border border-gray-800 mb-6">
-                                    <i data-lucide="shield" class="text-white w-10 h-10"></i>
-                                </div>
-                                <!-- 关键修改：添加容器类确保文字不被遮挡 -->
-                                <div class="text-center whitespace-nowrap weight-label-container">
-                                    <span class="block text-[10px] text-gray-400 font-black uppercase tracking-widest">Cover amount</span>
-                                    <span id="display-coverage" class="text-2xl font-bold text-[#003A3A]">£337,500</span>
+                            <div class="absolute right-0 bottom-[6px] translate-x-1/2">
+                                <div id="right-upright" class="flex flex-col items-center transition-transform duration-150" style="transform-origin: bottom;">
+                                    
+                                    <div class="h-48 flex items-end justify-center mb-6">
+                                        <div id="cover-box" class="w-40 h-40 bg-[#004A4A] rounded-3xl flex items-center justify-center shadow-xl transition-all duration-150 transform-gpu" style="transform-origin: bottom;">
+                                            <i data-lucide="shield" class="w-10 h-10 text-white"></i>
+                                        </div>
+                                    </div>
+
+                                    <span class="text-[10px] font-black text-gray-400 mb-1 uppercase tracking-wider">Cover amount</span>
+                                    <span class="text-3xl lg:text-4xl font-bold text-[#003A3A]">£<span id="display-coverage">337,500</span></span>
+                                    
+                                    <div class="mt-3 h-8 w-full min-h-[32px]"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Controller -->
-                    <div class="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm mt-8">
-                        <div class="flex justify-between mb-6 gap-4">
-                            <span class="text-xs font-black text-[#003A3A] uppercase tracking-widest">Adjust your contribution</span>
-                        </div>
+                    <div class="px-6 py-8 mb-10 bg-[#F8FAF9] rounded-[2rem] border border-gray-100/50">
+                        <label class="block text-[10px] font-black text-[#003A3A] mb-5 uppercase tracking-widest text-center">Adjust your contribution</label>
                         <input type="range" min="10" max="200" value="45" id="premium-slider" class="w-full cursor-pointer">
+                    </div>
+                </div>
+
+                <div class="space-y-8">
+                    <p class="font-bold italic text-sm text-gray-800 bg-gray-50 p-4 rounded-xl border border-gray-100">
+                        Note: This is a simple example. Actual cover depends on full application details.
+                    </p>
+                    <div class="space-y-4">
+                        <h3 class="font-bold text-xl text-[#003A3A]">Your health and lifestyle can affect available cover.</h3>
+                        <p class="text-gray-600">Based on your health and personal circumstances, the cover available to you may change. Use the options below to see how different situations affect your cover.</p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="smoking" data-penalty="0.15">
+                            <div class="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
+                                <i data-lucide="cigarette" class="w-7 h-7 text-gray-500"></i>
+                            </div>
+                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center">Smoking</span>
+                        </button>
+                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="bmi" data-penalty="0.12">
+                            <div class="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
+                                <i data-lucide="scale" class="w-7 h-7 text-gray-500"></i>
+                            </div>
+                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center">High BMI</span>
+                        </button>
+                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="mental" data-penalty="0.10">
+                            <div class="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
+                                <i data-lucide="brain" class="w-7 h-7 text-gray-500"></i>
+                            </div>
+                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center">Mental Health</span>
+                        </button>
+                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="treatment" data-penalty="0.15">
+                            <div class="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
+                                <i data-lucide="stethoscope" class="w-7 h-7 text-gray-500"></i>
+                            </div>
+                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center">Treatment</span>
+                        </button>
+                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="diabetes" data-penalty="0.15">
+                            <div class="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
+                                <i data-lucide="droplets" class="w-7 h-7 text-gray-500"></i>
+                            </div>
+                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center">Diabetes</span>
+                        </button>
+                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="pressure" data-penalty="0.10">
+                            <div class="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
+                                <i data-lucide="activity" class="w-7 h-7 text-gray-500"></i>
+                            </div>
+                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center">BP</span>
+                        </button>
+                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="job" data-penalty="0.12">
+                            <div class="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
+                                <i data-lucide="hard-hat" class="w-7 h-7 text-gray-500"></i>
+                            </div>
+                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center">Risky Job</span>
+                        </button>
+                        <button class="risk-btn group flex flex-col items-center gap-2" data-id="family" data-penalty="0.08">
+                            <div class="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center border-2 border-transparent transition-all group-hover:bg-gray-100 shadow-sm icon-box-ui">
+                                <i data-lucide="users" class="w-7 h-7 text-gray-500"></i>
+                            </div>
+                            <span class="text-[9px] font-bold text-gray-400 uppercase text-center">Family</span>
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Analysis Sidebar -->
-            <div class="lg:col-span-5 lg:pt-[32rem]">
-                <div class="lg:sticky lg:top-32 fade-section simulator-sidebar">
-                    <div class="bg-[#003A3A] p-8 md:p-10 rounded-[3rem] text-white space-y-10 shadow-2xl">
-                        <div class="space-y-5">
-                            <!-- 修改标题为动态文本 -->
-                            <h3 id="resilience-title" class="font-serif">
+            <div class="lg:col-span-5 lg:pt-[17.5rem]">
+                <div class="lg:sticky lg:top-32 fade-section">
+                    <div class="bg-[#003A3A] p-8 md:p-10 rounded-[3rem] text-white shadow-2xl">
+                        <div class="space-y-6 mb-10">
+                            <h3 id="resilience-title" class="text-[15px] font-normal leading-relaxed opacity-90">
                                 At £45 a month, you can secure £337,500 of cover for your family.
                             </h3>
-                            <!-- 删除了原来的那段文本 -->
-                            <div class="p-7 md:p-8 bg-white/5 rounded-[2rem] border border-white/10">
-                                <div class="flex justify-between items-center mb-4">
-                                    <span class="text-[11px] uppercase font-bold text-white/40 tracking-widest">Risk transferred</span>
+                            <div class="p-6 md:p-8 bg-white/5 rounded-[2rem] border border-white/10">
+                                <div class="flex justify-between items-center mb-4 text-[11px] uppercase font-bold text-white/40 tracking-widest">
+                                    <span>Risk transferred</span>
                                     <i data-lucide="refresh-cw" class="w-4 h-4 text-green-400"></i>
                                 </div>
-                                <div id="transfer-amount" class="text-4xl font-black mb-2 tracking-tighter">£337,500</div>
+                                <div id="transfer-amount" class="text-4xl font-black mb-4 tracking-tighter">£337,500</div>
                                 <div class="w-full h-1 bg-white/10 rounded-full overflow-hidden">
                                     <div id="transfer-progress" class="h-full bg-green-400 w-1/3 transition-all duration-700"></div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- 修改说明文本区域 -->
-                        <div class="space-y-5">
-                            <!-- 新增总标题 -->
-                            <h4 class="what-it-means-title">What this actually means</h4>
-                            
-                            <!-- 第一段：固定月保费 -->
-                            <div class="flex items-start gap-3">
-                                <i data-lucide="dollar-sign" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
-                                <div class="explanation-text">
-                                    Life insurance works by exchanging a fixed monthly premium for a guaranteed cover amount.
-                                </div>
+                        <div class="space-y-6" >
+                            <h4 class="text-[18px] font-bold text-white uppercase tracking-wider mb-6">What this actually means</h4>
+                            <div class="flex items-start gap-4">
+                                <i data-lucide="dollar-sign" class="w-6 h-6 text-green-400 mt-1 shrink-0"></i>
+                                <p class="explanation-text">Life insurance works by exchanging a fixed monthly premium for a guaranteed cover amount.</p>
                             </div>
-                            
-                            <!-- 第二段：赔付说明 -->
-                            <div class="flex items-start gap-3">
-                                <i data-lucide="shield-check" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
-                                <div class="explanation-text">
-                                    If you die during your policy term, your family receives that amount — regardless of how long the policy has been in place.
-                                </div>
+                            <div class="flex items-start gap-4">
+                                <i data-lucide="shield-check" class="w-6 h-6 text-green-400 mt-1 shrink-0"></i>
+                                <p class="explanation-text">If you die during your policy term, your family receives that amount — regardless of how long the policy has been in place.</p>
                             </div>
-                            
-                            <!-- 第三段：滑块说明 -->
-                            <div class="flex items-start gap-3">
-                                <i data-lucide="sliders" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
-                                <div class="explanation-text">
-                                    Use the slider to explore how different monthly premiums relate to different levels of cover.
-                                </div>
+                            <div class="flex items-start gap-4">
+                                <i data-lucide="sliders" class="w-6 h-6 text-green-400 mt-1 shrink-0"></i>
+                                <p class="explanation-text">Use the slider to explore how different monthly premiums relate to different levels of cover.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -805,9 +839,7 @@
     </section>
 
     <script>
-    // 强制立即执行代码，确保修改生效
-    (function() {
-        // 初始化所有 Lucide 图标
+        // 1. 初始化所有 Lucide 图标
         try {
             lucide.createIcons({
                 attrs: {
@@ -820,7 +852,7 @@
             console.error('Lucide 图标初始化失败:', error);
         }
 
-        // Scroll Animation Observer
+        // 2. 页面滚动渐显动画 (Scroll Animation Observer)
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -833,249 +865,288 @@
             observer.observe(section);
         });
 
-        // Simulator Logic
-        const slider = document.getElementById('premium-slider');
-        const displayPremium = document.getElementById('display-premium');
-        const displayCoverage = document.getElementById('display-coverage');
-        const transferAmount = document.getElementById('transfer-amount');
-        const transferProgress = document.getElementById('transfer-progress');
-        const resilienceTitle = document.getElementById('resilience-title');
+        // 3. 核心交互逻辑 (使用安全作用域完全包裹，防止语法报错)
+        (function() {
+            
+            /* ==========================================
+               A. 天平模拟器逻辑 (Simulator Logic)
+               ========================================== */
+            const slider = document.getElementById('premium-slider');
+            const displayPremium = document.getElementById('display-premium');
+            const displayCoverage = document.getElementById('display-coverage');
+            const transferAmount = document.getElementById('transfer-amount');
+            const transferProgress = document.getElementById('transfer-progress');
+            const resilienceTitle = document.getElementById('resilience-title');
 
-        const beamScene = document.getElementById('beam-scene');
-        const leftUpright = document.getElementById('left-upright');
-        const rightUpright = document.getElementById('right-upright');
-        const riskWeight = document.getElementById('risk-weight');
-        const inputIcon = document.getElementById('input-icon');
+            const beamScene = document.getElementById('beam-scene');
+            const leftUpright = document.getElementById('left-upright');
+            const rightUpright = document.getElementById('right-upright');
+            const coverBox = document.getElementById('cover-box');
+            const premiumBox = document.getElementById('premium-box');
+            const activeRisksSlot = document.getElementById('active-risks-slot');
 
-        const MIN_VALUE = 10;
-        const MAX_VALUE = 200;
-        const DEFAULT_VALUE = 45;
-        const LEVERAGE_MULTIPLIER = 7500;
+            const BASE_MULTIPLIER = 7500;
+            let activeRisks = new Map();
 
-        function clamp(num, min, max) {
-            return Math.min(Math.max(num, min), max);
-        }
+            function updateSimulator() {
+                if (!slider) return;
 
-        function updateSimulator(val) {
-            const coverage = val * LEVERAGE_MULTIPLIER;
-            const progress = (val - MIN_VALUE) / (MAX_VALUE - MIN_VALUE);
+                const premiumVal = parseInt(slider.value, 10);
+                let totalPenalty = 0;
+                activeRisks.forEach(penalty => totalPenalty += parseFloat(penalty));
+                totalPenalty = Math.min(totalPenalty, 0.8);
 
-            // Update Text
-            displayPremium.textContent = `£${val}`;
-            displayCoverage.textContent = `£${coverage.toLocaleString()}`;
-            transferAmount.textContent = `£${coverage.toLocaleString()}`;
-            transferProgress.style.width = `${progress * 100}%`;
-            
-            // 更新动态标题
-            resilienceTitle.textContent = `At £${val} a month, you can secure £${coverage.toLocaleString()} of cover for your family.`;
-
-            // 保持天平水平
-            beamScene.style.transform = `translateX(-50%) rotate(0deg)`;
-            leftUpright.style.transform = `rotate(0deg)`;
-            rightUpright.style.transform = `rotate(0deg)`;
-
-            // 调整缩放比例（适配新的图标尺寸）
-            const scale = clamp(1.0 + (progress * 0.6), 1.0, 1.6);
-            
-            // 应用缩放比例
-            riskWeight.style.transform = `scale(${scale})`;
-            riskWeight.style.opacity = 1;
-            
-            inputIcon.style.transform = `scale(${scale})`;
-            inputIcon.style.opacity = 1;
-        }
-
-        // 立即初始化滑块
-        if (slider) {
-            updateSimulator(parseInt(slider.value, 10));
-            slider.addEventListener('input', (e) => {
-                updateSimulator(parseInt(e.target.value, 10));
-            });
-        }
-
-        // WhatsApp 分享功能
-        const whatsappShareCard = document.getElementById('whatsapp-share-card');
-        if (whatsappShareCard) {
-            whatsappShareCard.addEventListener('click', function() {
-                const shareText = encodeURIComponent('Check out this life insurance guide: ');
-                const shareUrl = encodeURIComponent(window.location.href);
-                const whatsappUrl = `https://api.whatsapp.com/send?text=${shareText}${shareUrl}`;
-                window.open(whatsappUrl, '_blank', 'width=600,height=600');
-            });
-        }
-
-        // 客服卡片点击事件
-        const customerSupportCard = document.getElementById('customer-support-card');
-        if (customerSupportCard) {
-            customerSupportCard.addEventListener('click', function(e) {
-                if (!e.target.closest('a')) {
-                    window.location.href = 'tel:+448000271846';
-                }
-            });
-        }
-
-        // 理赔流程滑动切换逻辑
-        const totalSteps = 6;
-        let currentStep = 1;
-        let isHovering = false;
-        let mouseX = 0;
-        let lastMouseX = 0;
-        let isAnimating = false;
-        let touchStartX = 0; // 修复：声明触摸事件变量
-        const sensitivity = 2;
-        const animationDuration = 300;
-        
-        // DOM元素
-        const steps = document.querySelectorAll('[data-step]');
-        const indicators = document.querySelectorAll('.indicator-dot');
-        const carousel = document.getElementById('carousel');
-        
-        // 更新步骤显示
-        function updateStepDisplay() {
-            if (isAnimating) return;
-            isAnimating = true;
-            
-            steps.forEach(step => {
-                step.classList.remove('step-active');
-                step.classList.add('step-hidden');
-            });
-            
-            const activeStep = document.querySelector(`[data-step="${currentStep}"]`);
-            activeStep.classList.remove('step-hidden');
-            activeStep.classList.add('step-active');
-            
-            // 更新指示器
-            indicators.forEach((dot, index) => {
-                if (index + 1 === currentStep) {
-                    dot.classList.remove('bg-white/20');
-                    dot.classList.add('bg-green-400');
-                    dot.style.transform = 'scale(1.2)';
-                } else {
-                    dot.classList.remove('bg-green-400');
-                    dot.classList.add('bg-white/20');
-                    dot.style.transform = 'scale(1)';
-                }
-                dot.style.transition = 'all 0.2s ease';
-            });
-            
-            carousel.setAttribute('aria-valuenow', currentStep);
-            
-            setTimeout(() => {
-                isAnimating = false;
-            }, animationDuration);
-        }
-        
-        // 切换到指定步骤
-        function goToStep(targetStep) {
-            if (targetStep < 1 || targetStep > totalSteps || isAnimating || targetStep === currentStep) {
-                return;
-            }
-            
-            currentStep = targetStep;
-            updateStepDisplay();
-        }
-        
-        // 下一页/上一页
-        function goToNextStep() { goToStep(currentStep + 1); }
-        function goToPrevStep() { goToStep(currentStep - 1); }
-        
-        // 鼠标移动检测
-        function handleMouseMove(e) {
-            if (!isHovering || isAnimating) return;
-            
-            mouseX = e.clientX;
-            const deltaX = mouseX - lastMouseX;
-            
-            if (Math.abs(deltaX) > sensitivity) {
-                deltaX < 0 ? goToNextStep() : goToPrevStep();
-                lastMouseX = mouseX;
-            }
-        }
-        
-        // 绑定轮播事件
-        if (carousel) {
-            carousel.addEventListener('mouseenter', (e) => {
-                isHovering = true;
-                lastMouseX = e.clientX;
-                carousel.style.cursor = 'grab';
-            });
-            
-            carousel.addEventListener('mouseleave', () => {
-                isHovering = false;
-                carousel.style.cursor = 'default';
-            });
-            
-            carousel.addEventListener('mousemove', handleMouseMove);
-            
-            // 指示器点击
-            indicators.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    goToStep(index + 1);
-                });
+                const currentMultiplier = BASE_MULTIPLIER * (1 - totalPenalty);
+                const coverage = Math.floor(premiumVal * currentMultiplier);
                 
-                dot.addEventListener('mouseenter', () => {
-                    if (!dot.classList.contains('bg-green-400')) {
-                        dot.style.transform = 'scale(1.3)';
-                        dot.style.backgroundColor = 'rgba(255,255,255,0.4)';
+                // 更新数字
+                if (displayPremium) displayPremium.textContent = premiumVal;
+                if (displayCoverage) displayCoverage.textContent = coverage.toLocaleString(); 
+                
+                // 侧边栏联动
+                if (transferAmount) transferAmount.textContent = `£${coverage.toLocaleString()}`;
+                if (resilienceTitle) resilienceTitle.textContent = `At £${premiumVal} a month, you can secure £${coverage.toLocaleString()} of cover for your family.`;
+
+                const progressPercent = (premiumVal - 10) / (200 - 10);
+                if (transferProgress) transferProgress.style.width = `${progressPercent * 100}%`;
+                
+                // 物理缩放
+                const minScale = 0.7; 
+                const maxScale = 1.3;
+                const dynamicBaseScale = minScale + (progressPercent * (maxScale - minScale));
+
+                if (premiumBox) {
+                    premiumBox.style.transform = `scale(${dynamicBaseScale})`;
+                }
+                if (coverBox) {
+                    const riskScale = (1 - (totalPenalty * 0.4));
+                    const finalCoverScale = dynamicBaseScale * riskScale;
+                    coverBox.style.transform = `scale(${finalCoverScale})`;
+                    // 颜色联动
+                    coverBox.style.backgroundColor = totalPenalty > 0.4 ? "#134e4a" : "#004A4A";
+                }
+                
+                // 天平倾斜
+                const tiltAngle = totalPenalty * -30;
+                if (beamScene) beamScene.style.transform = `translateX(-50%) rotate(${tiltAngle}deg)`;
+                if (leftUpright) leftUpright.style.transform = `rotate(${-tiltAngle}deg)`;
+                if (rightUpright) rightUpright.style.transform = `rotate(${-tiltAngle}deg)`;
+            }
+
+            // 绑定底部风险图标点击事件
+            document.querySelectorAll('.risk-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const penalty = this.getAttribute('data-penalty');
+                    const iconBox = this.querySelector('.icon-box-ui');
+                    if (!iconBox) return;
+
+                    const iconHtml = iconBox.innerHTML;
+
+                    if (activeRisks.has(id)) {
+                        activeRisks.delete(id);
+                        iconBox.classList.remove('border-[#003A3A]', 'bg-gray-200');
+                        iconBox.classList.add('border-transparent', 'bg-gray-50');
+                        const slotIcon = document.getElementById(`slot-${id}`);
+                        if (slotIcon) slotIcon.remove();
+                    } else {
+                        activeRisks.set(id, penalty);
+                        iconBox.classList.remove('border-transparent', 'bg-gray-50');
+                        iconBox.classList.add('border-[#003A3A]', 'bg-gray-200');
+
+                        const miniIcon = document.createElement('div');
+                        miniIcon.id = `slot-${id}`;
+                        miniIcon.className = 'w-7 h-7 bg-white rounded-md flex items-center justify-center border border-gray-300 shadow-sm cursor-pointer hover:bg-red-50 transition-colors';
+                        miniIcon.innerHTML = iconHtml;
+                        
+                        // 核心功能：点击天平上的小图标，反向触发按钮点击来取消
+                        miniIcon.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                            btn.click();
+                        });
+
+                        const svg = miniIcon.querySelector('svg');
+                        if (svg) { 
+                            svg.setAttribute('width', '14'); 
+                            svg.setAttribute('height', '14'); 
+                        }
+                        if (activeRisksSlot) activeRisksSlot.appendChild(miniIcon);
+                    }
+                    updateSimulator();
+                });
+            });
+
+            // 初始化滑块
+            if (slider) {
+                slider.addEventListener('input', updateSimulator);
+                updateSimulator();
+            }
+
+            /* ==========================================
+               B. 底部卡片点击与分享逻辑
+               ========================================== */
+            const whatsappShareCard = document.getElementById('whatsapp-share-card');
+            if (whatsappShareCard) {
+                whatsappShareCard.addEventListener('click', function() {
+                    const shareText = encodeURIComponent('Check out this life insurance guide: ');
+                    const shareUrl = encodeURIComponent(window.location.href);
+                    const whatsappUrl = `https://api.whatsapp.com/send?text=${shareText}${shareUrl}`;
+                    window.open(whatsappUrl, '_blank', 'width=600,height=600');
+                });
+            }
+
+            const customerSupportCard = document.getElementById('customer-support-card');
+            if (customerSupportCard) {
+                customerSupportCard.addEventListener('click', function(e) {
+                    if (!e.target.closest('a')) {
+                        window.location.href = 'tel:+448000271846';
                     }
                 });
+            }
+
+            /* ==========================================
+               C. 理赔流程滑动切换逻辑 (Carousel)
+               ========================================== */
+            const totalSteps = 6;
+            let currentStep = 1;
+            let isHovering = false;
+            let mouseX = 0;
+            let lastMouseX = 0;
+            let isAnimating = false;
+            let touchStartX = 0; 
+            const sensitivity = 2;
+            const animationDuration = 300;
+            
+            const steps = document.querySelectorAll('[data-step]');
+            const indicators = document.querySelectorAll('.indicator-dot');
+            const carousel = document.getElementById('carousel');
+            
+            function updateStepDisplay() {
+                if (isAnimating || !carousel) return;
+                isAnimating = true;
                 
-                dot.addEventListener('mouseleave', () => {
-                    if (!dot.classList.contains('bg-green-400')) {
+                steps.forEach(step => {
+                    step.classList.remove('step-active');
+                    step.classList.add('step-hidden');
+                });
+                
+                const activeStep = document.querySelector(`[data-step="${currentStep}"]`);
+                if (activeStep) {
+                    activeStep.classList.remove('step-hidden');
+                    activeStep.classList.add('step-active');
+                }
+                
+                indicators.forEach((dot, index) => {
+                    if (index + 1 === currentStep) {
+                        dot.classList.remove('bg-white/20');
+                        dot.classList.add('bg-green-400');
+                        dot.style.transform = 'scale(1.2)';
+                    } else {
+                        dot.classList.remove('bg-green-400');
+                        dot.classList.add('bg-white/20');
                         dot.style.transform = 'scale(1)';
-                        dot.style.backgroundColor = 'rgba(255,255,255,0.2)';
+                    }
+                    dot.style.transition = 'all 0.2s ease';
+                });
+                
+                carousel.setAttribute('aria-valuenow', currentStep);
+                
+                setTimeout(() => {
+                    isAnimating = false;
+                }, animationDuration);
+            }
+            
+            function goToStep(targetStep) {
+                if (targetStep < 1 || targetStep > totalSteps || isAnimating || targetStep === currentStep) return;
+                currentStep = targetStep;
+                updateStepDisplay();
+            }
+            
+            function goToNextStep() { goToStep(currentStep + 1); }
+            function goToPrevStep() { goToStep(currentStep - 1); }
+            
+            function handleMouseMove(e) {
+                if (!isHovering || isAnimating) return;
+                mouseX = e.clientX;
+                const deltaX = mouseX - lastMouseX;
+                if (Math.abs(deltaX) > sensitivity) {
+                    deltaX < 0 ? goToNextStep() : goToPrevStep();
+                    lastMouseX = mouseX;
+                }
+            }
+            
+            if (carousel) {
+                carousel.addEventListener('mouseenter', (e) => {
+                    isHovering = true;
+                    lastMouseX = e.clientX;
+                    carousel.style.cursor = 'grab';
+                });
+                
+                carousel.addEventListener('mouseleave', () => {
+                    isHovering = false;
+                    carousel.style.cursor = 'default';
+                });
+                
+                carousel.addEventListener('mousemove', handleMouseMove);
+                
+                indicators.forEach((dot, index) => {
+                    dot.addEventListener('click', () => goToStep(index + 1));
+                    dot.addEventListener('mouseenter', () => {
+                        if (!dot.classList.contains('bg-green-400')) {
+                            dot.style.transform = 'scale(1.3)';
+                            dot.style.backgroundColor = 'rgba(255,255,255,0.4)';
+                        }
+                    });
+                    dot.addEventListener('mouseleave', () => {
+                        if (!dot.classList.contains('bg-green-400')) {
+                            dot.style.transform = 'scale(1)';
+                            dot.style.backgroundColor = 'rgba(255,255,255,0.2)';
+                        }
+                    });
+                });
+                
+                carousel.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+                
+                carousel.addEventListener('touchend', (e) => {
+                    const touchEndX = e.changedTouches[0].screenX;
+                    const swipeDistance = touchEndX - touchStartX;
+                    if (Math.abs(swipeDistance) > 50) {
+                        swipeDistance < 0 ? goToNextStep() : goToPrevStep();
+                    }
+                }, { passive: true });
+                
+                document.addEventListener('keydown', (e) => {
+                    const isCarouselFocused = document.activeElement === carousel || carousel.contains(document.activeElement);
+                    if (isCarouselFocused || e.target.tagName === 'BODY') {
+                        if (e.key === 'ArrowRight') {
+                            e.preventDefault();
+                            goToNextStep();
+                        } else if (e.key === 'ArrowLeft') {
+                            e.preventDefault();
+                            goToPrevStep();
+                        }
                     }
                 });
-            });
-            
-            // 触摸事件
-            carousel.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            }, { passive: true });
-            
-            carousel.addEventListener('touchend', (e) => {
-                const touchEndX = e.changedTouches[0].screenX;
-                const swipeDistance = touchEndX - touchStartX;
                 
-                if (Math.abs(swipeDistance) > 50) {
-                    swipeDistance < 0 ? goToNextStep() : goToPrevStep();
-                }
-            }, { passive: true });
-            
-            // 键盘导航
-            document.addEventListener('keydown', (e) => {
-                const isCarouselFocused = document.activeElement === carousel || 
-                                          carousel.contains(document.activeElement);
+                carousel.tabIndex = 0;
+                carousel.setAttribute('role', 'slider');
+                carousel.setAttribute('aria-valuemin', '1');
+                carousel.setAttribute('aria-valuemax', totalSteps);
+                carousel.setAttribute('aria-valuenow', currentStep);
                 
-                if (isCarouselFocused || e.target.tagName === 'BODY') {
-                    if (e.key === 'ArrowRight') {
-                        e.preventDefault();
-                        goToNextStep();
-                    } else if (e.key === 'ArrowLeft') {
-                        e.preventDefault();
-                        goToPrevStep();
-                    }
-                }
-            });
+                updateStepDisplay();
+            }
             
-            // 初始化轮播
-            carousel.tabIndex = 0;
-            carousel.setAttribute('role', 'slider');
-            carousel.setAttribute('aria-valuemin', '1');
-            carousel.setAttribute('aria-valuemax', totalSteps);
-            carousel.setAttribute('aria-valuenow', currentStep);
-            
-            // 立即更新轮播显示
-            updateStepDisplay();
-        }
-        
-        // 强制触发所有动画元素显示（调试用）
-        setTimeout(() => {
-            document.querySelectorAll('.fade-section').forEach(el => {
-                el.classList.add('visible');
-            });
-        }, 100);
-    })();
+            // 强制触发所有动画元素显示（防止 Observer 失败的兜底方案）
+            setTimeout(() => {
+                document.querySelectorAll('.fade-section').forEach(el => {
+                    el.classList.add('visible');
+                });
+            }, 100);
+
+        })(); // <--- 这个最重要的闭合括号现在被安稳地放在了这里
     </script>
 </body>
 </html>
