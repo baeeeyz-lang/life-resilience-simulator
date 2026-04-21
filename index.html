@@ -384,87 +384,325 @@
     align-items: center;
 }
 
-/* --- 饼图专用的交互与视觉样式 --- */
-        .pie-svg-wrap { 
-            width: 100%; 
-            max-width: 850px; 
-            margin: 0 auto; 
-            overflow: visible; 
-            font-family: 'Inter', sans-serif; 
-        }
-        .pie-group { 
-            cursor: pointer; 
-            transform-origin: 500px 500px; 
-            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); 
-        }
-        .pie-slice { 
-            stroke: white; 
-            stroke-width: 3px; 
-            stroke-linejoin: round; 
-            transition: all 0.3s; 
-        }
-        
-        /* 默认状态（未激活）：显示外部标签，隐藏内部图文 */
-        .pie-group foreignObject { 
-            opacity: 0; 
-            transition: opacity 0.3s; 
-            pointer-events: none; 
-        }
-        .pie-group .outside-label { 
-            opacity: 1; 
-            transition: opacity 0.3s; 
-            font-size: 16px; 
-            font-weight: 700; 
-            fill: #4B5563; 
-        }
-        
-        /* 激活状态：向外弹出并放大，显示内部图文，隐藏外部标签 */
-        .pie-group.active { 
-            transform: scale(1.15); 
-            z-index: 10;
-        }
-        .pie-group.active .pie-slice { 
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15)); 
-        }
-        .pie-group.active foreignObject { 
-            opacity: 1; 
-            pointer-events: auto; 
-            transition-delay: 0.1s; 
-        }
-        .pie-group.active .outside-label { 
-            opacity: 0; 
-        }
-        
-        .slice-content {
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            text-align: center;
-            width: 100%; 
-            height: 100%; 
-            color: white; 
-            padding: 20px;
-        }
-        .slice-icon { 
-            margin-bottom: 12px; 
-            opacity: 0.95; 
-            background: rgba(255,255,255,0.15);
-            padding: 12px;
-            border-radius: 16px;
-        }
-        .slice-title { 
-            font-size: 18px; 
-            font-weight: 800; 
-            line-height: 1.25; 
-            margin-bottom: 8px; 
-        }
-        .slice-desc { 
-            font-size: 12px; 
-            line-height: 1.5; 
-            font-weight: 400; 
-            opacity: 0.9; 
-        }
+/* ========== 新增：拓展区域样式 ========== */
+.expandable-section {
+    /* 移除背景色和边框 */
+    margin-top: 4rem;
+}
+
+.expand-btn {
+    background-color: #F8FAF9;
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    color: #003A3A;
+    cursor: pointer;
+}
+
+.expand-btn:hover {
+    background-color: #f3f4f6;
+}
+
+.expand-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+    /* 移除背景、边框和内边距 */
+    margin-top: 1rem;
+}
+
+.expand-content.open {
+    max-height: 2000px;
+}
+
+.cover-types-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cover-types-table th,
+.cover-types-table td {
+    padding: 1rem;
+    text-align: left;
+    border: 1px solid #e5e7eb;
+}
+
+.cover-types-table th {
+    background-color: #F8FAF9;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #003A3A;
+}
+
+.cover-types-table td {
+    font-size: 0.875rem;
+    color: #4b5563;
+}
+
+.service-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    background-color: #F8FAF9;
+}
+
+.service-card img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.service-card-content {
+    flex: 1;
+}
+
+.service-card-title {
+    font-weight: 600;
+    color: #003A3A;
+    margin-bottom: 0.25rem;
+}
+
+.service-card-desc {
+    font-size: 0.875rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+/* ========== Ending 章节样式（图二效果） ========== */
+#next {
+    position: relative;
+    padding: 6rem 2rem;
+    background-color: white;
+}
+
+/* 修改：Start now 改为 section-label 样式 */
+.start-now-label {
+    position: absolute;
+    top: 4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    border: 1px solid rgba(0, 58, 58, 0.15);
+    color: var(--primary-dark);
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    border-radius: 999px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.start-now-label:hover {
+    background-color: rgba(0, 58, 58, 0.05);
+}
+
+/* 新增：购买流程样式 */
+.buying-process-section {
+    max-width: 800px;
+    margin: 4rem auto 6rem auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+.buying-process-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #003A3A;
+    margin-bottom: 1rem;
+}
+
+.buying-process-subtitle {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.buying-process-timeline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 0 1rem;
+    margin-bottom: 4rem;
+}
+
+.buying-process-timeline::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 2rem;
+    right: 2rem;
+    height: 2px;
+    background-color: #e5e7eb;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.buying-process-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+}
+
+.buying-process-dot {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    background-color: white;
+    border: 2px solid #003A3A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.buying-process-step {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #003A3A;
+    margin-bottom: 0.5rem;
+}
+
+.buying-process-label {
+    font-size: 0.75rem;
+    color: #6b7280;
+    text-align: center;
+    max-width: 100px;
+}
+
+/* 删除：Validation 标签样式（已移除） */
+/* .validation-badge {
+    position: absolute;
+    top: -1.5rem;
+    right: -1rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #003A3A;
+    background-color: #f0f4f2;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+} */
+
+.get-quote-btn {
+    padding: 0.8rem 2rem;
+    border: 2px solid #003A3A;
+    background-color: white;
+    color: #003A3A;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+}
+
+.get-quote-btn:hover {
+    background-color: #003A3A;
+    color: white;
+}
+
+.if-not-text {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+#next h3.font-serif {
+    font-family: 'Playfair Display', serif !important;
+    font-weight: 900 !important;
+    font-size: 4rem !important;
+    line-height: 1.1 !important;
+    color: #003A3A;
+    margin-bottom: 1.5rem;
+}
+
+#next p.text-lg {
+    font-size: 1.125rem;
+    color: #6b7280;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto 4rem auto;
+}
+
+/* 核心：原型卡片样式（图二效果） */
+.prototype-card {
+    background-color: #f9fafb;
+    border-radius: 2rem;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.prototype-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+}
+
+.prototype-card-icon {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem auto;
+}
+
+.prototype-card-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #003A3A;
+    margin-bottom: 1rem;
+}
+
+.prototype-card-text {
+    font-size: 0.9375rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+    .buying-process-timeline {
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: center;
+    }
+    
+    .buying-process-timeline::before {
+        display: none;
+    }
+    
+    .buying-process-item {
+        width: 45%;
+        margin-bottom: 1rem;
+    }
+    
+    .buying-process-title {
+        font-size: 1.5rem;
+    }
+    
+    #next h3.font-serif {
+        font-size: 2.5rem !important;
+    }
+}
     </style>
 </head>
 <body class="selection:bg-[#E30613] selection:text-white">
@@ -699,7 +937,7 @@
                     <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
                         <i data-lucide="home" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
-                    <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Pay off the mortgage or rent</h4>
+                    <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Keep the home stable</h4>
                     <p class="text-sm text-gray-500 leading-relaxed font-light">
                        A payout could be used to settle an outstanding mortgage or cover rent, helping your family stay in their home without that financial pressure falling on them. 
                     </p>
@@ -709,7 +947,7 @@
                     <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
                         <i data-lucide="hand-coins" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
-                    <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Support day-to-day living costs</h4>
+                    <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Protect everyday living costs</h4>
                     <p class="text-sm text-gray-500 leading-relaxed font-light">
                         Without your income, everyday costs — food, bills, childcare, transport — still need to be met. A lump sum can help bridge that gap while your family adjusts.
                     </p>
@@ -735,10 +973,102 @@
                     </p>
                 </div>
             </div>
+
+            <!-- ========== 完整保留的拓展区域 (Chapter 2 之后) ========== -->
+            <div class="expandable-section mt-16">
+                <div class="max-w-6xl mx-auto">
+                    <!-- 拓展按钮 -->
+                    <button id="expand-button" class="expand-btn flex items-center justify-center gap-2">
+                        <span>Show more details about cover types & additional services</span>
+                        <i id="expand-icon" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i>
+                    </button>
+
+                    <!-- 拓展内容 -->
+                    <div id="expand-content" class="expand-content">
+                        <div class="max-w-5xl mx-auto space-y-10">
+                            <!-- Cover types 部分 -->
+                            <div>
+                                <h3 class="text-2xl font-bold text-[#003A3A] mb-6">Cover types</h3>
+                                <p class="text-gray-600 mb-6">There are different types of cover depending on what you might need it for.</p>
+                                <div class="overflow-x-auto">
+                                    <table class="cover-types-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Cover option</th>
+                                                <th>What this means</th>
+                                                <th>Why you might need it</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Level cover</td>
+                                                <td>The amount of cover you choose and your premium will remain the same through the term of your policy.</td>
+                                                <td>The amount of cover won't change over time so you and your family know how much will be received in the event of a claim.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Decreasing cover</td>
+                                                <td>The amount of cover you choose reduces each month, but your premium remains the same.</td>
+                                                <td>This is normally chosen to cover a repayment mortgage.</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Increasing cover</td>
+                                                <td>The amount of cover you choose increases each year in line with the Retail Prices Index (RPI). Your premium will also increase for this type of cover, so that your cover amount stays in line with inflation.</td>
+                                                <td>As this type of cover stays in line with inflation, it is designed to combat price rises, maintaining its real value throughout the term.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Additional Services Included 部分 -->
+                            <div>
+                                <h3 class="text-2xl font-bold text-[#003A3A] mb-6">Additional Services Included</h3>
+                                
+                                <!-- Clinic in a Pocket -->
+                                <div class="service-card">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Clinic in a Pocket">
+                                    <div class="service-card-content">
+                                        <h4 class="service-card-title">Clinic in a Pocket™</h4>
+                                        <p class="service-card-desc">Provided by Square Health. 24/7 remote GP service for policyholder, spouse, and children. Includes free repeat prescription delivery.</p>
+                                    </div>
+                                </div>
+
+                                <!-- RedArc Nurse Support -->
+                                <div class="service-card">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Nurse Support">
+                                    <div class="service-card-content">
+                                        <h4 class="service-card-title">RedArc Nurse Support</h4>
+                                        <p class="service-card-desc">Long-term care advice and emotional support from RedArc, available from day one without needing to claim.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Macmillan Cancer Support Advance -->
+                                <div class="service-card">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Macmillan Support">
+                                    <div class="service-card-content">
+                                        <h4 class="service-card-title">Macmillan Cancer Support Advance</h4>
+                                        <p class="service-card-desc">Request a £3,000 advance during critical illness claim processing to ease financial pressure.</p>
+                                    </div>
+                                </div>
+
+                                <!-- Disney+ -->
+                                <div class="service-card">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Disney Plus">
+                                    <div class="service-card-content">
+                                        <h4 class="service-card-title">Disney+ (12 Months)</h4>
+                                        <p class="service-card-desc">Buy a new policy directly via scottishwidows.co.uk and get 12 months of Disney+ Standard with Ads.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-        <!-- 3. lifecycle -->
-        <section id="lifecycle" class="py-24 md:py-36 px-4 bg-[#F8FAF9] overflow-hidden border-t border-gray-100">
+
+    <!-- 5. Lifecycle 章节（完整保留） -->
+    <section id="lifecycle" class="py-24 md:py-36 px-4 bg-[#F8FAF9] overflow-hidden border-t border-gray-100">
         <style>
             .pie-svg-wrap {
                 width: 100%;
@@ -931,8 +1261,9 @@
                 </svg>
             </div>
         </div>
-        </section>
-<!-- 5. Ending -->
+    </section>
+
+<!-- 6. Claims 章节 -->
     <section id="claims" class="py-24 md:py-36 px-4 bg-[#F8FAF9] overflow-hidden">
     <div class="max-w-7xl mx-auto">
         <div class="mb-20 text-center fade-section">
@@ -1030,35 +1361,93 @@
 
     </div>
 </section>
-    <!-- 6. Ending -->
-    <section id="next" class="py-28 md:py-36 px-4 md:px-8 bg-white">
-        <div class="max-w-5xl mx-auto text-center fade-section">
-            <div class="section-label mb-8">Start now</div>
-            <h3 class="text-5xl md:text-6xl font-black text-[#003A3A] mb-8 font-serif">
+    <!-- 7. 按原型图修改后的 Ending 章节 -->
+    <section id="next" class="py-28 md:py-36 px-4 md:px-8 bg-white relative">
+        <!-- 修改：Start now 改为 section-label 样式 -->
+        <div class="start-now-label">Start now</div>
+        
+        <!-- 新增：购买流程模块 -->
+        <div class="buying-process-section fade-section">
+            <h3 class="buying-process-title">Buying process</h3>
+            <p class="buying-process-subtitle">A quick look at how your cover works, from the day you start to the moment it's needed</p>
+            
+            <div class="buying-process-timeline">
+                <div class="buying-process-item">
+                    <div class="buying-process-dot">
+                        <i data-lucide="timer" class="w-4 h-4 text-[#003A3A]"></i>
+                    </div>
+                    <div class="buying-process-step">Step 1</div>
+                    <div class="buying-process-label">Quick quote</div>
+                </div>
+                
+                <div class="buying-process-item">
+                    <div class="buying-process-dot">
+                        <i data-lucide="shield" class="w-4 h-4 text-[#003A3A]"></i>
+                    </div>
+                    <div class="buying-process-step">Step 2</div>
+                    <div class="buying-process-label">Choose cover & amount</div>
+                </div>
+                
+                <div class="buying-process-item">
+                    <div class="buying-process-dot">
+                        <i data-lucide="file-text" class="w-4 h-4 text-[#003A3A]"></i>
+                    </div>
+                    <div class="buying-process-step">Step 3</div>
+                    <div class="buying-process-label">Detail quote</div>
+                </div>
+                
+                <div class="buying-process-item">
+                    <div class="buying-process-dot">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-[#003A3A]"></i>
+                        <!-- 删除：Validation 标签 -->
+                    </div>
+                    <div class="buying-process-step">Step 4</div>
+                    <div class="buying-process-label">Information verification completed</div>
+                </div>
+                
+                <div class="buying-process-item">
+                    <div class="buying-process-dot">
+                        <i data-lucide="lock" class="w-4 h-4 text-[#003A3A]"></i>
+                    </div>
+                    <div class="buying-process-step">Step 5</div>
+                    <div class="buying-process-label">Policy starts</div>
+                </div>
+            </div>
+            
+            <p class="mb-4 text-[#003A3A] font-medium">Have you made up your mind?</p>
+            <!-- 修改：Get a quote 按钮跳转链接 -->
+            <button class="get-quote-btn" onclick="window.open('https://www.scottishwidows.co.uk/life-insurance.html#quote', '_blank')">Get a quote</button>
+            <p class="if-not-text">if not</p>
+        </div>
+        
+        <div class="max-w-7xl mx-auto text-center fade-section">
+            <!-- 核心标题和描述 -->
+            <h3 class="text-4xl md:text-5xl font-black text-[#003A3A] mb-6 font-serif">
                 You do not need to decide today.
             </h3>
-            <p class="text-xl text-gray-500 font-light leading-relaxed max-w-3xl mx-auto mb-16">
+            <p class="text-lg text-gray-500 font-light leading-relaxed max-w-3xl mx-auto mb-12">
                 This page is here to make the journey more understandable — not to push you into a decision. Whatever you choose to do next is entirely up to you.
             </p>
 
-            <div class="grid md:grid-cols-3 gap-7">
-                <!-- Product details 卡片 - 添加跳转链接 -->
-                <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]" onclick="window.open('https://www.scottishwidows.co.uk/life-insurance.html', '_blank')">
-                    <div class="w-16 h-16 bg-[#003A3A] text-white rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container">
-                        <i data-lucide="file-text" class="w-8 h-8"></i>
+            <!-- 原型图样式的卡片组 -->
+            <div class="grid md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
+                <!-- Product details 卡片 -->
+                <div class="prototype-card" onclick="window.open('https://www.scottishwidows.co.uk/life-insurance.html', '_blank')">
+                    <div class="prototype-card-icon bg-[#003A3A] text-white">
+                        <i data-lucide="file-text" class="w-6 h-6"></i>
                     </div>
-                    <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Product details</h4>
-                    <p class="text-sm text-gray-500 mb-6 leading-7 font-light">If you feel ready to explore cover options, compare products, or get a quote, you can move into the main journey from here.</p>
+                    <h4 class="prototype-card-title">Product details</h4>
+                    <p class="prototype-card-text">If you feel ready to explore cover options, compare products, or get a quote, you can move into the main journey from here.</p>
                 </div>
                 
-                <!-- 修改：Save for later → Got a question? 客服咨询功能 -->
-                <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]" id="customer-support-card">
-                    <div class="w-16 h-16 bg-[#003A3A]/10 text-[#003A3A] rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container">
-                        <i data-lucide="headphones" class="w-8 h-8"></i>
+                <!-- Got a question? 卡片 -->
+                <div class="prototype-card" id="customer-support-card">
+                    <div class="prototype-card-icon bg-gray-100 text-[#003A3A]">
+                        <i data-lucide="headphones" class="w-6 h-6"></i>
                     </div>
-                    <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Got a question?</h4>
-                    <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Speak to our friendly team for impartial advice with no pressure to buy.</p>
-                    <!-- 新增：显示客服联系方式 -->
+                    <h4 class="prototype-card-title">Got a question?</h4>
+                    <p class="prototype-card-text">Speak to our friendly team for impartial advice with no pressure to buy.</p>
+                    <!-- 客服联系方式 -->
                     <div class="mt-4 text-center">
                         <a href="tel:+448000271846" class="inline-flex items-center justify-center gap-2 text-[#003A3A] font-bold text-sm hover:text-[#005a5a] transition-colors">
                             <i data-lucide="phone" class="w-4 h-4"></i>
@@ -1068,13 +1457,13 @@
                     </div>
                 </div>
                 
-                <!-- Discuss it 卡片 - 添加 WhatsApp 分享功能 -->
-                <div class="step-card p-10 bg-[#F8FAF9] border border-gray-100 rounded-[3rem]" id="whatsapp-share-card">
-                    <div class="w-16 h-16 bg-gray-100 text-gray-500 rounded-2xl flex items-center justify-center mx-auto mb-5 lucide-icon-container">
-                        <i data-lucide="share-2" class="w-8 h-8"></i>
+                <!-- Discuss it 卡片 -->
+                <div class="prototype-card" id="whatsapp-share-card">
+                    <div class="prototype-card-icon bg-gray-100 text-gray-500">
+                        <i data-lucide="share-2" class="w-6 h-6"></i>
                     </div>
-                    <h4 class="font-bold mb-4 text-[#003A3A] text-lg">Discuss it</h4>
-                    <p class="text-sm text-gray-500 mb-6 leading-7 font-light">Many people need to talk it through with family before deciding.</p>
+                    <h4 class="prototype-card-title">Discuss it</h4>
+                    <p class="prototype-card-text">Many people need to talk it through with family before deciding.</p>
                 </div>
             </div>
         </div>
@@ -1223,6 +1612,7 @@
                 slider.addEventListener('input', updateSimulator);
                 updateSimulator();
             }
+
             /* ==========================================
                D. 饼图生命周期逻辑 (Pie Chart Logic)
                ========================================== */
@@ -1248,6 +1638,7 @@
                     group.addEventListener('click', activateGroup); 
                 });
             }
+
             /* ==========================================
                B. 底部卡片点击与分享逻辑
                ========================================== */
@@ -1403,6 +1794,37 @@
                 carousel.setAttribute('aria-valuenow', currentStep);
                 
                 updateStepDisplay();
+            }
+            
+            /* ==========================================
+               E. 新增：拓展区域交互逻辑
+               ========================================== */
+            const expandButton = document.getElementById('expand-button');
+            const expandContent = document.getElementById('expand-content');
+            const expandIcon = document.getElementById('expand-icon');
+            
+            if (expandButton && expandContent && expandIcon) {
+                expandButton.addEventListener('click', function() {
+                    // 切换内容显示状态
+                    expandContent.classList.toggle('open');
+                    
+                    // 切换图标旋转和按钮文本
+                    if (expandContent.classList.contains('open')) {
+                        expandIcon.style.transform = 'rotate(180deg)';
+                        expandButton.innerHTML = `
+                            <span>Hide additional details</span>
+                            <i id="expand-icon" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300" style="transform: rotate(180deg);"></i>
+                        `;
+                    } else {
+                        expandIcon.style.transform = 'rotate(0)';
+                        expandButton.innerHTML = `
+                            <span>Show more details about cover types & additional services</span>
+                            <i id="expand-icon" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i>
+                        `;
+                    }
+                    // 重新初始化图标
+                    lucide.createIcons();
+                });
             }
             
             // 强制触发所有动画元素显示（防止 Observer 失败的兜底方案）
