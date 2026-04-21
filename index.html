@@ -10,9 +10,15 @@
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.323.0/dist/umd/lucide.min.js"></script>
     <style>
         :root {
-            --primary-dark: #003A3A;
-            --accent-red: #E30613;
-            --bg-light: #F0F4F2;
+            /* === 核心修改：改为苏格兰寡妇官网深绿色主色调 === */
+            --primary-dark: #003A3A;      /* 品牌深绿色（主色） */
+            --primary-light: #005050;     /* 绿色浅变体 */
+            --primary-deep: #002828;      /* 绿色加深版 */
+            --accent-green: #003A3A;      /* 品牌绿（与主色统一） */
+            --bg-light: #F8F8F8;          /* 官网浅灰背景 */
+            --neutral-gray: #6B7280;      /* 中性灰 */
+            --white-pure: #FFFFFF;        /* 纯白 */
+            --gray-light: #E5E7EB;        /* 浅灰边框 */
         }
 
         html {
@@ -23,6 +29,8 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-light);
             color: #333;
+            line-height: 1.5;
+            font-weight: 400;
         }
 
         .font-serif {
@@ -52,7 +60,7 @@
         .section-label {
             display: inline-block;
             padding: 0.3rem 0.9rem;
-            border: 1px solid rgba(0, 58, 58, 0.15);
+            border: 1px solid rgba(0, 58, 58, 0.15); /* 匹配绿色主色 */
             color: var(--primary-dark);
             font-size: 10px;
             font-weight: 900;
@@ -84,7 +92,7 @@
             appearance: none;
             width: 24px;
             height: 24px;
-            background: var(--primary-dark);
+            background: var(--primary-dark); /* 绿色主色 */
             border-radius: 50%;
             cursor: pointer;
             border: 4px solid white;
@@ -101,7 +109,7 @@
         input[type=range]::-moz-range-thumb {
             width: 24px;
             height: 24px;
-            background: var(--primary-dark);
+            background: var(--primary-dark); /* 绿色主色 */
             border-radius: 50%;
             cursor: pointer;
             border: 4px solid white;
@@ -116,16 +124,14 @@
         #risk-weight,
         #input-icon {
             transition: transform 120ms linear, opacity 120ms linear;
-            /* 关键修改：添加z-index确保方块在文字上方但不遮挡 */
             position: relative;
             z-index: 1;
         }
 
-        /* 关键修改：为文字容器添加更高的z-index */
         .weight-label-container {
             position: relative;
             z-index: 10;
-            background-color: rgba(248, 250, 249, 0.95); /* 半透明背景增强可读性 */
+            background-color: rgba(248, 250, 249, 0.95);
             padding: 4px 8px;
             border-radius: 8px;
         }
@@ -144,18 +150,15 @@
             }
         }
         
-        /* 核心修改：缩小图标容器间距和尺寸 */
         .lucide-icon-container {
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 20px; /* 从24px缩小到20px */
-            min-height: 20px; /* 从24px缩小到20px */
-            /* 移除不必要的外边距，进一步缩小间距 */
+            min-width: 20px;
+            min-height: 20px;
             margin: 0 !important;
         }
         
-        /* 新增：优化说明文本的字体样式 - 统一字号为15px */
         .explanation-text {
             font-size: 15px !important;
             font-weight: 400 !important;
@@ -163,7 +166,6 @@
             color: rgba(255, 255, 255, 0.9) !important;
         }
         
-        /* 新增：总标题样式 */
         .what-it-means-title {
             font-size: 18px;
             font-weight: 700;
@@ -173,17 +175,17 @@
             letter-spacing: 0.05em;
         }
         
-        /* 关键修改：统一标题字体样式（和说明文本完全一致） */
         #resilience-title {
             font-family: 'Inter', sans-serif !important;
             font-weight: 400 !important;
-            font-size: 15px !important;  /* 修改：和说明文本保持一致的15px */
-            line-height: 1.6 !important;  /* 修改：和说明文本保持一致的1.6 */
+            font-size: 15px !important;
+            line-height: 1.6 !important;
             letter-spacing: normal !important;
-            margin-bottom: 1rem;         /* 新增：添加底部间距，保持排版美观 */
+            margin-bottom: 1rem;
+            color: var(--primary-dark) !important; /* 绿色主色 */
         }
 
-/* 恢复高质感天平样式 */
+        /* === 核心修改：天平样式改为绿色系 === */
         .balance-pivot {
             position: absolute;
             left: 50%;
@@ -216,7 +218,7 @@
             bottom: 72px;
             width: 78%;
             height: 6px;
-            background: linear-gradient(to right, #003A3A, #004A4A, #003A3A);
+            background: linear-gradient(to right, var(--primary-dark), var(--primary-light), var(--primary-dark)); /* 绿色渐变 */
             border-radius: 3px;
             transform-origin: center center;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -232,7 +234,7 @@
             transform: translateY(-50%);
             width: 12px;
             height: 12px;
-            background: #002A2A;
+            background: var(--primary-deep); /* 绿色加深 */
             border-radius: 50%;
         }
         
@@ -240,32 +242,31 @@
         .balance-beam::after { right: -6px; }
 
         /* --- Claim Journey Z-Path 专用 --- */
-.claims-grid-container {
-    position: relative;
-}
+        .claims-grid-container {
+            position: relative;
+        }
 
-/* 桌面端中轴线 - 使用半透明绿色引导感 */
-@media (min-width: 768px) {
-    .claims-grid-container::before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        top: 40px;
-        bottom: 40px;
-        width: 2px;
-        background: linear-gradient(to bottom, transparent, rgba(74, 222, 128, 0.2), transparent);
-        transform: translateX(-50%);
-    }
-}
+        @media (min-width: 768px) {
+            .claims-grid-container::before {
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 40px;
+                bottom: 40px;
+                width: 2px;
+                background: linear-gradient(to bottom, transparent, rgba(0, 58, 58, 0.4), transparent); /* 绿色渐变 */
+                transform: translateX(-50%);
+            }
+        }
 
-.step-node {
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
+        .step-node {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-.step-node:hover {
-    background: rgba(255, 255, 255, 0.08);
-}
-        /* 2.5D插画容器样式 - 新增 */
+        .step-node:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
         .step-illustration {
             width: 100%;
             height: 100%;
@@ -275,18 +276,15 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
-        /* 核心修改：全局缩小图标与文字的间距 */
         [data-lucide] {
-            margin-right: 4px !important; /* 图标右侧间距从默认值缩小到4px */
+            margin-right: 4px !important;
             margin-left: 0 !important;
         }
 
-        /* 核心修改：缩小卡片内图标容器的外边距 */
         .step-card .lucide-icon-container {
-            margin-bottom: 6px !important; /* 从8px缩小到6px */
+            margin-bottom: 6px !important;
         }
         
-        /* 图片加载过渡效果 */
         .illustration-wrapper {
             position: relative;
             overflow: hidden;
@@ -301,415 +299,443 @@
             transform: scale(1.02);
         }
 
-        /* 针对理赔流程的对齐优化 */
-.claims-layout-grid {
-    display: grid;
-    grid-template-columns: 1fr 500px 1fr; /* 中间栏放大到500px，左右栏平分 */
-    align-items: start;
-    gap: 20px;
-}
+        .claims-layout-grid {
+            display: grid;
+            grid-template-columns: 1fr 500px 1fr;
+            align-items: start;
+            gap: 20px;
+        }
 
-@media (max-width: 1024px) {
-    .claims-layout-grid {
-        grid-template-columns: 1fr 400px 1fr;
-    }
-}
+        @media (max-width: 1024px) {
+            .claims-layout-grid {
+                grid-template-columns: 1fr 400px 1fr;
+            }
+        }
 
-/* 移动端降级为单列 */
-@media (max-width: 768px) {
-    .claims-layout-grid {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-}
+        @media (max-width: 768px) {
+            .claims-layout-grid {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
 
-/* 新增：时间轴样式 */
-.timeline-container {
-    max-width: 800px;
-    margin: 3rem auto;
-    width: 100%;
-}
+        .timeline-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            width: 100%;
+        }
 
-.timeline {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    padding: 0 1rem;
-}
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            padding: 0 1rem;
+        }
 
-.timeline::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 2rem;
-    right: 2rem;
-    height: 1px;
-    background-color: #ccc;
-    transform: translateY(-50%);
-    z-index: 1;
-}
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 2rem;
+            right: 2rem;
+            height: 1px;
+            background-color: var(--gray-light); /* 浅灰边框色 */
+            transform: translateY(-50%);
+            z-index: 1;
+        }
 
-.timeline-dot {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    background-color: white;
-    border: 1px solid #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #333;
-    position: relative;
-    z-index: 2;
-}
+        .timeline-dot {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            background-color: var(--white-pure);
+            border: 1px solid var(--gray-light); /* 浅灰边框色 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary-dark); /* 绿色主色 */
+            position: relative;
+            z-index: 2;
+        }
 
-.timeline-label {
-    position: absolute;
-    bottom: -2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.75rem;
-    color: #666;
-    white-space: nowrap;
-}
+        .timeline-label {
+            position: absolute;
+            bottom: -2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: var(--neutral-gray); /* 中性灰 */
+            white-space: nowrap;
+        }
 
-.timeline-item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        .timeline-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-/* ========== 新增：拓展区域样式 ========== */
-.expandable-section {
-    /* 移除背景色和边框 */
-    margin-top: 4rem;
-}
+        /* ========== 拓展区域样式 ========== */
+        .expandable-section {
+            margin-top: 4rem;
+        }
 
-.expand-btn {
-    background-color: #F8FAF9;
-    border: 1px solid #e5e7eb;
-    transition: all 0.3s ease;
-    width: 100%;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    color: #003A3A;
-    cursor: pointer;
-}
+        .expand-btn {
+            background-color: var(--white-pure); /* 纯白 */
+            border: 1px solid var(--gray-light); /* 浅灰边框 */
+            transition: all 0.3s ease;
+            width: 100%;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-dark); /* 绿色主色 */
+            cursor: pointer;
+        }
 
-.expand-btn:hover {
-    background-color: #f3f4f6;
-}
+        .expand-btn:hover {
+            background-color: #f3f4f6;
+            border-color: var(--primary-dark); /* 悬停边框变绿 */
+        }
 
-.expand-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease-in-out;
-    /* 移除背景、边框和内边距 */
-    margin-top: 1rem;
-}
+        .expand-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            margin-top: 1rem;
+        }
 
-.expand-content.open {
-    max-height: 2000px;
-}
+        .expand-content.open {
+            max-height: 2000px;
+        }
 
-.cover-types-table {
-    width: 100%;
-    border-collapse: collapse;
-}
+        .cover-types-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-.cover-types-table th,
-.cover-types-table td {
-    padding: 1rem;
-    text-align: left;
-    border: 1px solid #e5e7eb;
-}
+        .cover-types-table th,
+        .cover-types-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid var(--gray-light); /* 浅灰边框 */
+        }
 
-.cover-types-table th {
-    background-color: #F8FAF9;
-    font-weight: 600;
-    font-size: 0.875rem;
-    color: #003A3A;
-}
+        .cover-types-table th {
+            background-color: var(--bg-light); /* 浅灰背景 */
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--primary-dark); /* 绿色主色 */
+        }
 
-.cover-types-table td {
-    font-size: 0.875rem;
-    color: #4b5563;
-}
+        .cover-types-table td {
+            font-size: 0.875rem;
+            color: var(--neutral-gray); /* 中性灰 */
+        }
 
-.service-card {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1rem;
-    border: 1px solid #e5e7eb;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-    background-color: #F8FAF9;
-}
+        .service-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--gray-light); /* 浅灰边框 */
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            background-color: var(--white-pure); /* 纯白背景 */
+        }
 
-.service-card img {
-    width: 48px;
-    height: 48px;
-    object-fit: contain;
-    flex-shrink: 0;
-}
+        .service-card img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
 
-.service-card-content {
-    flex: 1;
-}
+        .service-card-content {
+            flex: 1;
+        }
 
-.service-card-title {
-    font-weight: 600;
-    color: #003A3A;
-    margin-bottom: 0.25rem;
-}
+        .service-card-title {
+            font-weight: 600;
+            color: var(--primary-dark); /* 绿色主色 */
+            margin-bottom: 0.25rem;
+        }
 
-.service-card-desc {
-    font-size: 0.875rem;
-    color: #4b5563;
-    line-height: 1.5;
-}
+        .service-card-desc {
+            font-size: 0.875rem;
+            color: var(--neutral-gray); /* 中性灰 */
+            line-height: 1.5;
+        }
 
-/* ========== Ending 章节样式（图二效果） ========== */
-#next {
-    position: relative;
-    padding: 6rem 2rem;
-    background-color: white;
-}
+        /* ========== Ending 章节样式 ========== */
+        #next {
+            position: relative;
+            padding: 6rem 2rem;
+            background-color: var(--white-pure); /* 纯白背景 */
+        }
 
-/* 修改：Start now 改为 section-label 样式 */
-.start-now-label {
-    position: absolute;
-    top: 4rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: inline-block;
-    padding: 0.3rem 0.9rem;
-    border: 1px solid rgba(0, 58, 58, 0.15);
-    color: var(--primary-dark);
-    font-size: 10px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.28em;
-    border-radius: 999px;
-    background-color: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
+        .start-now-label {
+            position: absolute;
+            top: 4rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-block;
+            padding: 0.3rem 0.9rem;
+            border: 1px solid rgba(0, 58, 58, 0.15); /* 绿色边框 */
+            color: var(--primary-dark); /* 绿色主色 */
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.28em;
+            border-radius: 999px;
+            background-color: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-.start-now-label:hover {
-    background-color: rgba(0, 58, 58, 0.05);
-}
+        .start-now-label:hover {
+            background-color: rgba(0, 58, 58, 0.05); /* 绿色浅背景 */
+        }
 
-/* 新增：购买流程样式 */
-/* --- 购买流程 (Buying Process) 静态美化版 --- */
-.buying-process-section {
-    max-width: 1000px;
-    margin: 4rem auto 6rem auto;
-    padding: 2rem;
-    text-align: center;
-}
+        /* --- 购买流程样式 --- */
+        .buying-process-section {
+            max-width: 1000px;
+            margin: 4rem auto 6rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
 
-.buying-process-timeline {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    position: relative;
-    padding: 0;
-    margin-top: 3rem;
-    margin-bottom: 4rem;
-}
+        .buying-process-timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            padding: 0;
+            margin-top: 3rem;
+            margin-bottom: 4rem;
+        }
 
-/* 连接线：精准穿过 72px 圆圈的中心点 (36px) */
-.buying-process-timeline::before {
-    content: '';
-    position: absolute;
-    top: 36px; 
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background-color: #e5e7eb;
-    z-index: 1;
-}
+        .buying-process-timeline::before {
+            content: '';
+            position: absolute;
+            top: 36px; 
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background-color: var(--gray-light); /* 浅灰边框 */
+            z-index: 1;
+        }
 
-.buying-process-item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: 2;
-    flex: 1;
-    cursor: default; /* 强制使用标准箭头光标，暗示不可点击 */
-}
+        .buying-process-item {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+            flex: 1;
+            cursor: default;
+        }
 
-/* 图片圆圈容器：增大至 72px，移除所有 Hover 动画 */
-.buying-process-dot {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background-color: white;
-    border: 2px solid #003A3A;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-    position: relative;
-    padding: 16px; /* 通过增加内边距来控制内部图片的大小，使其看起来更精致 */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-}
+        .buying-process-dot {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background-color: var(--white-pure); /* 纯白 */
+            border: 2px solid var(--primary-dark); /* 绿色边框 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
 
-.buying-process-dot img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
+        .buying-process-dot img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
 
-.buying-process-step {
-    font-size: 0.85rem;
-    font-weight: 800;
-    color: #003A3A;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
+        .buying-process-step {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--primary-dark); /* 绿色主色 */
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
 
-.buying-process-label {
-    font-size: 0.8rem;
-    color: #6b7280;
-    text-align: center;
-    max-width: 140px;
-    line-height: 1.5;
-    font-weight: 500;
-}
+        .buying-process-label {
+            font-size: 0.8rem;
+            color: var(--neutral-gray); /* 中性灰 */
+            text-align: center;
+            max-width: 140px;
+            line-height: 1.5;
+            font-weight: 500;
+        }
 
-/* 删除：Validation 标签样式（已移除） */
-/* .validation-badge {
-    position: absolute;
-    top: -1.5rem;
-    right: -1rem;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: #003A3A;
-    background-color: #f0f4f2;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    white-space: nowrap;
-} */
+        .get-quote-btn {
+            padding: 0.8rem 2rem;
+            border: 2px solid var(--primary-dark); /* 绿色边框 */
+            background-color: var(--white-pure); /* 纯白背景 */
+            color: var(--primary-dark); /* 绿色文字 */
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
 
-.get-quote-btn {
-    padding: 0.8rem 2rem;
-    border: 2px solid #003A3A;
-    background-color: white;
-    color: #003A3A;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-bottom: 1rem;
-}
+        .get-quote-btn:hover {
+            background-color: var(--primary-dark); /* 绿色背景 */
+            color: var(--white-pure); /* 白色文字 */
+        }
 
-.get-quote-btn:hover {
-    background-color: #003A3A;
-    color: white;
-}
+        .if-not-text {
+            font-size: 0.875rem;
+            color: var(--neutral-gray); /* 中性灰 */
+        }
 
-.if-not-text {
-    font-size: 0.875rem;
-    color: #6b7280;
-}
+        #next h3.font-serif {
+            font-family: 'Playfair Display', serif !important;
+            font-weight: 900 !important;
+            font-size: 4rem !important;
+            line-height: 1.1 !important;
+            color: var(--primary-dark); /* 绿色主色 */
+            margin-bottom: 1.5rem;
+        }
 
-#next h3.font-serif {
-    font-family: 'Playfair Display', serif !important;
-    font-weight: 900 !important;
-    font-size: 4rem !important;
-    line-height: 1.1 !important;
-    color: #003A3A;
-    margin-bottom: 1.5rem;
-}
+        #next p.text-lg {
+            font-size: 1.125rem;
+            color: var(--neutral-gray); /* 中性灰 */
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto 4rem auto;
+        }
 
-#next p.text-lg {
-    font-size: 1.125rem;
-    color: #6b7280;
-    line-height: 1.6;
-    max-width: 600px;
-    margin: 0 auto 4rem auto;
-}
+        /* 原型卡片样式 */
+        .prototype-card {
+            background-color: var(--white-pure); /* 纯白背景 */
+            border-radius: 2rem;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid var(--gray-light); /* 浅灰边框 */
+        }
 
-/* 核心：原型卡片样式（图二效果） */
-.prototype-card {
-    background-color: #f9fafb;
-    border-radius: 2rem;
-    padding: 2.5rem 2rem;
-    text-align: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
+        .prototype-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            border-color: var(--primary-dark); /* 悬停边框变绿 */
+        }
 
-.prototype-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-}
+        .prototype-card-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem auto;
+        }
 
-.prototype-card-icon {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1.5rem auto;
-}
+        .prototype-card-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--primary-dark); /* 绿色主色 */
+            margin-bottom: 1rem;
+        }
 
-.prototype-card-title {
-    font-size: 1.125rem;
-    font-weight: 700;
-    color: #003A3A;
-    margin-bottom: 1rem;
-}
+        .prototype-card-text {
+            font-size: 0.9375rem;
+            color: var(--neutral-gray); /* 中性灰 */
+            line-height: 1.5;
+        }
 
-.prototype-card-text {
-    font-size: 0.9375rem;
-    color: #4b5563;
-    line-height: 1.5;
-}
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .buying-process-timeline {
+                flex-wrap: wrap;
+                gap: 2rem;
+                justify-content: center;
+            }
+            
+            .buying-process-timeline::before {
+                display: none;
+            }
+            
+            .buying-process-item {
+                width: 45%;
+                margin-bottom: 1rem;
+            }
+            
+            .buying-process-title {
+                font-size: 1.5rem;
+            }
+            
+            #next h3.font-serif {
+                font-size: 2.5rem !important;
+            }
+        }
 
-/* 响应式适配 */
-@media (max-width: 768px) {
-    .buying-process-timeline {
-        flex-wrap: wrap;
-        gap: 2rem;
-        justify-content: center;
-    }
-    
-    .buying-process-timeline::before {
-        display: none;
-    }
-    
-    .buying-process-item {
-        width: 45%;
-        margin-bottom: 1rem;
-    }
-    
-    .buying-process-title {
-        font-size: 1.5rem;
-    }
-    
-    #next h3.font-serif {
-        font-size: 2.5rem !important;
-    }
-}
+        /* === 新增：匹配官网的饼图样式 === */
+        .pie-slice {
+            stroke: transparent;
+            transition: fill 0.4s ease, filter 0.4s ease;
+            fill: var(--base-fill);
+        }
+        .pie-group.active .pie-slice { 
+            fill: var(--primary-dark) !important; /* 绿色高亮 */
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.25)); 
+        }
+
+        /* === 新增：导航栏样式优化 === */
+        nav {
+            border-bottom: 1px solid var(--gray-light); /* 浅灰边框 */
+        }
+        nav a:hover {
+            color: var(--primary-dark) !important; /* 悬停变绿 */
+        }
+
+        /* === 新增：按钮主样式优化 === */
+        .group.bg-[#003A3A] {
+            background-color: var(--primary-dark) !important; /* 绿色按钮 */
+        }
+        .group.bg-[#003A3A]:hover {
+            background-color: var(--primary-deep) !important; /* 绿色加深悬停 */
+        }
+
+        /* === 新增：卡片样式优化 === */
+        .step-card {
+            border: 1px solid var(--gray-light); /* 浅灰边框 */
+            background-color: var(--white-pure); /* 纯白背景 */
+        }
+        .step-card:hover {
+            border-color: var(--primary-dark); /* 悬停边框变绿 */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        /* === 新增：深色卡片样式 === */
+        .bg-[#003A3A] {
+            background-color: var(--primary-dark) !important; /* 绿色背景 */
+        }
+
+        /* === 新增：选中文字颜色匹配品牌 === */
+        ::selection {
+            background-color: var(--primary-dark) !important; /* 绿色 */
+            color: var(--white-pure) !important;
+        }
     </style>
 </head>
-<body class="selection:bg-[#E30613] selection:text-white">
+<body class="selection:bg-[#003A3A] selection:text-white">
 
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full z-50 bg-white/40 backdrop-blur-2xl px-6 md:px-12 py-6 flex justify-between items-center border-b border-black/[0.03]">
+    <nav class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-2xl px-6 md:px-12 py-6 flex justify-between items-center border-b border-gray-100">
         <div class="flex items-center gap-3">
             <div class="w-6 h-6 bg-[#003A3A] flex items-center justify-center rounded-sm">
                 <div class="w-3 h-3 bg-white rotate-45"></div>
@@ -728,17 +754,17 @@
     <!-- 1. 合并后的 Intro + Journey Overview -->
     <section id="intro" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
         <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#003A3A]/5 rounded-full blur-[100px]"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] bg-[#E30613]/5 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] bg-[#003A3A]/5 rounded-full blur-[120px]"></div>
 
         <div class="relative z-20 max-w-5xl fade-section">
             <div class="inline-flex items-center gap-2 px-4 py-1.5 border border-[#003A3A]/10 rounded-full text-[11px] mb-8 bg-white/50 backdrop-blur-md text-[#003A3A] tracking-[0.2em] uppercase font-bold shadow-sm">
-                <i data-lucide="activity" class="w-3.5 h-3.5 text-[#E30613]"></i>
+                <i data-lucide="activity" class="w-3.5 h-3.5 text-[#003A3A]"></i>
                 Protection Journey Preview
             </div>
 
             <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-[1.08] font-serif text-[#003A3A] tracking-tight">
                 Take Your Time,<br />
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#003A3A] to-[#005a5a]">Get the Clarity</span>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#003A3A] to-[#005050]">Get the Clarity</span>
             </h1>
 
             <p class="text-lg md:text-xl mb-8 text-gray-600/80 max-w-3xl mx-auto leading-relaxed font-light">
@@ -826,7 +852,7 @@
                                 <div class="absolute right-0 bottom-[6px] translate-x-1/2">
                                     <div id="right-upright" class="flex flex-col items-center transition-transform duration-150" style="transform-origin: bottom;">
                                         <div class="h-56 flex items-end justify-center mb-6">
-                                            <div id="cover-box" class="w-40 h-40 bg-[#004A4A] rounded-3xl flex items-center justify-center shadow-xl transition-all duration-150 transform-gpu" style="transform-origin: bottom;">
+                                            <div id="cover-box" class="w-40 h-40 bg-[#003A3A] rounded-3xl flex items-center justify-center shadow-xl transition-all duration-150 transform-gpu" style="transform-origin: bottom;">
                                                 <i data-lucide="shield" class="w-10 h-10 text-white"></i>
                                             </div>
                                         </div>
@@ -838,7 +864,7 @@
                             </div>
                         </div>
 
-                        <div class="px-6 py-8 mb-2 bg-[#F8FAF9] rounded-[2rem] border border-gray-100/50">
+                        <div class="px-6 py-8 mb-2 bg-[#F8F8F8] rounded-[2rem] border border-gray-100/50">
                             <label class="block text-[10px] font-black text-[#003A3A] mb-5 uppercase tracking-widest text-center">Adjust your Monthly payment</label>
                             <input type="range" min="10" max="200" value="45" id="premium-slider" class="w-full cursor-pointer">
                         </div>
@@ -900,15 +926,15 @@
                         <h4 class="text-[13px] xl:text-[14px] font-bold text-white uppercase tracking-wider mb-5">What this actually means</h4>
                         <div class="space-y-4 xl:space-y-5">
                             <div class="flex items-start gap-3">
-                                <i data-lucide="dollar-sign" class="w-4 h-4 xl:w-5 xl:h-5 text-green-400 mt-0.5 shrink-0"></i>
+                                <i data-lucide="dollar-sign" class="w-4 h-4 xl:w-5 xl:h-5 text-white mt-0.5 shrink-0"></i>
                                 <p class="text-[12px] xl:text-[13px] leading-relaxed text-white/90">Life insurance works by exchanging a fixed monthly premium for a guaranteed cover amount.</p>
                             </div>
                             <div class="flex items-start gap-3">
-                                <i data-lucide="shield-check" class="w-4 h-4 xl:w-5 xl:h-5 text-green-400 mt-0.5 shrink-0"></i>
+                                <i data-lucide="shield-check" class="w-4 h-4 xl:w-5 xl:h-5 text-white mt-0.5 shrink-0"></i>
                                 <p class="text-[12px] xl:text-[13px] leading-relaxed text-white/90">If you die during your policy term, your family receives that amount — regardless of how long the policy has been in place.</p>
                             </div>
                             <div class="flex items-start gap-3">
-                                <i data-lucide="sliders" class="w-4 h-4 xl:w-5 xl:h-5 text-green-400 mt-0.5 shrink-0"></i>
+                                <i data-lucide="sliders" class="w-4 h-4 xl:w-5 xl:h-5 text-white mt-0.5 shrink-0"></i>
                                 <p class="text-[12px] xl:text-[13px] leading-relaxed text-white/90">Use the slider to explore how different monthly premiums relate to different levels of cover.</p>
                             </div>
                         </div>
@@ -933,9 +959,9 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- 卡片1：偿还房贷/租金 → 改回原来的房子图标 -->
+                <!-- 卡片1：偿还房贷/租金 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
+                    <div class="w-14 h-14 bg-[#F8F8F8] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
                         <i data-lucide="home" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Keep the home stable</h4>
@@ -943,9 +969,9 @@
                        A payout could be used to settle an outstanding mortgage or cover rent, helping your family stay in their home without that financial pressure falling on them. 
                     </p>
                 </div>
-                <!-- 卡片2：日常开支 → hand-coins 图标 -->
+                <!-- 卡片2：日常开支 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
+                    <div class="w-14 h-14 bg-[#F8F8F8] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
                         <i data-lucide="hand-coins" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Protect everyday living costs</h4>
@@ -953,9 +979,9 @@
                         Without your income, everyday costs — food, bills, childcare, transport — still need to be met. A lump sum can help bridge that gap while your family adjusts.
                     </p>
                 </div>
-                <!-- 卡片3：偿还债务 → credit-card 图标 -->
+                <!-- 卡片3：偿还债务 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
+                    <div class="w-14 h-14 bg-[#F8F8F8] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
                         <i data-lucide="credit-card" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Settle outstanding loans or debts</h4>
@@ -963,9 +989,9 @@
                         Life cover can also help clear other financial obligations — such as personal loans or outstanding debts — so your family is not left managing these alone.
                     </p>
                 </div>
-                <!-- 卡片4：安心喘息 → heart 图标 -->
+                <!-- 卡片4：安心喘息 -->
                 <div class="step-card p-10 bg-white rounded-[3rem] border border-gray-100 shadow-sm">
-                    <div class="w-14 h-14 bg-[#F8FAF9] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
+                    <div class="w-14 h-14 bg-[#F8F8F8] rounded-2xl flex items-center justify-center mb-6 lucide-icon-container">
                         <i data-lucide="heart" class="text-[#003A3A] w-7 h-7"></i>
                     </div>
                     <h4 class="text-xl font-bold mb-4 text-[#003A3A]">Create space to make considered decisions</h4>
@@ -975,7 +1001,7 @@
                 </div>
             </div>
 
-            <!-- ========== 完整保留的拓展区域 (Chapter 2 之后) ========== -->
+            <!-- 拓展区域 -->
             <div class="expandable-section mt-16">
                 <div class="max-w-6xl mx-auto">
                     <!-- 拓展按钮 -->
@@ -1027,7 +1053,7 @@
                                 
                                 <!-- Clinic in a Pocket -->
                                 <div class="service-card">
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Clinic in a Pocket">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiMwMDNBM0EiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiMwMDI4MjgiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiMwMDUwNTAiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiMwMDUwNTAiLz4KPC9zdmc+Cg==" alt="Clinic in a Pocket">
                                     <div class="service-card-content">
                                         <h4 class="service-card-title">Clinic in a Pocket™</h4>
                                         <p class="service-card-desc">Provided by Square Health. 24/7 remote GP service for policyholder, spouse, and children. Includes free repeat prescription delivery.</p>
@@ -1036,7 +1062,7 @@
 
                                 <!-- RedArc Nurse Support -->
                                 <div class="service-card">
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Nurse Support">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiMwMDNBM0EiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiMwMDI4MjgiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiMwMDUwNTAiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiMwMDUwNTAiLz4KPC9zdmc+Cg==" alt="Nurse Support">
                                     <div class="service-card-content">
                                         <h4 class="service-card-title">RedArc Nurse Support</h4>
                                         <p class="service-card-desc">Long-term care advice and emotional support from RedArc, available from day one without needing to claim.</p>
@@ -1045,7 +1071,7 @@
 
                                 <!-- Macmillan Cancer Support Advance -->
                                 <div class="service-card">
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Macmillan Support">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiMwMDNBM0EiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiMwMDI4MjgiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiMwMDUwNTAiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiMwMDUwNTAiLz4KPC9zdmc+Cg==" alt="Macmillan Support">
                                     <div class="service-card-content">
                                         <h4 class="service-card-title">Macmillan Cancer Support Advance</h4>
                                         <p class="service-card-desc">Request a £3,000 advance during critical illness claim processing to ease financial pressure.</p>
@@ -1054,7 +1080,7 @@
 
                                 <!-- Disney+ -->
                                 <div class="service-card">
-                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiNEM0QzRDMiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiNCMUIxQjEiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiNFOEU4RTgiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiNFOEU4RTgiLz4KPC9zdmc+Cg==" alt="Disney Plus">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjQiIGN5PSIyNCIgcj0iMjQiIGZpbGw9IiMwMDNBM0EiLz4KPHBhdGggZD0iTTI0IDhDMzMuMzg4OCA4IDQwIDE0LjYxMTIgNDAgMjRDMCAyNCAwIDI0IDI0IDI0QzI0IDI0IDggMzMuMzg4OCA4IDI0QzggMTQuNjExMiAxNC42MTEyIDggMjQgOFoiIGZpbGw9IiMwMDI4MjgiLz4KPHBhdGggZD0iTTI0IDEyQzE4LjQ3NzIgMTIgMTQgMTYuNDc3MiAxNCAyMkMxNCAyNy41MjI4IDE4LjQ3NzIgMzIgMjQgMzJDMjkuNTIyOCAzMiAzNCAyNy41MjI4IDM0IDIyQzM0IDE2LjQ3NzIgMjkuNTIyOCAxMiAyNCAxMloiIGZpbGw9IiMwMDUwNTAiLz4KPHBhdGggZD0iTTI0IDE2QzI3LjMzMTQgMTYgMzAgMTguNjY4NiAzMCAyMkMzMCAyNS4zMzE0IDI3LjMzMTQgMjggMjQgMjhDMjAuNjY4NiAyOCAxOCAyNS4zMzE0IDE4IDIyQzE4IDE4LjY2ODYgMjAuNjY4NiAxNiAyNCAxNloiIGZpbGw9IiMwMDUwNTAiLz4KPC9zdmc+Cg==" alt="Disney Plus">
                                     <div class="service-card-content">
                                         <h4 class="service-card-title">Disney+ (12 Months)</h4>
                                         <p class="service-card-desc">Buy a new policy directly via scottishwidows.co.uk and get 12 months of Disney+ Standard with Ads.</p>
@@ -1068,8 +1094,8 @@
         </div>
     </section>
 
-    <!-- 5. Lifecycle 章节（完整保留） -->
-    <section id="lifecycle" class="py-24 md:py-36 px-4 bg-[#F8FAF9] overflow-hidden border-t border-gray-100">
+    <!-- 5. Lifecycle 章节 -->
+    <section id="lifecycle" class="py-24 md:py-36 px-4 bg-[#F8F8F8] overflow-hidden border-t border-gray-100">
         <style>
             .pie-svg-wrap {
                 width: 100%;
@@ -1088,7 +1114,6 @@
                 fill: var(--base-fill);
             }
 
-            /* --- 闲置状态的标题 --- */
             .idle-text {
                 fill: rgba(255, 255, 255, 0.95);
                 font-family: 'Inter', sans-serif;
@@ -1102,7 +1127,6 @@
                 transform: scale(0.8);
             }
 
-            /* --- 激活状态的图文容器 (180x220 极限安全尺寸) --- */
             .pie-group foreignObject {
                 pointer-events: none;
                 opacity: 0;
@@ -1126,7 +1150,6 @@
                 color: white;
             }
 
-            /* 图标：缩小高度，并双重保障去除白底 */
             .slice-illustration {
                 height: 120px; 
                 object-fit: contain;
@@ -1135,7 +1158,6 @@
                 mix-blend-mode: multiply; 
             }
 
-            /* 文本：强制限制 170px 宽度，塑造紧凑排版 */
             .slice-title {
                 font-size: 13px;
                 font-weight: 800;
@@ -1155,9 +1177,9 @@
                 margin: 0 auto;
             }
 
-            /* --- 抽出动效：缩放 1.25 倍并顺着中轴线平移 --- */
+            /* === 核心修改：饼图高亮色改为绿色 === */
             .pie-group.active .pie-slice { 
-                fill: #2EA265 !important; 
+                fill: #003A3A !important; 
                 filter: drop-shadow(0 20px 40px rgba(0,0,0,0.25)); 
             }
             
@@ -1187,7 +1209,7 @@
                 <svg viewBox="0 0 1000 1000" width="100%" height="auto" class="overflow-visible">
                     <g id="pie-slices-container">
                         
-                        <g class="pie-group active" data-index="1" style="--base-fill: #1E4E45;">
+                        <g class="pie-group active" data-index="1" style="--base-fill: #002828;">
                             <path class="pie-slice" d="M 500 500 L 500 160 A 340 340 0 0 1 823.3 395.1 Z" />
                             <text class="idle-text" x="617" y="345" text-anchor="middle">1. Quote & Application</text>
                             
@@ -1200,7 +1222,7 @@
                             </foreignObject>
                         </g>
 
-                        <g class="pie-group" data-index="2" style="--base-fill: #24584C;">
+                        <g class="pie-group" data-index="2" style="--base-fill: #002E2E;">
                             <path class="pie-slice" d="M 500 500 L 823.3 395.1 A 340 340 0 0 1 700 775.1 Z" />
                             <text class="idle-text" text-anchor="middle">
                                 <tspan x="690" y="550">2. Underwriting &</tspan>
@@ -1216,7 +1238,7 @@
                             </foreignObject>
                         </g>
 
-                        <g class="pie-group" data-index="3" style="--base-fill: #1D4B42;">
+                        <g class="pie-group" data-index="3" style="--base-fill: #003A3A;">
                             <path class="pie-slice" d="M 500 500 L 700 775.1 A 340 340 0 0 1 300 775.1 Z" />
                             <text class="idle-text" x="500" y="700" text-anchor="middle">3. Policy Administration</text>
                             
@@ -1229,7 +1251,7 @@
                             </foreignObject>
                         </g>
 
-                        <g class="pie-group" data-index="4" style="--base-fill: #153831;">
+                        <g class="pie-group" data-index="4" style="--base-fill: #004545;">
                             <path class="pie-slice" d="M 500 500 L 300 775.1 A 340 340 0 0 1 176.7 395.1 Z" />
                             <text class="idle-text" text-anchor="middle">
                                 <tspan x="310" y="550">4. Claims</tspan>
@@ -1245,7 +1267,7 @@
                             </foreignObject>
                         </g>
 
-                        <g class="pie-group" data-index="5" style="--base-fill: #205349;">
+                        <g class="pie-group" data-index="5" style="--base-fill: #005050;">
                             <path class="pie-slice" d="M 500 500 L 176.7 395.1 A 340 340 0 0 1 500 160 Z" />
                             <text class="idle-text" x="382" y="345" text-anchor="middle">5. Expiration</text>
                             
@@ -1265,12 +1287,12 @@
     </section>
 
 <!-- 6. Claims 章节 -->
-    <section id="claims" class="py-24 md:py-36 px-4 bg-[#F8FAF9] overflow-hidden">
+    <section id="claims" class="py-24 md:py-36 px-4 bg-[#F8F8F8] overflow-hidden">
     <div class="max-w-7xl mx-auto">
         <div class="mb-20 text-center fade-section">
             <div class="section-label mb-6">Chapter 4 · Claim journey</div>
             <h2 class="text-5xl md:text-6xl font-black text-[#003A3A] font-serif leading-tight">
-                If something serious happens,<br><span class="text-green-600">how does the claim journey work?</span>
+                If something serious happens,<br><span class="text-[#003A3A]">how does the claim journey work?</span>
             </h2>
         </div>
 
@@ -1279,7 +1301,7 @@
 
             <div class="absolute top-[8%] right-full w-[300px] lg:w-[380px] pr-0 lg:pr-0 text-right">
                 <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Trigger & Notify</h4>
-                <span class="text-[10px] text-green-600 uppercase font-bold tracking-widest block mb-3">INITIAL CONTACT</span>
+                <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">INITIAL CONTACT</span>
                 <p class="text-gray-500 text-sm leading-relaxed">
                     For illness-related claims, notify us via our online form or specialist team. For life cover, family can use our bereavement support page.
                 </p>
@@ -1287,7 +1309,7 @@
 
             <div class="absolute top-[37.3%] right-full w-[300px] lg:w-[380px] pr-0 lg:pr-0 text-right">
                 <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Assessment & Review</h4>
-                <span class="text-[10px] text-green-600 uppercase font-bold tracking-widest block mb-3">DEEP REVIEW</span>
+                <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">DEEP REVIEW</span>
                 <p class="text-gray-500 text-sm leading-relaxed">
                     Your claim is reviewed by a dedicated claims team against policy terms. You will receive updates on progress throughout.
                 </p>
@@ -1295,7 +1317,7 @@
 
             <div class="absolute top-[68.5%] right-full w-[300px] lg:w-[380px] pr-0 lg:pr-0 text-right">
                 <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Payout & Relief</h4>
-                <span class="text-[10px] text-green-600 uppercase font-bold tracking-widest block mb-3">COMPLETION</span>
+                <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">COMPLETION</span>
                 <p class="text-gray-500 text-sm leading-relaxed">
                     Approved claims are paid promptly. Life insurance pays out as a lump sum to the nominated beneficiary or bank account.
                 </p>
@@ -1303,7 +1325,7 @@
 
             <div class="absolute top-[17.5%] left-full w-[300px] lg:w-[380px] pl-4 lg:pl-6 text-left">
                 <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Evidence Gathering</h4>
-                <span class="text-[10px] text-green-600 uppercase font-bold tracking-widest block mb-3">VERIFICATION</span>
+                <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">VERIFICATION</span>
                 <p class="text-gray-500 text-sm leading-relaxed">
                     Provide specific documents. Copies of medical notes are helpful. We may contact your GP directly to speed up the process.
                 </p>
@@ -1311,7 +1333,7 @@
 
             <div class="absolute top-[51.5%] left-full w-[300px] lg:w-[380px] pl-4 lg:pl-6 text-left">
                 <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">The Decision</h4>
-                <span class="text-[10px] text-green-600 uppercase font-bold tracking-widest block mb-3">OUTCOME</span>
+                <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">OUTCOME</span>
                 <p class="text-gray-500 text-sm leading-relaxed">
                     You will be informed of the outcome clearly. Scottish Widows paid 99% of life cover claims in 2024.
                 </p>
@@ -1319,7 +1341,7 @@
 
             <div class="absolute top-[81%] left-full w-[300px] lg:w-[380px] pl-4 lg:pl-6 text-left">
                 <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Ongoing Support</h4>
-                <span class="text-[10px] text-green-600 uppercase font-bold tracking-widest block mb-3">POST-CLAIM</span>
+                <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">POST-CLAIM</span>
                 <p class="text-gray-500 text-sm leading-relaxed">
                     If you hold a Scottish Widows Protect policy, you have access to practical and emotional support through RedArc.
                 </p>
@@ -1330,47 +1352,46 @@
             <img src="1.png" class="w-full max-w-[280px] mx-auto mb-8 opacity-30 absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none z-0">
             
             <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
-                <h4 class="font-bold text-[#003A3A]"><span class="text-green-600 mr-2">1.</span>Trigger & Notify</h4>
+                <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">1.</span>Trigger & Notify</h4>
                 <p class="text-gray-500 text-sm mt-2">For illness-related claims, notify us via our online form or specialist team.</p>
             </div>
             
             <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
-                <h4 class="font-bold text-[#003A3A]"><span class="text-green-600 mr-2">2.</span>Evidence Gathering</h4>
+                <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">2.</span>Evidence Gathering</h4>
                 <p class="text-gray-500 text-sm mt-2">Provide specific documents. Copies of medical notes are helpful.</p>
             </div>
 
             <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
-                <h4 class="font-bold text-[#003A3A]"><span class="text-green-600 mr-2">3.</span>Assessment & Review</h4>
+                <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">3.</span>Assessment & Review</h4>
                 <p class="text-gray-500 text-sm mt-2">Your claim is reviewed by a dedicated claims team against policy terms.</p>
             </div>
 
             <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
-                <h4 class="font-bold text-[#003A3A]"><span class="text-green-600 mr-2">4.</span>The Decision</h4>
+                <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">4.</span>The Decision</h4>
                 <p class="text-gray-500 text-sm mt-2">You will be informed of the outcome clearly. 99% paid in 2024.</p>
             </div>
 
             <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
-                <h4 class="font-bold text-[#003A3A]"><span class="text-green-600 mr-2">5.</span>Payout & Relief</h4>
+                <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">5.</span>Payout & Relief</h4>
                 <p class="text-gray-500 text-sm mt-2">Approved claims are paid promptly as a lump sum to your account.</p>
             </div>
 
             <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
-                <h4 class="font-bold text-[#003A3A]"><span class="text-green-600 mr-2">6.</span>Ongoing Support</h4>
+                <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">6.</span>Ongoing Support</h4>
                 <p class="text-gray-500 text-sm mt-2">Access to practical and emotional support through RedArc.</p>
             </div>
         </div>
 
     </div>
 </section>
-    <!-- 7. 按原型图修改后的 Ending 章节 -->
+    <!-- 7. Ending 章节 -->
     <section id="next" class="py-28 md:py-36 px-4 md:px-8 bg-white relative">
-        <!-- 修改：Start now 改为 section-label 样式 -->
         <div class="start-now-label">Start now</div>
         
-        <!-- 新增：购买流程模块 -->
+        <!-- 购买流程模块 -->
         <div class="buying-process-section fade-section">
-            <h3 class="buying-process-title">Buying process</h3>
-            <p class="buying-process-subtitle">A quick look at how your cover works, from the day you start to the moment it's needed</p>
+            <h3 class="buying-process-title text-[#003A3A] text-2xl font-bold">Buying process</h3>
+            <p class="buying-process-subtitle text-gray-500">A quick look at how your cover works, from the day you start to the moment it's needed</p>
             
             <div class="buying-process-timeline">
                 <div class="buying-process-item">
@@ -1415,13 +1436,11 @@
             </div>
             
             <p class="mb-4 text-[#003A3A] font-medium">Have you made up your mind?</p>
-            <!-- 修改：Get a quote 按钮跳转链接 -->
             <button class="get-quote-btn" onclick="window.open('https://www.scottishwidows.co.uk/life-insurance.html#quote', '_blank')">Get a quote</button>
             <p class="if-not-text">if not</p>
         </div>
         
         <div class="max-w-7xl mx-auto text-center fade-section">
-            <!-- 核心标题和描述 -->
             <h3 class="text-4xl md:text-5xl font-black text-[#003A3A] mb-6 font-serif">
                 You do not need to decide today.
             </h3>
@@ -1449,7 +1468,7 @@
                     <p class="prototype-card-text">Speak to our friendly team for impartial advice with no pressure to buy.</p>
                     <!-- 客服联系方式 -->
                     <div class="mt-4 text-center">
-                        <a href="tel:+448000271846" class="inline-flex items-center justify-center gap-2 text-[#003A3A] font-bold text-sm hover:text-[#005a5a] transition-colors">
+                        <a href="tel:+448000271846" class="inline-flex items-center justify-center gap-2 text-[#003A3A] font-bold text-sm hover:text-[#002828] transition-colors">
                             <i data-lucide="phone" class="w-4 h-4"></i>
                             0800 027 1846
                         </a>
@@ -1459,7 +1478,7 @@
                 
                 <!-- Discuss it 卡片 -->
                 <div class="prototype-card" id="whatsapp-share-card">
-                    <div class="prototype-card-icon bg-gray-100 text-gray-500">
+                    <div class="prototype-card-icon bg-gray-100 text-[#003A3A]">
                         <i data-lucide="share-2" class="w-6 h-6"></i>
                     </div>
                     <h4 class="prototype-card-title">Discuss it</h4>
@@ -1483,7 +1502,7 @@
             console.error('Lucide 图标初始化失败:', error);
         }
 
-        // 2. 页面滚动渐显动画 (Scroll Animation Observer)
+        // 2. 页面滚动渐显动画
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -1496,11 +1515,11 @@
             observer.observe(section);
         });
 
-        // 3. 核心交互逻辑 (使用安全作用域完全包裹，防止语法报错)
+        // 3. 核心交互逻辑
         (function() {
             
             /* ==========================================
-               A. 天平模拟器逻辑 (Simulator Logic)
+               A. 天平模拟器逻辑
                ========================================== */
             const slider = document.getElementById('premium-slider');
             const displayPremium = document.getElementById('display-premium');
@@ -1530,18 +1549,15 @@
                 const currentMultiplier = BASE_MULTIPLIER * (1 - totalPenalty);
                 const coverage = Math.floor(premiumVal * currentMultiplier);
                 
-                // 更新数字
                 if (displayPremium) displayPremium.textContent = premiumVal;
                 if (displayCoverage) displayCoverage.textContent = coverage.toLocaleString(); 
                 
-                // 侧边栏联动
                 if (transferAmount) transferAmount.textContent = `£${coverage.toLocaleString()}`;
                 if (resilienceTitle) resilienceTitle.textContent = `At £${premiumVal} a month, you can secure £${coverage.toLocaleString()} of cover for your family.`;
 
                 const progressPercent = (premiumVal - 10) / (200 - 10);
                 if (transferProgress) transferProgress.style.width = `${progressPercent * 100}%`;
                 
-                // 物理缩放
                 const minScale = 0.7; 
                 const maxScale = 1.3;
                 const dynamicBaseScale = minScale + (progressPercent * (maxScale - minScale));
@@ -1553,11 +1569,10 @@
                     const riskScale = (1 - (totalPenalty * 0.4));
                     const finalCoverScale = dynamicBaseScale * riskScale;
                     coverBox.style.transform = `scale(${finalCoverScale})`;
-                    // 颜色联动
-                    coverBox.style.backgroundColor = totalPenalty > 0.4 ? "#134e4a" : "#004A4A";
+                    // 颜色联动（绿色系）
+                    coverBox.style.backgroundColor = totalPenalty > 0.4 ? "#002828" : "#003A3A";
                 }
                 
-                // 天平倾斜
                 const tiltAngle = totalPenalty * -30;
                 if (beamScene) beamScene.style.transform = `translateX(-50%) rotate(${tiltAngle}deg)`;
                 if (leftUpright) leftUpright.style.transform = `rotate(${-tiltAngle}deg)`;
@@ -1587,10 +1602,9 @@
 
                         const miniIcon = document.createElement('div');
                         miniIcon.id = `slot-${id}`;
-                        miniIcon.className = 'w-7 h-7 bg-white rounded-md flex items-center justify-center border border-gray-300 shadow-sm cursor-pointer hover:bg-red-50 transition-colors';
+                        miniIcon.className = 'w-7 h-7 bg-white rounded-md flex items-center justify-center border border-gray-300 shadow-sm cursor-pointer hover:bg-green-50 transition-colors';
                         miniIcon.innerHTML = iconHtml;
                         
-                        // 核心功能：点击天平上的小图标，反向触发按钮点击来取消
                         miniIcon.addEventListener('click', (e) => {
                             e.stopPropagation();
                             btn.click();
@@ -1614,27 +1628,21 @@
             }
 
             /* ==========================================
-               D. 饼图生命周期逻辑 (Pie Chart Logic)
+               D. 饼图生命周期逻辑
                ========================================== */
             const pieGroups = document.querySelectorAll('.pie-group');
             const pieContainer = document.getElementById('pie-slices-container');
             
             if (pieGroups.length > 0 && pieContainer) {
                 const activateGroup = function() {
-                    // 移除所有切片的 active 类
                     pieGroups.forEach(g => g.classList.remove('active'));
-                    // 给当前悬停的切片加上 active 类
                     this.classList.add('active');
-                    // DOM 操作：把激活的元素移到最下面，保证它的层级(z-index)在视觉上最高
                     pieContainer.appendChild(this);
-                    
-                    // 重新刷新一下当前高亮切片内的 Lucide 图标（防止重绘丢失）
                     lucide.createIcons();
                 };
                 
                 pieGroups.forEach(group => {
                     group.addEventListener('mouseenter', activateGroup);
-                    // 兼容手机端点击
                     group.addEventListener('click', activateGroup); 
                 });
             }
@@ -1662,7 +1670,7 @@
             }
 
             /* ==========================================
-               C. 理赔流程滑动切换逻辑 (Carousel)
+               C. 理赔流程滑动切换逻辑
                ========================================== */
             const totalSteps = 6;
             let currentStep = 1;
@@ -1696,10 +1704,10 @@
                 indicators.forEach((dot, index) => {
                     if (index + 1 === currentStep) {
                         dot.classList.remove('bg-white/20');
-                        dot.classList.add('bg-green-400');
+                        dot.classList.add('bg-[#003A3A]'); // 绿色
                         dot.style.transform = 'scale(1.2)';
                     } else {
-                        dot.classList.remove('bg-green-400');
+                        dot.classList.remove('bg-[#003A3A]');
                         dot.classList.add('bg-white/20');
                         dot.style.transform = 'scale(1)';
                     }
@@ -1749,13 +1757,13 @@
                 indicators.forEach((dot, index) => {
                     dot.addEventListener('click', () => goToStep(index + 1));
                     dot.addEventListener('mouseenter', () => {
-                        if (!dot.classList.contains('bg-green-400')) {
+                        if (!dot.classList.contains('bg-[#003A3A]')) {
                             dot.style.transform = 'scale(1.3)';
                             dot.style.backgroundColor = 'rgba(255,255,255,0.4)';
                         }
                     });
                     dot.addEventListener('mouseleave', () => {
-                        if (!dot.classList.contains('bg-green-400')) {
+                        if (!dot.classList.contains('bg-[#003A3A]')) {
                             dot.style.transform = 'scale(1)';
                             dot.style.backgroundColor = 'rgba(255,255,255,0.2)';
                         }
@@ -1797,7 +1805,7 @@
             }
             
             /* ==========================================
-               E. 新增：拓展区域交互逻辑
+               E. 拓展区域交互逻辑
                ========================================== */
             const expandButton = document.getElementById('expand-button');
             const expandContent = document.getElementById('expand-content');
@@ -1805,10 +1813,8 @@
             
             if (expandButton && expandContent && expandIcon) {
                 expandButton.addEventListener('click', function() {
-                    // 切换内容显示状态
                     expandContent.classList.toggle('open');
                     
-                    // 切换图标旋转和按钮文本
                     if (expandContent.classList.contains('open')) {
                         expandIcon.style.transform = 'rotate(180deg)';
                         expandButton.innerHTML = `
@@ -1822,19 +1828,18 @@
                             <i id="expand-icon" data-lucide="chevron-down" class="w-5 h-5 transition-transform duration-300"></i>
                         `;
                     }
-                    // 重新初始化图标
                     lucide.createIcons();
                 });
             }
             
-            // 强制触发所有动画元素显示（防止 Observer 失败的兜底方案）
+            // 强制触发所有动画元素显示
             setTimeout(() => {
                 document.querySelectorAll('.fade-section').forEach(el => {
                     el.classList.add('visible');
                 });
             }, 100);
 
-        })(); // <--- 这个最重要的闭合括号现在被安稳地放在了这里
+        })();
     </script>
 </body>
 </html>
