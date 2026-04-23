@@ -19,6 +19,7 @@
             --neutral-gray: #6B7280;      /* 中性灰 */
             --white-pure: #FFFFFF;        /* 纯白 */
             --gray-light: #E5E7EB;        /* 浅灰边框 */
+            --gray-hover: #F3F4F6;        /* 悬停浅灰 */
         }
 
         html {
@@ -412,28 +413,81 @@
             max-height: 2000px;
         }
 
+        /* ========== 优化后的表格样式 ========== */
         .cover-types-table {
             width: 100%;
-            border-collapse: collapse;
-        }
-
-        .cover-types-table th,
-        .cover-types-table td {
-            padding: 1rem;
-            text-align: left;
-            border: 1px solid var(--gray-light); /* 浅灰边框 */
+            border-collapse: separate;
+            border-spacing: 0;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .cover-types-table th {
-            background-color: var(--bg-light); /* 浅灰背景 */
+            background-color: var(--primary-dark); /* 品牌深绿色表头 */
+            color: white;
             font-weight: 600;
             font-size: 0.875rem;
-            color: var(--primary-dark); /* 绿色主色 */
+            padding: 1.25rem 1rem;
+            text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         .cover-types-table td {
+            padding: 1.25rem 1rem;
+            text-align: left;
             font-size: 0.875rem;
-            color: var(--neutral-gray); /* 中性灰 */
+            color: #374151; /* 深灰色文本提高可读性 */
+            background-color: var(--white-pure);
+            border-bottom: 1px solid var(--gray-light);
+            transition: background-color 0.2s ease;
+        }
+
+        .cover-types-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .cover-types-table tr:hover td {
+            background-color: var(--gray-hover); /* 行悬停效果 */
+        }
+
+        /* 表格单元格特殊样式 */
+        .cover-types-table td:first-child {
+            font-weight: 500;
+            color: var(--primary-dark); /* 左侧列文字用品牌绿 */
+            padding-left: 1.5rem;
+        }
+
+        .cover-types-table th:first-child {
+            padding-left: 1.5rem;
+        }
+
+        .cover-types-table th:last-child,
+        .cover-types-table td:last-child {
+            padding-right: 1.5rem;
+        }
+
+        /* 响应式表格优化 */
+        @media (max-width: 768px) {
+            .cover-types-table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .cover-types-table thead,
+            .cover-types-table tbody,
+            .cover-types-table th,
+            .cover-types-table td,
+            .cover-types-table tr {
+                display: table-cell;
+            }
+            
+            .cover-types-table td {
+                white-space: nowrap;
+            }
         }
 
         .service-card {
@@ -445,6 +499,12 @@
             border-radius: 0.5rem;
             margin-bottom: 1rem;
             background-color: var(--white-pure); /* 纯白背景 */
+            transition: all 0.2s ease;
+        }
+
+        .service-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-color: var(--primary-dark);
         }
 
         .service-card img {
