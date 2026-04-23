@@ -6,26 +6,25 @@
     <title>Protection Journey Prototype - SCOTTISH WIDOWS · PROTECTION PREVIEW</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-    <!-- 1. 优先加载 Lucide 图标库（使用更稳定的 CDN 地址） -->
     <script src="https://cdn.jsdelivr.net/npm/lucide@0.323.0/dist/umd/lucide.min.js"></script>
     <style>
         :root {
-            /* === 核心修改：改为苏格兰寡妇官网深绿色主色调 === */
-            --primary-dark: #003A3A;      /* 品牌深绿色（主色） */
-            --primary-light: #005050;     /* 绿色浅变体 */
-            --primary-deep: #002828;      /* 绿色加深版 */
-            --accent-green: #003A3A;      /* 品牌绿（与主色统一） */
-            --bg-light: #F8F8F8;          /* 官网浅灰背景 */
-            --neutral-gray: #6B7280;      /* 中性灰 */
-            --white-pure: #FFFFFF;        /* 纯白 */
-            --gray-light: #E5E7EB;        /* 浅灰边框 */
-            --gray-hover: #F3F4F6;        /* 悬停浅灰 */
+            /* 品牌主色调 */
+            --primary-dark: #003A3A;
+            --primary-light: #005050;
+            --primary-deep: #002828;
+            --accent-green: #003A3A;
+            
+            /* 中性色 */
+            --bg-light: #F8F8F8;
+            --neutral-gray: #6B7280;
+            --white-pure: #FFFFFF;
+            --gray-light: #E5E7EB;
+            --gray-hover: #F3F4F6;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
+        /* 基础样式 */
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-light);
@@ -33,35 +32,28 @@
             line-height: 1.5;
             font-weight: 400;
         }
-
-        .font-serif {
-            font-family: 'Playfair Display', serif;
+        ::selection {
+            background-color: var(--primary-dark) !important;
+            color: var(--white-pure) !important;
         }
 
-        .timeline-card {
-            transition: all 0.3s ease;
-        }
-
-        .timeline-card:hover {
-            transform: translateX(8px);
-            background: rgba(255,255,255,0.08);
-        }
-
+        /* 通用类 */
+        .font-serif { font-family: 'Playfair Display', serif; }
         .fade-section {
             opacity: 0;
             transform: translateY(32px);
             transition: opacity 0.8s ease, transform 0.8s ease;
         }
-
         .fade-section.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
+        /* 章节标签 */
         .section-label {
             display: inline-block;
             padding: 0.3rem 0.9rem;
-            border: 1px solid rgba(0, 58, 58, 0.15); /* 匹配绿色主色 */
+            border: 1px solid rgba(0, 58, 58, 0.15);
             color: var(--primary-dark);
             font-size: 10px;
             font-weight: 900;
@@ -70,123 +62,48 @@
             border-radius: 999px;
         }
 
-        .section-label-dark {
-            display: inline-block;
-            padding: 0.3rem 0.9rem;
-            border: 1px solid rgba(255,255,255,0.15);
-            color: white;
-            font-size: 10px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.28em;
-            border-radius: 999px;
-        }
-
+        /* 滑块样式 */
         input[type=range] {
             -webkit-appearance: none;
             appearance: none;
             background: transparent;
         }
-
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 24px;
             height: 24px;
-            background: var(--primary-dark); /* 绿色主色 */
+            background: var(--primary-dark);
             border-radius: 50%;
             cursor: pointer;
             border: 4px solid white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
             margin-top: -8px;
         }
-
         input[type=range]::-webkit-slider-runnable-track {
             height: 8px;
             background: #E5E7EB;
             border-radius: 999px;
         }
-
         input[type=range]::-moz-range-thumb {
             width: 24px;
             height: 24px;
-            background: var(--primary-dark); /* 绿色主色 */
+            background: var(--primary-dark);
             border-radius: 50%;
             cursor: pointer;
             border: 4px solid white;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        .beam-rotate {
-            transition: none;
-            will-change: transform;
+        /* 导航栏 */
+        nav {
+            border-bottom: 1px solid var(--gray-light);
+        }
+        nav a:hover {
+            color: var(--primary-dark) !important;
         }
 
-        #risk-weight,
-        #input-icon {
-            transition: transform 120ms linear, opacity 120ms linear;
-            position: relative;
-            z-index: 1;
-        }
-
-        .weight-label-container {
-            position: relative;
-            z-index: 10;
-            background-color: rgba(248, 250, 249, 0.95);
-            padding: 4px 8px;
-            border-radius: 8px;
-        }
-
-        .simulator-shell {
-            align-items: start;
-        }
-
-        .simulator-visual {
-            min-height: 550px;
-        }
-
-        @media (max-width: 1023px) {
-            .simulator-sidebar {
-                position: static !important;
-            }
-        }
-        
-        .lucide-icon-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 20px;
-            min-height: 20px;
-            margin: 0 !important;
-        }
-        
-        .explanation-text {
-            font-size: 15px !important;
-            font-weight: 400 !important;
-            line-height: 1.6 !important;
-            color: rgba(255, 255, 255, 0.9) !important;
-        }
-        
-        .what-it-means-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 1.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        
-        #resilience-title {
-            font-family: 'Inter', sans-serif !important;
-            font-weight: 400 !important;
-            font-size: 15px !important;
-            line-height: 1.6 !important;
-            letter-spacing: normal !important;
-            margin-bottom: 1rem;
-            color: var(--primary-dark) !important; /* 绿色主色 */
-        }
-
-        /* === 核心修改：天平样式改为绿色系 === */
+        /* 天平样式 */
         .balance-pivot {
             position: absolute;
             left: 50%;
@@ -199,7 +116,6 @@
             z-index: 5;
             box-shadow: inset 0 0 10px rgba(255,255,255,0.2);
         }
-        
         .balance-pivot::after {
             content: '';
             position: absolute;
@@ -212,21 +128,19 @@
             border-radius: 0 0 10px 10px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        
         .balance-beam {
             position: absolute;
             left: 50%;
             bottom: 72px;
             width: 78%;
             height: 6px;
-            background: linear-gradient(to right, var(--primary-dark), var(--primary-light), var(--primary-dark)); /* 绿色渐变 */
+            background: linear-gradient(to right, var(--primary-dark), var(--primary-light), var(--primary-dark));
             border-radius: 3px;
             transform-origin: center center;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
             z-index: 4;
             transition: transform 0.5s ease-out;
         }
-        
         .balance-beam::before,
         .balance-beam::after {
             content: '';
@@ -235,98 +149,18 @@
             transform: translateY(-50%);
             width: 12px;
             height: 12px;
-            background: var(--primary-deep); /* 绿色加深 */
+            background: var(--primary-deep);
             border-radius: 50%;
         }
-        
         .balance-beam::before { left: -6px; }
         .balance-beam::after { right: -6px; }
 
-        /* --- Claim Journey Z-Path 专用 --- */
-        .claims-grid-container {
-            position: relative;
-        }
-
-        @media (min-width: 768px) {
-            .claims-grid-container::before {
-                content: '';
-                position: absolute;
-                left: 50%;
-                top: 40px;
-                bottom: 40px;
-                width: 2px;
-                background: linear-gradient(to bottom, transparent, rgba(0, 58, 58, 0.4), transparent); /* 绿色渐变 */
-                transform: translateX(-50%);
-            }
-        }
-
-        .step-node {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .step-node:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .step-illustration {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            max-height: 250px;
-            border-radius: 1rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        [data-lucide] {
-            margin-right: 4px !important;
-            margin-left: 0 !important;
-        }
-
-        .step-card .lucide-icon-container {
-            margin-bottom: 6px !important;
-        }
-        
-        .illustration-wrapper {
-            position: relative;
-            overflow: hidden;
-            border-radius: 1rem;
-        }
-        
-        .step-illustration {
-            transition: all 0.3s ease;
-        }
-        
-        .step-illustration:hover {
-            transform: scale(1.02);
-        }
-
-        .claims-layout-grid {
-            display: grid;
-            grid-template-columns: 1fr 500px 1fr;
-            align-items: start;
-            gap: 20px;
-        }
-
-        @media (max-width: 1024px) {
-            .claims-layout-grid {
-                grid-template-columns: 1fr 400px 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .claims-layout-grid {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-
+        /* 时间轴样式 */
         .timeline-container {
             max-width: 800px;
             margin: 3rem auto;
             width: 100%;
         }
-
         .timeline {
             display: flex;
             justify-content: space-between;
@@ -334,7 +168,6 @@
             position: relative;
             padding: 0 1rem;
         }
-
         .timeline::before {
             content: '';
             position: absolute;
@@ -342,37 +175,34 @@
             left: 2rem;
             right: 2rem;
             height: 1px;
-            background-color: var(--gray-light); /* 浅灰边框色 */
+            background-color: var(--gray-light);
             transform: translateY(-50%);
             z-index: 1;
         }
-
         .timeline-dot {
             width: 2rem;
             height: 2rem;
             border-radius: 50%;
             background-color: var(--white-pure);
-            border: 1px solid var(--gray-light); /* 浅灰边框色 */
+            border: 1px solid var(--gray-light);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 0.875rem;
             font-weight: 600;
-            color: var(--primary-dark); /* 绿色主色 */
+            color: var(--primary-dark);
             position: relative;
             z-index: 2;
         }
-
         .timeline-label {
             position: absolute;
             bottom: -2rem;
             left: 50%;
             transform: translateX(-50%);
             font-size: 0.75rem;
-            color: var(--neutral-gray); /* 中性灰 */
+            color: var(--neutral-gray);
             white-space: nowrap;
         }
-
         .timeline-item {
             position: relative;
             display: flex;
@@ -380,40 +210,32 @@
             align-items: center;
         }
 
-        /* ========== 拓展区域样式 ========== */
-        .expandable-section {
-            margin-top: 4rem;
-        }
-
+        /* 拓展区域 */
+        .expandable-section { margin-top: 4rem; }
         .expand-btn {
-            background-color: var(--white-pure); /* 纯白 */
-            border: 1px solid var(--gray-light); /* 浅灰边框 */
+            background-color: var(--white-pure);
+            border: 1px solid var(--gray-light);
             transition: all 0.3s ease;
             width: 100%;
             padding: 1rem;
             border-radius: 0.5rem;
             font-weight: 500;
-            color: var(--primary-dark); /* 绿色主色 */
+            color: var(--primary-dark);
             cursor: pointer;
         }
-
         .expand-btn:hover {
             background-color: #f3f4f6;
-            border-color: var(--primary-dark); /* 悬停边框变绿 */
+            border-color: var(--primary-dark);
         }
-
         .expand-content {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease-in-out;
             margin-top: 1rem;
         }
+        .expand-content.open { max-height: 2000px; }
 
-        .expand-content.open {
-            max-height: 2000px;
-        }
-
-        /* ========== 优化后的表格样式 ========== */
+        /* 表格样式 */
         .cover-types-table {
             width: 100%;
             border-collapse: separate;
@@ -422,9 +244,8 @@
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
-
         .cover-types-table th {
-            background-color: var(--primary-dark); /* 品牌深绿色表头 */
+            background-color: var(--primary-dark);
             color: white;
             font-weight: 600;
             font-size: 0.875rem;
@@ -433,145 +254,70 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
-
         .cover-types-table td {
             padding: 1.25rem 1rem;
             text-align: left;
             font-size: 0.875rem;
-            color: #374151; /* 深灰色文本提高可读性 */
+            color: #374151;
             background-color: var(--white-pure);
             border-bottom: 1px solid var(--gray-light);
-            /* 移除表格单元格悬停过渡效果 */
-            /* transition: background-color 0.2s ease; */
         }
-
-        .cover-types-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        /* 移除表格行悬停效果 */
-        /* .cover-types-table tr:hover td {
-            background-color: var(--gray-hover); 
-        } */
-
-        /* 表格单元格特殊样式 */
+        .cover-types-table tr:last-child td { border-bottom: none; }
+        .cover-types-table td:first-child,
+        .cover-types-table th:first-child { padding-left: 1.5rem; }
+        .cover-types-table th:last-child,
+        .cover-types-table td:last-child { padding-right: 1.5rem; }
         .cover-types-table td:first-child {
             font-weight: 500;
-            color: var(--primary-dark); /* 左侧列文字用品牌绿 */
-            padding-left: 1.5rem;
+            color: var(--primary-dark);
         }
 
-        .cover-types-table th:first-child {
-            padding-left: 1.5rem;
-        }
-
-        .cover-types-table th:last-child,
-        .cover-types-table td:last-child {
-            padding-right: 1.5rem;
-        }
-
-        /* 响应式表格优化 */
-        @media (max-width: 768px) {
-            .cover-types-table {
-                display: block;
-                width: 100%;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .cover-types-table thead,
-            .cover-types-table tbody,
-            .cover-types-table th,
-            .cover-types-table td,
-            .cover-types-table tr {
-                display: table-cell;
-            }
-            
-            .cover-types-table td {
-                white-space: nowrap;
-            }
-        }
-
+        /* 服务卡片 */
         .service-card {
             display: flex;
             align-items: flex-start;
             gap: 1rem;
             padding: 1rem;
-            border: 1px solid var(--gray-light); /* 浅灰边框 */
+            border: 1px solid var(--gray-light);
             border-radius: 0.5rem;
             margin-bottom: 1rem;
-            background-color: var(--white-pure); /* 纯白背景 */
-            /* 移除服务卡片悬停过渡效果 */
-            /* transition: all 0.2s ease; */
+            background-color: var(--white-pure);
         }
-
-        /* 移除服务卡片悬停效果 */
-        /* .service-card:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            border-color: var(--primary-dark);
-        } */
-
         .service-card img {
             width: 48px;
             height: 48px;
             object-fit: contain;
             flex-shrink: 0;
         }
-
-        .service-card-content {
-            flex: 1;
-        }
-
+        .service-card-content { flex: 1; }
         .service-card-title {
             font-weight: 600;
-            color: var(--primary-dark); /* 绿色主色 */
+            color: var(--primary-dark);
             margin-bottom: 0.25rem;
         }
-
         .service-card-desc {
             font-size: 0.875rem;
-            color: var(--neutral-gray); /* 中性灰 */
+            color: var(--neutral-gray);
             line-height: 1.5;
         }
 
-        /* ========== Ending 章节样式 ========== */
-        #next {
-            position: relative;
-            padding: 6rem 2rem;
-            background-color: var(--white-pure); /* 纯白背景 */
+        /* 步骤卡片 */
+        .step-card {
+            border: 1px solid var(--gray-light);
+            background-color: var(--white-pure);
+        }
+        .step-card:hover {
+            border-color: var(--primary-dark);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
-        .start-now-label {
-            position: absolute;
-            top: 4rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: inline-block;
-            padding: 0.3rem 0.9rem;
-            border: 1px solid rgba(0, 58, 58, 0.15); /* 绿色边框 */
-            color: var(--primary-dark); /* 绿色主色 */
-            font-size: 10px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.28em;
-            border-radius: 999px;
-            background-color: transparent;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .start-now-label:hover {
-            background-color: rgba(0, 58, 58, 0.05); /* 绿色浅背景 */
-        }
-
-        /* --- 购买流程样式 --- */
+        /* 购买流程 */
         .buying-process-section {
             max-width: 1000px;
             margin: 4rem auto 6rem auto;
             padding: 2rem;
             text-align: center;
         }
-
         .buying-process-timeline {
             display: flex;
             justify-content: space-between;
@@ -581,18 +327,16 @@
             margin-top: 3rem;
             margin-bottom: 4rem;
         }
-
         .buying-process-timeline::before {
             content: '';
             position: absolute;
-            top: 36px; 
+            top: 36px;
             left: 10%;
             right: 10%;
             height: 2px;
-            background-color: var(--gray-light); /* 浅灰边框 */
+            background-color: var(--gray-light);
             z-index: 1;
         }
-
         .buying-process-item {
             position: relative;
             display: flex;
@@ -602,13 +346,12 @@
             flex: 1;
             cursor: default;
         }
-
         .buying-process-dot {
             width: 72px;
             height: 72px;
             border-radius: 50%;
-            background-color: var(--white-pure); /* 纯白 */
-            border: 2px solid var(--primary-dark); /* 绿色边框 */
+            background-color: var(--white-pure);
+            border: 2px solid var(--primary-dark);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -617,87 +360,66 @@
             padding: 16px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
-
         .buying-process-dot img {
             width: 100%;
             height: 100%;
             object-fit: contain;
         }
-
         .buying-process-step {
             font-size: 0.85rem;
             font-weight: 800;
-            color: var(--primary-dark); /* 绿色主色 */
+            color: var(--primary-dark);
             margin-bottom: 0.5rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
-
         .buying-process-label {
             font-size: 0.8rem;
-            color: var(--neutral-gray); /* 中性灰 */
+            color: var(--neutral-gray);
             text-align: center;
             max-width: 140px;
             line-height: 1.5;
             font-weight: 500;
         }
 
+        /* 按钮样式 */
         .get-quote-btn {
             padding: 0.8rem 2rem;
-            border: 2px solid var(--primary-dark); /* 绿色边框 */
-            background-color: var(--white-pure); /* 纯白背景 */
-            color: var(--primary-dark); /* 绿色文字 */
+            border: 2px solid var(--primary-dark);
+            background-color: var(--white-pure);
+            color: var(--primary-dark);
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             margin-bottom: 1rem;
         }
-
         .get-quote-btn:hover {
-            background-color: var(--primary-dark); /* 绿色背景 */
-            color: var(--white-pure); /* 白色文字 */
+            background-color: var(--primary-dark);
+            color: var(--white-pure);
+        }
+        .group.bg-\[\#003A3A\] {
+            background-color: var(--primary-dark) !important;
+        }
+        .group.bg-\[\#003A3A\]:hover {
+            background-color: var(--primary-deep) !important;
         }
 
-        .if-not-text {
-            font-size: 0.875rem;
-            color: var(--neutral-gray); /* 中性灰 */
-        }
-
-        #next h3.font-serif {
-            font-family: 'Playfair Display', serif !important;
-            font-weight: 900 !important;
-            font-size: 4rem !important;
-            line-height: 1.1 !important;
-            color: var(--primary-dark); /* 绿色主色 */
-            margin-bottom: 1.5rem;
-        }
-
-        #next p.text-lg {
-            font-size: 1.125rem;
-            color: var(--neutral-gray); /* 中性灰 */
-            line-height: 1.6;
-            max-width: 600px;
-            margin: 0 auto 4rem auto;
-        }
-
-        /* 原型卡片样式 */
+        /* 原型卡片 */
         .prototype-card {
-            background-color: var(--white-pure); /* 纯白背景 */
+            background-color: var(--white-pure);
             border-radius: 2rem;
             padding: 2.5rem 2rem;
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
-            border: 1px solid var(--gray-light); /* 浅灰边框 */
+            border: 1px solid var(--gray-light);
         }
-
         .prototype-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-            border-color: var(--primary-dark); /* 悬停边框变绿 */
+            border-color: var(--primary-dark);
         }
-
         .prototype-card-icon {
             width: 4rem;
             height: 4rem;
@@ -707,92 +429,187 @@
             justify-content: center;
             margin: 0 auto 1.5rem auto;
         }
-
         .prototype-card-title {
             font-size: 1.125rem;
             font-weight: 700;
-            color: var(--primary-dark); /* 绿色主色 */
+            color: var(--primary-dark);
             margin-bottom: 1rem;
         }
-
         .prototype-card-text {
             font-size: 0.9375rem;
-            color: var(--neutral-gray); /* 中性灰 */
+            color: var(--neutral-gray);
             line-height: 1.5;
         }
 
-        /* 响应式适配 */
-        @media (max-width: 768px) {
-            .buying-process-timeline {
-                flex-wrap: wrap;
-                gap: 2rem;
-                justify-content: center;
-            }
-            
-            .buying-process-timeline::before {
-                display: none;
-            }
-            
-            .buying-process-item {
-                width: 45%;
-                margin-bottom: 1rem;
-            }
-            
-            .buying-process-title {
-                font-size: 1.5rem;
-            }
-            
-            #next h3.font-serif {
-                font-size: 2.5rem !important;
-            }
+        /* 饼图样式 */
+        .pie-svg-wrap {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: visible;
         }
-
-        /* === 新增：匹配官网的饼图样式 === */
+        .pie-group {
+            cursor: pointer;
+            transform-origin: 500px 500px;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
         .pie-slice {
             stroke: transparent;
             transition: fill 0.4s ease, filter 0.4s ease;
             fill: var(--base-fill);
         }
-        .pie-group.active .pie-slice { 
-            fill: var(--primary-dark) !important; /* 绿色高亮 */
-            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.25)); 
+        .pie-group.active .pie-slice {
+            fill: var(--primary-dark) !important;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.25));
+        }
+        .idle-text {
+            fill: rgba(255, 255, 255, 0.95);
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            pointer-events: none;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .pie-group.active .idle-text {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+        .pie-group foreignObject {
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.9) translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .pie-group.active foreignObject {
+            pointer-events: auto;
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        .slice-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            color: white;
+        }
+        .slice-illustration {
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 6px;
+            background-color: transparent !important;
+            mix-blend-mode: multiply;
+        }
+        .slice-title {
+            font-size: 13px;
+            font-weight: 800;
+            line-height: 1.2;
+            width: 100%;
+            max-width: 170px;
+            margin: 0 auto 4px auto;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .slice-description {
+            font-size: 10.5px;
+            line-height: 1.35;
+            opacity: 0.95;
+            width: 100%;
+            max-width: 170px;
+            margin: 0 auto;
         }
 
-        /* === 新增：导航栏样式优化 === */
-        nav {
-            border-bottom: 1px solid var(--gray-light); /* 浅灰边框 */
+        /* 响应式样式 */
+        @media (max-width: 1023px) {
+            .simulator-sidebar { position: static !important; }
+            .claims-layout-grid { grid-template-columns: 1fr 400px 1fr; }
         }
-        nav a:hover {
-            color: var(--primary-dark) !important; /* 悬停变绿 */
+        @media (max-width: 768px) {
+            /* 表格响应式 */
+            .cover-types-table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .cover-types-table thead,
+            .cover-types-table tbody,
+            .cover-types-table th,
+            .cover-types-table td,
+            .cover-types-table tr {
+                display: table-cell;
+            }
+            .cover-types-table td { white-space: nowrap; }
+            
+            /* 购买流程响应式 */
+            .buying-process-timeline {
+                flex-wrap: wrap;
+                gap: 2rem;
+                justify-content: center;
+            }
+            .buying-process-timeline::before { display: none; }
+            .buying-process-item {
+                width: 45%;
+                margin-bottom: 1rem;
+            }
+            .buying-process-title { font-size: 1.5rem; }
+            #next h3.font-serif { font-size: 2.5rem !important; }
+            
+            /* 饼图响应式 */
+            .pie-group.active { transform: scale(1.15) !important; }
+            .slice-illustration { height: 45px; }
+            .slice-title { font-size: 11px; }
+            .slice-description { font-size: 9.5px; max-width: 150px; }
+            
+            /* 理赔流程响应式 */
+            .claims-layout-grid {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
         }
 
-        /* === 新增：按钮主样式优化 === */
-        .group.bg-\[\#003A3A\] {
-            background-color: var(--primary-dark) !important; /* 绿色按钮 */
-        }
-        .group.bg-\[\#003A3A\]:hover {
-            background-color: var(--primary-deep) !important; /* 绿色加深悬停 */
-        }
+        /* 饼图切片位置 */
+        .pie-group[data-index="1"].active { transform: translate(18px, -24px) scale(1.25); z-index: 50; }
+        .pie-group[data-index="2"].active { transform: translate(24px, 8px) scale(1.25); z-index: 50; }
+        .pie-group[data-index="3"].active { transform: translate(0px, 28px) scale(1.25); z-index: 50; }
+        .pie-group[data-index="4"].active { transform: translate(-24px, 8px) scale(1.25); z-index: 50; }
+        .pie-group[data-index="5"].active { transform: translate(-18px, -24px) scale(1.25); z-index: 50; }
 
-        /* === 新增：卡片样式优化 === */
-        .step-card {
-            border: 1px solid var(--gray-light); /* 浅灰边框 */
-            background-color: var(--white-pure); /* 纯白背景 */
+        /* 其他通用样式 */
+        .lucide-icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 20px;
+            min-height: 20px;
+            margin: 0 !important;
         }
-        .step-card:hover {
-            border-color: var(--primary-dark); /* 悬停边框变绿 */
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        .if-not-text {
+            font-size: 0.875rem;
+            color: var(--neutral-gray);
         }
-
-        /* === 新增：深色卡片样式 === */
-        .bg-\[\#003A3A\] {
-            background-color: var(--primary-dark) !important; /* 绿色背景 */
+        .start-now-label {
+            position: absolute;
+            top: 4rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-block;
+            padding: 0.3rem 0.9rem;
+            border: 1px solid rgba(0, 58, 58, 0.15);
+            color: var(--primary-dark);
+            font-size: 10px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.28em;
+            border-radius: 999px;
+            background-color: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
-
-        /* === 新增：选中文字颜色匹配品牌 === */
-        ::selection {
-            background-color: var(--primary-dark) !important; /* 绿色 */
-            color: var(--white-pure) !important;
+        .start-now-label:hover {
+            background-color: rgba(0, 58, 58, 0.05);
         }
     </style>
 </head>
@@ -806,7 +623,6 @@
             </div>
             <span class="font-serif font-black text-xl tracking-tighter text-[#003A3A]">SCOTTISH WIDOWS · PROTECTION PREVIEW</span>
         </div>
-
         <div class="hidden lg:flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
             <a href="#intro" class="hover:text-[#003A3A] transition-colors">Intro</a>
             <a href="#simulator" class="hover:text-[#003A3A] transition-colors">Logic</a>
@@ -815,7 +631,7 @@
         </div>
     </nav>
 
-    <!-- 1. 合并后的 Intro + Journey Overview -->
+    <!-- 1. Intro + Journey Overview -->
     <section id="intro" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
         <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#003A3A]/5 rounded-full blur-[100px]"></div>
         <div class="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] bg-[#003A3A]/5 rounded-full blur-[120px]"></div>
@@ -872,7 +688,7 @@
         </div>
     </section>
 
-    <!-- 3. Simulator chapter -->
+    <!-- 2. Simulator chapter -->
     <section id="simulator" class="py-16 xl:py-24 px-4 md:px-8 bg-white border-y border-gray-100">
         <div class="max-w-7xl mx-auto space-y-12">
             
@@ -1009,7 +825,7 @@
         </div>
     </section>
 
-    <!-- 4. Real-life meaning -->
+    <!-- 3. Real-life meaning -->
     <section class="py-28 md:py-36 px-4 md:px-8">
         <div class="max-w-6xl mx-auto fade-section">
             <div class="mb-20 text-center space-y-6">
@@ -1154,109 +970,8 @@
         </div>
     </section>
 
-    <!-- 5. Lifecycle 章节 -->
+    <!-- 4. Lifecycle 章节 -->
     <section id="lifecycle" class="py-24 md:py-36 px-4 bg-[#F8F8F8] overflow-hidden border-t border-gray-100">
-        <style>
-            .pie-svg-wrap {
-                width: 100%;
-                max-width: 900px;
-                margin: 0 auto;
-                overflow: visible;
-            }
-            .pie-group {
-                cursor: pointer;
-                transform-origin: 500px 500px;
-                transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            }
-            .pie-slice {
-                stroke: transparent;
-                transition: fill 0.4s ease, filter 0.4s ease;
-                fill: var(--base-fill);
-            }
-
-            .idle-text {
-                fill: rgba(255, 255, 255, 0.95);
-                font-family: 'Inter', sans-serif;
-                font-weight: 700;
-                font-size: 14px;
-                pointer-events: none;
-                transition: opacity 0.4s ease, transform 0.4s ease;
-            }
-            .pie-group.active .idle-text {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-
-            .pie-group foreignObject {
-                pointer-events: none;
-                opacity: 0;
-                transform: scale(0.9) translateY(10px);
-                transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            }
-            .pie-group.active foreignObject {
-                pointer-events: auto;
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-
-            .slice-content-wrapper {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                width: 100%;
-                height: 100%;
-                color: white;
-            }
-
-            .slice-illustration {
-                height: 120px; 
-                object-fit: contain;
-                margin-bottom: 6px;
-                background-color: transparent !important;
-                mix-blend-mode: multiply; 
-            }
-
-            .slice-title {
-                font-size: 13px;
-                font-weight: 800;
-                line-height: 1.2;
-                width: 100%;
-                max-width: 170px;
-                margin: 0 auto 4px auto;
-                text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            }
-
-            .slice-description {
-                font-size: 10.5px;
-                line-height: 1.35;
-                opacity: 0.95;
-                width: 100%;
-                max-width: 170px; 
-                margin: 0 auto;
-            }
-
-            /* === 核心修改：饼图高亮色改为绿色 === */
-            .pie-group.active .pie-slice { 
-                fill: #003A3A !important; 
-                filter: drop-shadow(0 20px 40px rgba(0,0,0,0.25)); 
-            }
-            
-            .pie-group[data-index="1"].active { transform: translate(18px, -24px) scale(1.25); z-index: 50; }
-            .pie-group[data-index="2"].active { transform: translate(24px, 8px) scale(1.25); z-index: 50; }
-            .pie-group[data-index="3"].active { transform: translate(0px, 28px) scale(1.25); z-index: 50; }
-            .pie-group[data-index="4"].active { transform: translate(-24px, 8px) scale(1.25); z-index: 50; }
-            .pie-group[data-index="5"].active { transform: translate(-18px, -24px) scale(1.25); z-index: 50; }
-
-            @media (max-width: 768px) {
-                .pie-group.active { transform: scale(1.15) !important; }
-                .slice-illustration { height: 45px; }
-                .slice-title { font-size: 11px; }
-                .slice-description { font-size: 9.5px; max-width: 150px; }
-            }
-        </style>
-
         <div class="max-w-7xl mx-auto">
             <div class="mb-16 fade-section text-center">
                 <div class="section-label mb-6">Chapter 3 · Lifecycle</div>
@@ -1268,11 +983,9 @@
             <div class="pie-svg-wrap fade-section relative mt-10">
                 <svg viewBox="0 0 1000 1000" width="100%" height="auto" class="overflow-visible">
                     <g id="pie-slices-container">
-                        
                         <g class="pie-group active" data-index="1" style="--base-fill: #002828;">
                             <path class="pie-slice" d="M 500 500 L 500 160 A 340 340 0 0 1 823.3 395.1 Z" />
                             <text class="idle-text" x="617" y="345" text-anchor="middle">1. Quote & Application</text>
-                            
                             <foreignObject x="545" y="204" width="180" height="220">
                                 <div class="slice-content-wrapper">
                                     <img src="3 1.png" class="slice-illustration" />
@@ -1281,14 +994,12 @@
                                 </div>
                             </foreignObject>
                         </g>
-
                         <g class="pie-group" data-index="2" style="--base-fill: #002E2E;">
                             <path class="pie-slice" d="M 500 500 L 823.3 395.1 A 340 340 0 0 1 700 775.1 Z" />
                             <text class="idle-text" text-anchor="middle">
                                 <tspan x="690" y="550">2. Underwriting &</tspan>
                                 <tspan x="690" y="570">Policy Issuance</tspan>
                             </text>
-                            
                             <foreignObject x="628" y="461" width="180" height="220">
                                 <div class="slice-content-wrapper">
                                     <img src="3 2.png" class="slice-illustration" />
@@ -1297,11 +1008,9 @@
                                 </div>
                             </foreignObject>
                         </g>
-
                         <g class="pie-group" data-index="3" style="--base-fill: #003A3A;">
                             <path class="pie-slice" d="M 500 500 L 700 775.1 A 340 340 0 0 1 300 775.1 Z" />
                             <text class="idle-text" x="500" y="700" text-anchor="middle">3. Policy Administration</text>
-                            
                             <foreignObject x="410" y="620" width="180" height="220">
                                 <div class="slice-content-wrapper">
                                     <img src="3 3.png" class="slice-illustration" />
@@ -1310,14 +1019,12 @@
                                 </div>
                             </foreignObject>
                         </g>
-
                         <g class="pie-group" data-index="4" style="--base-fill: #004545;">
                             <path class="pie-slice" d="M 500 500 L 300 775.1 A 340 340 0 0 1 176.7 395.1 Z" />
                             <text class="idle-text" text-anchor="middle">
                                 <tspan x="310" y="550">4. Claims</tspan>
                                 <tspan x="310" y="570">Management</tspan>
                             </text>
-                            
                             <foreignObject x="191" y="461" width="180" height="220">
                                 <div class="slice-content-wrapper">
                                     <img src="3 4.png" class="slice-illustration" />
@@ -1326,11 +1033,9 @@
                                 </div>
                             </foreignObject>
                         </g>
-
                         <g class="pie-group" data-index="5" style="--base-fill: #005050;">
                             <path class="pie-slice" d="M 500 500 L 176.7 395.1 A 340 340 0 0 1 500 160 Z" />
                             <text class="idle-text" x="382" y="345" text-anchor="middle">5. Expiration</text>
-                            
                             <foreignObject x="275" y="204" width="180" height="220">
                                 <div class="slice-content-wrapper">
                                     <img src="3 5.png" class="slice-illustration" />
@@ -1346,105 +1051,105 @@
         </div>
     </section>
 
-<!-- 6. Claims 章节 -->
+    <!-- 5. Claims 章节 -->
     <section id="claims" class="py-24 md:py-36 px-4 bg-[#F8F8F8] overflow-hidden">
-    <div class="max-w-7xl mx-auto">
-        <div class="mb-20 text-center fade-section">
-            <div class="section-label mb-6">Chapter 4 · Claim journey</div>
-            <h2 class="text-5xl md:text-6xl font-black text-[#003A3A] font-serif leading-tight">
-                If something serious happens,<br><span class="text-[#003A3A]">how does the claim journey work?</span>
-            </h2>
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-20 text-center fade-section">
+                <div class="section-label mb-6">Chapter 4 · Claim journey</div>
+                <h2 class="text-5xl md:text-6xl font-black text-[#003A3A] font-serif leading-tight">
+                    If something serious happens,<br><span class="text-[#003A3A]">how does the claim journey work?</span>
+                </h2>
+            </div>
+
+            <div class="hidden md:block relative w-full max-w-[600px] lg:max-w-[700px] mx-auto fade-section">
+                <img src="1.png" alt="Claim Journey Path" class="w-full h-auto relative z-10">
+
+                <div class="absolute top-[8%] right-full w-[300px] lg:w-[380px] pr-0 lg:pr-0 text-right">
+                    <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Trigger & Notify</h4>
+                    <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">INITIAL CONTACT</span>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        For illness-related claims, notify us via our online form or specialist team. For life cover, family can use our bereavement support page.
+                    </p>
+                </div>
+
+                <div class="absolute top-[37.3%] right-full w-[300px] lg:w-[380px] pr-0 lg:pr-0 text-right">
+                    <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Assessment & Review</h4>
+                    <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">DEEP REVIEW</span>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Your claim is reviewed by a dedicated claims team against policy terms. You will receive updates on progress throughout.
+                    </p>
+                </div>
+
+                <div class="absolute top-[68.5%] right-full w-[300px] lg:w-[380px] pr-0 lg:pr-0 text-right">
+                    <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Payout & Relief</h4>
+                    <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">COMPLETION</span>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Approved claims are paid promptly. Life insurance pays out as a lump sum to the nominated beneficiary or bank account.
+                    </p>
+                </div>
+
+                <div class="absolute top-[17.5%] left-full w-[300px] lg:w-[380px] pl-4 lg:pl-6 text-left">
+                    <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Evidence Gathering</h4>
+                    <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">VERIFICATION</span>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        Provide specific documents. Copies of medical notes are helpful. We may contact your GP directly to speed up the process.
+                    </p>
+                </div>
+
+                <div class="absolute top-[51.5%] left-full w-[300px] lg:w-[380px] pl-4 lg:pl-6 text-left">
+                    <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">The Decision</h4>
+                    <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">OUTCOME</span>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        You will be informed of the outcome clearly. Scottish Widows paid 99% of life cover claims in 2024.
+                    </p>
+                </div>
+
+                <div class="absolute top-[81%] left-full w-[300px] lg:w-[380px] pl-4 lg:pl-6 text-left">
+                    <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Ongoing Support</h4>
+                    <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">POST-CLAIM</span>
+                    <p class="text-gray-500 text-sm leading-relaxed">
+                        If you hold a Scottish Widows Protect policy, you have access to practical and emotional support through RedArc.
+                    </p>
+                </div>
+            </div>
+
+            <div class="md:hidden w-full space-y-6 fade-section relative">
+                <img src="1.png" class="w-full max-w-[280px] mx-auto mb-8 opacity-30 absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none z-0">
+                
+                <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
+                    <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">1.</span>Trigger & Notify</h4>
+                    <p class="text-gray-500 text-sm mt-2">For illness-related claims, notify us via our online form or specialist team.</p>
+                </div>
+                
+                <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
+                    <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">2.</span>Evidence Gathering</h4>
+                    <p class="text-gray-500 text-sm mt-2">Provide specific documents. Copies of medical notes are helpful.</p>
+                </div>
+
+                <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
+                    <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">3.</span>Assessment & Review</h4>
+                    <p class="text-gray-500 text-sm mt-2">Your claim is reviewed by a dedicated claims team against policy terms.</p>
+                </div>
+
+                <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
+                    <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">4.</span>The Decision</h4>
+                    <p class="text-gray-500 text-sm mt-2">You will be informed of the outcome clearly. 99% paid in 2024.</p>
+                </div>
+
+                <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
+                    <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">5.</span>Payout & Relief</h4>
+                    <p class="text-gray-500 text-sm mt-2">Approved claims are paid promptly as a lump sum to your account.</p>
+                </div>
+
+                <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
+                    <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">6.</span>Ongoing Support</h4>
+                    <p class="text-gray-500 text-sm mt-2">Access to practical and emotional support through RedArc.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="hidden md:block relative w-full max-w-[600px] lg:max-w-[700px] mx-auto fade-section">
-            <img src="1.png" alt="Claim Journey Path" class="w-full h-auto relative z-10">
-
-            <div class="absolute top-[8%] right-full w-[300px] lg:w-[380px] pr-0 lg:pr-0 text-right">
-                <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Trigger & Notify</h4>
-                <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">INITIAL CONTACT</span>
-                <p class="text-gray-500 text-sm leading-relaxed">
-                    For illness-related claims, notify us via our online form or specialist team. For life cover, family can use our bereavement support page.
-                </p>
-            </div>
-
-            <div class="absolute top-[37.3%] right-full w-[300px] lg:w-[380px] pr-0 lg:pr-0 text-right">
-                <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Assessment & Review</h4>
-                <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">DEEP REVIEW</span>
-                <p class="text-gray-500 text-sm leading-relaxed">
-                    Your claim is reviewed by a dedicated claims team against policy terms. You will receive updates on progress throughout.
-                </p>
-            </div>
-
-            <div class="absolute top-[68.5%] right-full w-[300px] lg:w-[380px] pr-0 lg:pr-0 text-right">
-                <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Payout & Relief</h4>
-                <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">COMPLETION</span>
-                <p class="text-gray-500 text-sm leading-relaxed">
-                    Approved claims are paid promptly. Life insurance pays out as a lump sum to the nominated beneficiary or bank account.
-                </p>
-            </div>
-
-            <div class="absolute top-[17.5%] left-full w-[300px] lg:w-[380px] pl-4 lg:pl-6 text-left">
-                <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Evidence Gathering</h4>
-                <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">VERIFICATION</span>
-                <p class="text-gray-500 text-sm leading-relaxed">
-                    Provide specific documents. Copies of medical notes are helpful. We may contact your GP directly to speed up the process.
-                </p>
-            </div>
-
-            <div class="absolute top-[51.5%] left-full w-[300px] lg:w-[380px] pl-4 lg:pl-6 text-left">
-                <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">The Decision</h4>
-                <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">OUTCOME</span>
-                <p class="text-gray-500 text-sm leading-relaxed">
-                    You will be informed of the outcome clearly. Scottish Widows paid 99% of life cover claims in 2024.
-                </p>
-            </div>
-
-            <div class="absolute top-[81%] left-full w-[300px] lg:w-[380px] pl-4 lg:pl-6 text-left">
-                <h4 class="text-xl lg:text-2xl font-bold text-[#003A3A] mb-2">Ongoing Support</h4>
-                <span class="text-[10px] text-[#003A3A] uppercase font-bold tracking-widest block mb-3">POST-CLAIM</span>
-                <p class="text-gray-500 text-sm leading-relaxed">
-                    If you hold a Scottish Widows Protect policy, you have access to practical and emotional support through RedArc.
-                </p>
-            </div>
-        </div>
-
-        <div class="md:hidden w-full space-y-6 fade-section relative">
-            <img src="1.png" class="w-full max-w-[280px] mx-auto mb-8 opacity-30 absolute top-0 left-1/2 -translate-x-1/2 pointer-events-none z-0">
-            
-            <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
-                <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">1.</span>Trigger & Notify</h4>
-                <p class="text-gray-500 text-sm mt-2">For illness-related claims, notify us via our online form or specialist team.</p>
-            </div>
-            
-            <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
-                <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">2.</span>Evidence Gathering</h4>
-                <p class="text-gray-500 text-sm mt-2">Provide specific documents. Copies of medical notes are helpful.</p>
-            </div>
-
-            <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
-                <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">3.</span>Assessment & Review</h4>
-                <p class="text-gray-500 text-sm mt-2">Your claim is reviewed by a dedicated claims team against policy terms.</p>
-            </div>
-
-            <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
-                <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">4.</span>The Decision</h4>
-                <p class="text-gray-500 text-sm mt-2">You will be informed of the outcome clearly. 99% paid in 2024.</p>
-            </div>
-
-            <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
-                <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">5.</span>Payout & Relief</h4>
-                <p class="text-gray-500 text-sm mt-2">Approved claims are paid promptly as a lump sum to your account.</p>
-            </div>
-
-            <div class="relative z-10 p-6 bg-white/90 backdrop-blur-sm rounded-3xl border border-gray-100 shadow-sm">
-                <h4 class="font-bold text-[#003A3A]"><span class="text-[#003A3A] mr-2">6.</span>Ongoing Support</h4>
-                <p class="text-gray-500 text-sm mt-2">Access to practical and emotional support through RedArc.</p>
-            </div>
-        </div>
-
-    </div>
-</section>
-    <!-- 7. Ending 章节 -->
+    <!-- 6. Ending 章节 -->
     <section id="next" class="py-28 md:py-36 px-4 md:px-8 bg-white relative">
         <div class="start-now-label">Start now</div>
         
@@ -1552,11 +1257,7 @@
         // 1. 初始化所有 Lucide 图标
         try {
             lucide.createIcons({
-                attrs: {
-                    width: '24',
-                    height: '24',
-                    strokeWidth: '1.5'
-                }
+                attrs: { width: '24', height: '24', strokeWidth: '1.5' }
             });
         } catch (error) {
             console.error('Lucide 图标初始化失败:', error);
@@ -1564,30 +1265,20 @@
 
         // 2. 页面滚动渐显动画
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
         }, { threshold: 0.12 });
 
-        document.querySelectorAll('.fade-section').forEach((section) => {
-            observer.observe(section);
-        });
+        document.querySelectorAll('.fade-section').forEach(section => observer.observe(section));
 
         // 3. 核心交互逻辑
         (function() {
-            
-            /* ==========================================
-               A. 天平模拟器逻辑
-               ========================================== */
+            // A. 天平模拟器逻辑
             const slider = document.getElementById('premium-slider');
             const displayPremium = document.getElementById('display-premium');
             const displayCoverage = document.getElementById('display-coverage');
-            const transferAmount = document.getElementById('transfer-amount');
-            const transferProgress = document.getElementById('transfer-progress');
             const resilienceTitle = document.getElementById('resilience-title');
-
             const beamScene = document.getElementById('beam-scene');
             const leftUpright = document.getElementById('left-upright');
             const rightUpright = document.getElementById('right-upright');
@@ -1609,37 +1300,29 @@
                 const currentMultiplier = BASE_MULTIPLIER * (1 - totalPenalty);
                 const coverage = Math.floor(premiumVal * currentMultiplier);
                 
-                if (displayPremium) displayPremium.textContent = premiumVal;
-                if (displayCoverage) displayCoverage.textContent = coverage.toLocaleString(); 
-                
-                if (transferAmount) transferAmount.textContent = `£${coverage.toLocaleString()}`;
-                if (resilienceTitle) resilienceTitle.textContent = `At £${premiumVal} a month, you can secure £${coverage.toLocaleString()} of cover for your family.`;
+                displayPremium.textContent = premiumVal;
+                displayCoverage.textContent = coverage.toLocaleString();
+                resilienceTitle.textContent = `At £${premiumVal} a month, you can secure £${coverage.toLocaleString()} of cover for your family.`;
 
                 const progressPercent = (premiumVal - 10) / (200 - 10);
-                if (transferProgress) transferProgress.style.width = `${progressPercent * 100}%`;
-                
-                const minScale = 0.7; 
+                const minScale = 0.7;
                 const maxScale = 1.3;
                 const dynamicBaseScale = minScale + (progressPercent * (maxScale - minScale));
 
-                if (premiumBox) {
-                    premiumBox.style.transform = `scale(${dynamicBaseScale})`;
-                }
-                if (coverBox) {
-                    const riskScale = (1 - (totalPenalty * 0.4));
-                    const finalCoverScale = dynamicBaseScale * riskScale;
-                    coverBox.style.transform = `scale(${finalCoverScale})`;
-                    // 颜色联动（绿色系）
-                    coverBox.style.backgroundColor = totalPenalty > 0.4 ? "#002828" : "#003A3A";
-                }
+                premiumBox.style.transform = `scale(${dynamicBaseScale})`;
+                
+                const riskScale = (1 - (totalPenalty * 0.4));
+                const finalCoverScale = dynamicBaseScale * riskScale;
+                coverBox.style.transform = `scale(${finalCoverScale})`;
+                coverBox.style.backgroundColor = totalPenalty > 0.4 ? "#002828" : "#003A3A";
                 
                 const tiltAngle = totalPenalty * -30;
-                if (beamScene) beamScene.style.transform = `translateX(-50%) rotate(${tiltAngle}deg)`;
-                if (leftUpright) leftUpright.style.transform = `rotate(${-tiltAngle}deg)`;
-                if (rightUpright) rightUpright.style.transform = `rotate(${-tiltAngle}deg)`;
+                beamScene.style.transform = `translateX(-50%) rotate(${tiltAngle}deg)`;
+                leftUpright.style.transform = `rotate(${-tiltAngle}deg)`;
+                rightUpright.style.transform = `rotate(${-tiltAngle}deg)`;
             }
 
-            // 绑定底部风险图标点击事件
+            // 绑定风险图标点击事件
             document.querySelectorAll('.risk-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const id = this.getAttribute('data-id');
@@ -1653,8 +1336,7 @@
                         activeRisks.delete(id);
                         iconBox.classList.remove('border-[#003A3A]', 'bg-gray-200');
                         iconBox.classList.add('border-transparent', 'bg-gray-50');
-                        const slotIcon = document.getElementById(`slot-${id}`);
-                        if (slotIcon) slotIcon.remove();
+                        document.getElementById(`slot-${id}`)?.remove();
                     } else {
                         activeRisks.set(id, penalty);
                         iconBox.classList.remove('border-transparent', 'bg-gray-50');
@@ -1671,11 +1353,11 @@
                         });
 
                         const svg = miniIcon.querySelector('svg');
-                        if (svg) { 
-                            svg.setAttribute('width', '14'); 
-                            svg.setAttribute('height', '14'); 
+                        if (svg) {
+                            svg.setAttribute('width', '14');
+                            svg.setAttribute('height', '14');
                         }
-                        if (activeRisksSlot) activeRisksSlot.appendChild(miniIcon);
+                        activeRisksSlot.appendChild(miniIcon);
                     }
                     updateSimulator();
                 });
@@ -1687,13 +1369,11 @@
                 updateSimulator();
             }
 
-            /* ==========================================
-               D. 饼图生命周期逻辑
-               ========================================== */
+            // B. 饼图生命周期逻辑
             const pieGroups = document.querySelectorAll('.pie-group');
             const pieContainer = document.getElementById('pie-slices-container');
             
-            if (pieGroups.length > 0 && pieContainer) {
+            if (pieGroups.length && pieContainer) {
                 const activateGroup = function() {
                     pieGroups.forEach(g => g.classList.remove('active'));
                     this.classList.add('active');
@@ -1703,20 +1383,17 @@
                 
                 pieGroups.forEach(group => {
                     group.addEventListener('mouseenter', activateGroup);
-                    group.addEventListener('click', activateGroup); 
+                    group.addEventListener('click', activateGroup);
                 });
             }
 
-            /* ==========================================
-               B. 底部卡片点击与分享逻辑
-               ========================================== */
+            // C. 底部卡片交互
             const whatsappShareCard = document.getElementById('whatsapp-share-card');
             if (whatsappShareCard) {
                 whatsappShareCard.addEventListener('click', function() {
                     const shareText = encodeURIComponent('Check out this life insurance guide: ');
                     const shareUrl = encodeURIComponent(window.location.href);
-                    const whatsappUrl = `https://api.whatsapp.com/send?text=${shareText}${shareUrl}`;
-                    window.open(whatsappUrl, '_blank', 'width=600,height=600');
+                    window.open(`https://api.whatsapp.com/send?text=${shareText}${shareUrl}`, '_blank', 'width=600,height=600');
                 });
             }
 
@@ -1729,144 +1406,7 @@
                 });
             }
 
-            /* ==========================================
-               C. 理赔流程滑动切换逻辑
-               ========================================== */
-            const totalSteps = 6;
-            let currentStep = 1;
-            let isHovering = false;
-            let mouseX = 0;
-            let lastMouseX = 0;
-            let isAnimating = false;
-            let touchStartX = 0; 
-            const sensitivity = 2;
-            const animationDuration = 300;
-            
-            const steps = document.querySelectorAll('[data-step]');
-            const indicators = document.querySelectorAll('.indicator-dot');
-            const carousel = document.getElementById('carousel');
-            
-            function updateStepDisplay() {
-                if (isAnimating || !carousel) return;
-                isAnimating = true;
-                
-                steps.forEach(step => {
-                    step.classList.remove('step-active');
-                    step.classList.add('step-hidden');
-                });
-                
-                const activeStep = document.querySelector(`[data-step="${currentStep}"]`);
-                if (activeStep) {
-                    activeStep.classList.remove('step-hidden');
-                    activeStep.classList.add('step-active');
-                }
-                
-                indicators.forEach((dot, index) => {
-                    if (index + 1 === currentStep) {
-                        dot.classList.remove('bg-white/20');
-                        dot.classList.add('bg-[#003A3A]'); // 绿色
-                        dot.style.transform = 'scale(1.2)';
-                    } else {
-                        dot.classList.remove('bg-[#003A3A]');
-                        dot.classList.add('bg-white/20');
-                        dot.style.transform = 'scale(1)';
-                    }
-                    dot.style.transition = 'all 0.2s ease';
-                });
-                
-                carousel.setAttribute('aria-valuenow', currentStep);
-                
-                setTimeout(() => {
-                    isAnimating = false;
-                }, animationDuration);
-            }
-            
-            function goToStep(targetStep) {
-                if (targetStep < 1 || targetStep > totalSteps || isAnimating || targetStep === currentStep) return;
-                currentStep = targetStep;
-                updateStepDisplay();
-            }
-            
-            function goToNextStep() { goToStep(currentStep + 1); }
-            function goToPrevStep() { goToStep(currentStep - 1); }
-            
-            function handleMouseMove(e) {
-                if (!isHovering || isAnimating) return;
-                mouseX = e.clientX;
-                const deltaX = mouseX - lastMouseX;
-                if (Math.abs(deltaX) > sensitivity) {
-                    deltaX < 0 ? goToNextStep() : goToPrevStep();
-                    lastMouseX = mouseX;
-                }
-            }
-            
-            if (carousel) {
-                carousel.addEventListener('mouseenter', (e) => {
-                    isHovering = true;
-                    lastMouseX = e.clientX;
-                    carousel.style.cursor = 'grab';
-                });
-                
-                carousel.addEventListener('mouseleave', () => {
-                    isHovering = false;
-                    carousel.style.cursor = 'default';
-                });
-                
-                carousel.addEventListener('mousemove', handleMouseMove);
-                
-                indicators.forEach((dot, index) => {
-                    dot.addEventListener('click', () => goToStep(index + 1));
-                    dot.addEventListener('mouseenter', () => {
-                        if (!dot.classList.contains('bg-[#003A3A]')) {
-                            dot.style.transform = 'scale(1.3)';
-                            dot.style.backgroundColor = 'rgba(255,255,255,0.4)';
-                        }
-                    });
-                    dot.addEventListener('mouseleave', () => {
-                        if (!dot.classList.contains('bg-[#003A3A]')) {
-                            dot.style.transform = 'scale(1)';
-                            dot.style.backgroundColor = 'rgba(255,255,255,0.2)';
-                        }
-                    });
-                });
-                
-                carousel.addEventListener('touchstart', (e) => {
-                    touchStartX = e.changedTouches[0].screenX;
-                }, { passive: true });
-                
-                carousel.addEventListener('touchend', (e) => {
-                    const touchEndX = e.changedTouches[0].screenX;
-                    const swipeDistance = touchEndX - touchStartX;
-                    if (Math.abs(swipeDistance) > 50) {
-                        swipeDistance < 0 ? goToNextStep() : goToPrevStep();
-                    }
-                }, { passive: true });
-                
-                document.addEventListener('keydown', (e) => {
-                    const isCarouselFocused = document.activeElement === carousel || carousel.contains(document.activeElement);
-                    if (isCarouselFocused || e.target.tagName === 'BODY') {
-                        if (e.key === 'ArrowRight') {
-                            e.preventDefault();
-                            goToNextStep();
-                        } else if (e.key === 'ArrowLeft') {
-                            e.preventDefault();
-                            goToPrevStep();
-                        }
-                    }
-                });
-                
-                carousel.tabIndex = 0;
-                carousel.setAttribute('role', 'slider');
-                carousel.setAttribute('aria-valuemin', '1');
-                carousel.setAttribute('aria-valuemax', totalSteps);
-                carousel.setAttribute('aria-valuenow', currentStep);
-                
-                updateStepDisplay();
-            }
-            
-            /* ==========================================
-               E. 拓展区域交互逻辑
-               ========================================== */
+            // D. 拓展区域交互
             const expandButton = document.getElementById('expand-button');
             const expandContent = document.getElementById('expand-content');
             const expandIcon = document.getElementById('expand-icon');
@@ -1892,11 +1432,9 @@
                 });
             }
             
-            // 强制触发所有动画元素显示
+            // 强制触发动画显示
             setTimeout(() => {
-                document.querySelectorAll('.fade-section').forEach(el => {
-                    el.classList.add('visible');
-                });
+                document.querySelectorAll('.fade-section').forEach(el => el.classList.add('visible'));
             }, 100);
 
         })();
