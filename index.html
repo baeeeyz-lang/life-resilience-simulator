@@ -441,16 +441,18 @@
             color: #374151; /* 深灰色文本提高可读性 */
             background-color: var(--white-pure);
             border-bottom: 1px solid var(--gray-light);
-            transition: background-color 0.2s ease;
+            /* 移除表格单元格悬停过渡效果 */
+            /* transition: background-color 0.2s ease; */
         }
 
         .cover-types-table tr:last-child td {
             border-bottom: none;
         }
 
-        .cover-types-table tr:hover td {
-            background-color: var(--gray-hover); /* 行悬停效果 */
-        }
+        /* 移除表格行悬停效果 */
+        /* .cover-types-table tr:hover td {
+            background-color: var(--gray-hover); 
+        } */
 
         /* 表格单元格特殊样式 */
         .cover-types-table td:first-child {
@@ -499,13 +501,15 @@
             border-radius: 0.5rem;
             margin-bottom: 1rem;
             background-color: var(--white-pure); /* 纯白背景 */
-            transition: all 0.2s ease;
+            /* 移除服务卡片悬停过渡效果 */
+            /* transition: all 0.2s ease; */
         }
 
-        .service-card:hover {
+        /* 移除服务卡片悬停效果 */
+        /* .service-card:hover {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             border-color: var(--primary-dark);
-        }
+        } */
 
         .service-card img {
             width: 48px;
