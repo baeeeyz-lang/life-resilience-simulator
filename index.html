@@ -14,6 +14,9 @@
             --primary-light: #005050;
             --primary-deep: #002828;
             --accent-green: #003A3A;
+            /* 添加红色按钮专用变量 */
+            --button-red: #D3292E;
+            --button-red-deep: #B82227;
             
             /* 中性色 */
             --bg-light: #F8F8F8;
@@ -49,12 +52,12 @@
             transform: translateY(0);
         }
 
-        /* 章节标签 */
+        /* 章节标签 - 修改为红色字体 */
         .section-label {
             display: inline-block;
             padding: 0.3rem 0.9rem;
-            border: 1px solid rgba(0, 58, 58, 0.15);
-            color: var(--primary-dark);
+            border: 1px solid rgba(211, 41, 46, 0.15); /* 红色边框 */
+            color: var(--button-red) !important; /* 红色文字 */
             font-size: 10px;
             font-weight: 900;
             text-transform: uppercase;
@@ -385,9 +388,9 @@
         /* 按钮样式 */
         .get-quote-btn {
             padding: 0.8rem 2rem;
-            border: 2px solid var(--primary-dark);
-            background-color: var(--white-pure);
-            color: var(--primary-dark);
+            border: 2px solid var(--button-red); /* 修改：边框改为红色 */
+            background-color: var(--button-red); /* 修改：背景改为红色 */
+            color: var(--white-pure); /* 修改：文字改为白色 */
             border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
@@ -395,14 +398,16 @@
             margin-bottom: 1rem;
         }
         .get-quote-btn:hover {
-            background-color: var(--primary-dark);
+            background-color: var(--button-red-deep); /* 修改：hover背景改为深红色 */
             color: var(--white-pure);
+            border-color: var(--button-red-deep); /* 修改：hover边框改为深红色 */
         }
-        .group.bg-\[\#003A3A\] {
-            background-color: var(--primary-dark) !important;
+        /* 修改Start the journey按钮样式 */
+        .journey-button {
+            background-color: var(--button-red) !important;
         }
-        .group.bg-\[\#003A3A\]:hover {
-            background-color: var(--primary-deep) !important;
+        .journey-button:hover {
+            background-color: var(--button-red-deep) !important;
         }
 
         /* 原型卡片 */
@@ -597,8 +602,8 @@
             transform: translateX(-50%);
             display: inline-block;
             padding: 0.3rem 0.9rem;
-            border: 1px solid rgba(0, 58, 58, 0.15);
-            color: var(--primary-dark);
+            border: 1px solid rgba(211, 41, 46, 0.15); /* 红色边框 */
+            color: var(--button-red) !important; /* 红色文字 */
             font-size: 10px;
             font-weight: 900;
             text-transform: uppercase;
@@ -609,7 +614,18 @@
             transition: all 0.3s ease;
         }
         .start-now-label:hover {
-            background-color: rgba(0, 58, 58, 0.05);
+            background-color: rgba(211, 41, 46, 0.05); /* 红色hover背景 */
+        }
+        
+        /* 新增：导航栏logo文字红色样式 */
+        .navbar-brand-text {
+            color: var(--button-red) !important;
+        }
+
+        /* 额外修改：Intro部分的Protection Journey Preview标签也改成红色 */
+        .intro-section-tag {
+            color: var(--button-red) !important;
+            border-color: rgba(211, 41, 46, 0.1) !important;
         }
     </style>
 </head>
@@ -621,7 +637,8 @@
             <div class="w-6 h-6 bg-[#003A3A] flex items-center justify-center rounded-sm">
                 <div class="w-3 h-3 bg-white rotate-45"></div>
             </div>
-            <span class="font-serif font-black text-xl tracking-tighter text-[#003A3A]">SCOTTISH WIDOWS · PROTECTION PREVIEW</span>
+            <!-- 修改：添加 navbar-brand-text 类并把背景色也改成红色 -->
+            <span class="font-serif font-black text-xl tracking-tighter navbar-brand-text bg-[var(--button-red)]/0">SCOTTISH WIDOWS · PROTECTION PREVIEW</span>
         </div>
         <div class="hidden lg:flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">
             <a href="#intro" class="hover:text-[#003A3A] transition-colors">Intro</a>
@@ -637,8 +654,9 @@
         <div class="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] bg-[#003A3A]/5 rounded-full blur-[120px]"></div>
 
         <div class="relative z-20 max-w-5xl fade-section">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 border border-[#003A3A]/10 rounded-full text-[11px] mb-8 bg-white/50 backdrop-blur-md text-[#003A3A] tracking-[0.2em] uppercase font-bold shadow-sm">
-                <i data-lucide="activity" class="w-3.5 h-3.5 text-[#003A3A]"></i>
+            <!-- 修改：添加intro-section-tag类使这个标签也变成红色 -->
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 border border-[#003A3A]/10 rounded-full text-[11px] mb-8 bg-white/50 backdrop-blur-md text-[#003A3A] tracking-[0.2em] uppercase font-bold shadow-sm intro-section-tag">
+                <i data-lucide="activity" class="w-3.5 h-3.5 text-[var(--button-red)]"></i>
                 Protection Journey Preview
             </div>
 
@@ -680,7 +698,8 @@
             </div>
 
             <div class="flex flex-col items-center gap-6">
-                <a href="#simulator" class="group bg-[#003A3A] text-white px-10 py-6 rounded-full font-bold text-xl transition-all flex items-center gap-2">
+                <!-- 只修改这个按钮的样式，添加journey-button类 -->
+                <a href="#simulator" class="group journey-button text-white px-10 py-6 rounded-full font-bold text-xl transition-all flex items-center gap-2">
                     Start the journey <i data-lucide="arrow-down"></i>
                 </a>
                 <p class="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold">No quote · No form · No pressure</p>
@@ -974,7 +993,7 @@
     <section id="lifecycle" class="py-24 md:py-36 px-4 bg-[#F8F8F8] overflow-hidden border-t border-gray-100">
         <div class="max-w-7xl mx-auto">
             <div class="mb-16 fade-section text-center">
-                <div class="section-label mb-6">Chapter 3 · Lifecycle</div>
+                <div class="section-label">Chapter 3 · Lifecycle</div>
                 <h2 class="text-4xl md:text-6xl font-black text-[#003A3A] font-serif leading-tight">
                     An Insurance Policy Lifecycle
                 </h2>
@@ -1055,7 +1074,7 @@
     <section id="claims" class="py-24 md:py-36 px-4 bg-[#F8F8F8] overflow-hidden">
         <div class="max-w-7xl mx-auto">
             <div class="mb-20 text-center fade-section">
-                <div class="section-label mb-6">Chapter 4 · Claim journey</div>
+                <div class="section-label">Chapter 4 · Claim journey</div>
                 <h2 class="text-5xl md:text-6xl font-black text-[#003A3A] font-serif leading-tight">
                     If something serious happens,<br><span class="text-[#003A3A]">how does the claim journey work?</span>
                 </h2>
