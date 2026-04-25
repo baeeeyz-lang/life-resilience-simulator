@@ -234,18 +234,28 @@
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.5s ease-in-out;
-            margin-top: 1rem;
+            /* 修改1: 增大按钮与内容的间距，从1rem改为2rem */
+            margin-top: 2rem;
+            /* 修改2: 统一宽度 - 让内容区域和按钮宽度完全一致 */
+            width: 100%;
+            box-sizing: border-box;
+            /* 移除max-width限制，确保和按钮同宽 */
+            max-width: none;
         }
         .expand-content.open { max-height: 2000px; }
 
-        /* 表格样式 */
+        /* 表格样式 - 关键修改：加宽并和按钮同宽 */
         .cover-types-table {
+            /* 修改3: 统一表格宽度与按钮一致，移除max-width限制 */
             width: 100%;
+            box-sizing: border-box;
             border-collapse: separate;
             border-spacing: 0;
             border-radius: 1rem;
             overflow: hidden;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            /* 确保表格完全填充容器 */
+            display: table;
         }
         .cover-types-table th {
             background-color: var(--primary-dark);
@@ -275,8 +285,11 @@
             color: var(--primary-dark);
         }
 
-        /* 服务卡片 */
+        /* 服务卡片 - 关键修改：加宽并和按钮同宽 */
         .service-card {
+            /* 修改4: 统一服务卡片宽度与按钮一致，移除任何宽度限制 */
+            width: 100%;
+            box-sizing: border-box;
             display: flex;
             align-items: flex-start;
             gap: 1rem;
@@ -285,6 +298,8 @@
             border-radius: 0.5rem;
             margin-bottom: 1rem;
             background-color: var(--white-pure);
+            /* 确保卡片完全填充容器 */
+            max-width: none;
         }
         .service-card img {
             width: 48px;
@@ -395,7 +410,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            margin-bottom: 1rem;
+            /* 修改5: 增大按钮下方间距，从1rem改为1.5rem */
+            margin-bottom: 1.5rem;
         }
         .get-quote-btn:hover {
             background-color: var(--button-red-deep); /* 修改：hover背景改为深红色 */
@@ -405,6 +421,8 @@
         /* 修改Start the journey按钮样式 */
         .journey-button {
             background-color: var(--button-red) !important;
+            /* 修改6: 增大按钮上方间距 - 时间轴与按钮的间距 */
+            margin-top: 2rem !important;
         }
         .journey-button:hover {
             background-color: var(--button-red-deep) !important;
@@ -610,11 +628,8 @@
             letter-spacing: 0.28em;
             border-radius: 999px;
             background-color: transparent;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .start-now-label:hover {
-            background-color: rgba(211, 41, 46, 0.05); /* 红色hover背景 */
+            /* 移除start now的hover动效 */
+            cursor: default;
         }
         
         /* 新增：导航栏logo文字红色样式 */
@@ -626,6 +641,14 @@
         .intro-section-tag {
             color: var(--button-red) !important;
             border-color: rgba(211, 41, 46, 0.1) !important;
+        }
+
+        /* 关键修改：确保拓展内容容器和按钮完全同宽 */
+        .expand-content > div {
+            max-width: none !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
     </style>
 </head>
@@ -1175,10 +1198,10 @@
     <section id="next" class="py-28 md:py-36 px-4 md:px-8 bg-white relative">
         <div class="start-now-label">Start now</div>
         
-        <!-- 购买流程模块 -->
+        <!-- 购买流程模块 - 优化后的版本 -->
         <div class="buying-process-section fade-section">
             <h3 class="buying-process-title text-[#003A3A] text-2xl font-bold">Buying process</h3>
-            <p class="buying-process-subtitle text-gray-500">A quick look at how your cover works, from the day you start to the moment it's needed</p>
+            <p class="buying-process-subtitle text-gray-500 mb-8">A quick look at how your cover works, from the day you start to the moment it's needed</p>
             
             <div class="buying-process-timeline">
                 <div class="buying-process-item">
@@ -1222,9 +1245,11 @@
                 </div>
             </div>
             
-            <p class="mb-4 text-[#003A3A] font-medium">Have you made up your mind?</p>
-            <button class="get-quote-btn" onclick="window.open('https://www.scottishwidows.co.uk/life-insurance.html#quote', '_blank')">Get a quote</button>
-            <p class="if-not-text">if not</p>
+            <!-- 优化后的按钮区域 -->
+            <div class="mt-8">
+                <button class="get-quote-btn w-full max-w-[200px]" onclick="window.open('https://www.scottishwidows.co.uk/life-insurance.html#quote', '_blank')">Get a quote</button>
+                <p class="text-sm text-gray-500 mt-4">Take all the time you need to decide</p>
+            </div>
         </div>
         
         <div class="max-w-7xl mx-auto text-center fade-section">
