@@ -428,7 +428,7 @@
             background-color: var(--button-red-deep) !important;
         }
 
-        /* 原型卡片 */
+        /* 原型卡片 - 修改为灰色默认/红色hover效果 */
         .prototype-card {
             background-color: var(--white-pure);
             border-radius: 2rem;
@@ -436,12 +436,18 @@
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
+            /* 默认灰色边框 */
             border: 1px solid var(--gray-light);
+            /* 默认灰色背景（轻微） */
+            background-color: #fafafa;
         }
         .prototype-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-            border-color: var(--primary-dark);
+            /* hover时红色边框 */
+            border-color: var(--button-red);
+            /* hover时白色背景突出红色边框 */
+            background-color: var(--white-pure);
         }
         .prototype-card-icon {
             width: 4rem;
@@ -451,17 +457,44 @@
             align-items: center;
             justify-content: center;
             margin: 0 auto 1.5rem auto;
+            /* 默认灰色图标背景 */
+            background-color: var(--gray-light);
+            color: var(--neutral-gray);
+        }
+        /* hover时图标背景变红 */
+        .prototype-card:hover .prototype-card-icon {
+            background-color: var(--button-red);
+            color: var(--white-pure);
         }
         .prototype-card-title {
             font-size: 1.125rem;
             font-weight: 700;
-            color: var(--primary-dark);
+            /* 默认灰色标题 */
+            color: var(--neutral-gray);
             margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+        /* hover时标题变红 */
+        .prototype-card:hover .prototype-card-title {
+            color: var(--button-red);
         }
         .prototype-card-text {
             font-size: 0.9375rem;
             color: var(--neutral-gray);
             line-height: 1.5;
+            transition: color 0.3s ease;
+        }
+        /* hover时文本变深（可选） */
+        .prototype-card:hover .prototype-card-text {
+            color: #374151;
+        }
+        /* 客服卡片中的电话链接样式 */
+        .prototype-card a {
+            color: var(--neutral-gray);
+            transition: color 0.3s ease;
+        }
+        .prototype-card:hover a {
+            color: var(--button-red);
         }
 
         /* 饼图样式 */
@@ -1264,7 +1297,7 @@
             <div class="grid md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
                 <!-- Product details 卡片 -->
                 <div class="prototype-card" onclick="window.open('https://www.scottishwidows.co.uk/life-insurance.html', '_blank')">
-                    <div class="prototype-card-icon bg-[#003A3A] text-white">
+                    <div class="prototype-card-icon">
                         <i data-lucide="file-text" class="w-6 h-6"></i>
                     </div>
                     <h4 class="prototype-card-title">Product details</h4>
@@ -1273,14 +1306,14 @@
                 
                 <!-- Got a question? 卡片 -->
                 <div class="prototype-card" id="customer-support-card">
-                    <div class="prototype-card-icon bg-gray-100 text-[#003A3A]">
+                    <div class="prototype-card-icon">
                         <i data-lucide="headphones" class="w-6 h-6"></i>
                     </div>
                     <h4 class="prototype-card-title">Got a question?</h4>
                     <p class="prototype-card-text">Speak to our friendly team for impartial advice with no pressure to buy.</p>
                     <!-- 客服联系方式 -->
                     <div class="mt-4 text-center">
-                        <a href="tel:+448000271846" class="inline-flex items-center justify-center gap-2 text-[#003A3A] font-bold text-sm hover:text-[#002828] transition-colors">
+                        <a href="tel:+448000271846" class="inline-flex items-center justify-center gap-2 font-bold text-sm hover:text-[#002828] transition-colors">
                             <i data-lucide="phone" class="w-4 h-4"></i>
                             0800 027 1846
                         </a>
@@ -1290,7 +1323,7 @@
                 
                 <!-- Discuss it 卡片 -->
                 <div class="prototype-card" id="whatsapp-share-card">
-                    <div class="prototype-card-icon bg-gray-100 text-[#003A3A]">
+                    <div class="prototype-card-icon">
                         <i data-lucide="share-2" class="w-6 h-6"></i>
                     </div>
                     <h4 class="prototype-card-title">Discuss it</h4>
