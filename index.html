@@ -160,7 +160,7 @@
 
         /* 时间轴样式 */
         .timeline-container {
-            max-width: 800px;
+            max-width: 90%; /* 修改：放宽时间轴宽度限制 */
             margin: 3rem auto;
             width: 100%;
         }
@@ -790,30 +790,33 @@
         </div>
     </nav>
 
-    <!-- 1. Intro + Journey Overview -->
-    <section id="intro" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+    <!-- 1. Intro + Journey Overview - 主要修改区域 -->
+    <section id="intro" class="relative min-h-screen flex flex-col items-center justify-center text-center px-2 md:px-4 lg:px-6 overflow-hidden">
         <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#003A3A]/5 rounded-full blur-[100px]"></div>
         <div class="absolute bottom-[-10%] right-[-10%] w-[45%] h-[45%] bg-[#003A3A]/5 rounded-full blur-[120px]"></div>
 
-        <div class="relative z-20 max-w-5xl fade-section">
+        <!-- 修改：放宽max-width限制，从max-w-5xl改为max-w-7xl，减少左右空白 -->
+        <div class="relative z-20 w-full max-w-7xl fade-section px-2 md:px-4">
             <!-- 修改：添加intro-section-tag类使这个标签也变成红色 -->
             <div class="inline-flex items-center gap-2 px-4 py-1.5 border border-[#003A3A]/10 rounded-full text-[11px] mb-8 bg-white/50 backdrop-blur-md text-[#003A3A] tracking-[0.2em] uppercase font-bold shadow-sm intro-section-tag">
                 <i data-lucide="activity" class="w-3.5 h-3.5 text-[var(--button-red)]"></i>
                 Protection Journey Preview
             </div>
 
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-[1.08] font-serif text-[#003A3A] tracking-tight">
+            <!-- 修改：调整标题字体大小和行高，使其更适配宽屏 -->
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-[1.08] font-serif text-[#003A3A] tracking-tight">
                 Take Your Time,<br />
                 <span class="text-[#217A8B]">Get the Clarity</span>
             </h1>
 
-            <p class="text-lg md:text-xl mb-8 text-gray-600/80 max-w-3xl mx-auto leading-relaxed font-light">
+            <!-- 修改：放宽文本max-width限制，从max-w-3xl改为max-w-4xl -->
+            <p class="text-lg md:text-xl mb-8 text-gray-600/80 max-w-4xl mx-auto leading-relaxed font-light">
                 Before you purchase anything, see how protection actually works.
             </p>
 
             <h2 class="text-xl font-bold text-[#003A3A] mb-6">What you'll learn on this journey</h2>
             
-            <!-- 时间轴 -->
+            <!-- 时间轴 - 已在CSS中修改max-width为90% -->
             <div class="timeline-container mb-10">
                 <div class="timeline">
                     <div class="timeline-item">
