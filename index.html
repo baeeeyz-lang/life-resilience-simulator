@@ -497,7 +497,7 @@
             color: var(--button-red);
         }
 
-        /* 饼图样式 */
+        /* 饼图样式 - 全新设计：白色透明玻璃质感 */
         .pie-svg-wrap {
             width: 100%;
             max-width: 900px;
@@ -510,16 +510,21 @@
             transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .pie-slice {
-            stroke: transparent;
-            transition: fill 0.4s ease, filter 0.4s ease;
-            fill: var(--base-fill);
+            stroke: #ffffff;
+            stroke-width: 2;
+            transition: all 0.4s ease, filter 0.4s ease;
+            fill: rgba(255, 255, 255, 0.15); /* 半透明白色 */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
         .pie-group.active .pie-slice {
-            fill: var(--primary-dark) !important;
-            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.25));
+            fill: rgba(255, 255, 255, 0.9) !important; /* 高亮时更不透明 */
+            filter: drop-shadow(0 8px 30px rgba(0,0,0,0.12));
+            stroke: var(--primary-dark);
+            stroke-width: 2;
         }
         .idle-text {
-            fill: rgba(255, 255, 255, 0.95);
+            fill: #111827; /* 黑色文字 */
             font-family: 'Inter', sans-serif;
             font-weight: 700;
             font-size: 14px;
@@ -549,14 +554,20 @@
             text-align: center;
             width: 100%;
             height: 100%;
-            color: white;
+            color: #111827; /* 黑色文字 */
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 12px;
+            padding: 12px;
+            box-sizing: border-box;
         }
         .slice-illustration {
             height: 120px;
             object-fit: contain;
             margin-bottom: 6px;
             background-color: transparent !important;
-            mix-blend-mode: multiply;
+            mix-blend-mode: normal;
         }
         .slice-title {
             font-size: 13px;
@@ -565,15 +576,16 @@
             width: 100%;
             max-width: 170px;
             margin: 0 auto 4px auto;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            color: #111827; /* 黑色标题 */
         }
         .slice-description {
             font-size: 10.5px;
             line-height: 1.35;
-            opacity: 0.95;
+            opacity: 0.85;
             width: 100%;
             max-width: 170px;
             margin: 0 auto;
+            color: #374151; /* 深灰色描述 */
         }
 
         /* 响应式样式 */
@@ -1061,7 +1073,7 @@
             <div class="pie-svg-wrap fade-section relative mt-10">
                 <svg viewBox="0 0 1000 1000" width="100%" height="auto" class="overflow-visible">
                     <g id="pie-slices-container">
-                        <g class="pie-group active" data-index="1" style="--base-fill: #002828;">
+                        <g class="pie-group active" data-index="1">
                             <path class="pie-slice" d="M 500 500 L 500 160 A 340 340 0 0 1 823.3 395.1 Z" />
                             <text class="idle-text" x="617" y="345" text-anchor="middle">1. Quote & Application</text>
                             <foreignObject x="545" y="204" width="180" height="220">
@@ -1072,7 +1084,7 @@
                                 </div>
                             </foreignObject>
                         </g>
-                        <g class="pie-group" data-index="2" style="--base-fill: #002E2E;">
+                        <g class="pie-group" data-index="2">
                             <path class="pie-slice" d="M 500 500 L 823.3 395.1 A 340 340 0 0 1 700 775.1 Z" />
                             <text class="idle-text" text-anchor="middle">
                                 <tspan x="690" y="550">2. Underwriting &</tspan>
@@ -1086,7 +1098,7 @@
                                 </div>
                             </foreignObject>
                         </g>
-                        <g class="pie-group" data-index="3" style="--base-fill: #003A3A;">
+                        <g class="pie-group" data-index="3">
                             <path class="pie-slice" d="M 500 500 L 700 775.1 A 340 340 0 0 1 300 775.1 Z" />
                             <text class="idle-text" x="500" y="700" text-anchor="middle">3. Policy Administration</text>
                             <foreignObject x="410" y="620" width="180" height="220">
@@ -1097,7 +1109,7 @@
                                 </div>
                             </foreignObject>
                         </g>
-                        <g class="pie-group" data-index="4" style="--base-fill: #004545;">
+                        <g class="pie-group" data-index="4">
                             <path class="pie-slice" d="M 500 500 L 300 775.1 A 340 340 0 0 1 176.7 395.1 Z" />
                             <text class="idle-text" text-anchor="middle">
                                 <tspan x="310" y="550">4. Claims</tspan>
@@ -1111,7 +1123,7 @@
                                 </div>
                             </foreignObject>
                         </g>
-                        <g class="pie-group" data-index="5" style="--base-fill: #005050;">
+                        <g class="pie-group" data-index="5">
                             <path class="pie-slice" d="M 500 500 L 176.7 395.1 A 340 340 0 0 1 500 160 Z" />
                             <text class="idle-text" x="382" y="345" text-anchor="middle">5. Expiration</text>
                             <foreignObject x="275" y="204" width="180" height="220">
@@ -1123,7 +1135,7 @@
                             </foreignObject>
                         </g>
                     </g>
-                    <circle cx="500" cy="500" r="4" fill="#ffffff" />
+                    <circle cx="500" cy="500" r="8" fill="#ffffff" stroke="#003A3A" stroke-width="2" />
                 </svg>
             </div>
         </div>
